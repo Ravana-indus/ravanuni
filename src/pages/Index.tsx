@@ -57,7 +57,7 @@ const Index = () => {
           layout="asymmetrical"
           background="light"
           hideHeading
-          className="py-24"
+          className="clip-diagonal py-24"
         >
           <div className="container-content">
             <div className="mb-12 text-center max-w-3xl mx-auto px-4">
@@ -89,7 +89,7 @@ const Index = () => {
           background="white"
           alignment="left"
         >
-          <AsymmetricLayout variant="symmetrical" className="mt-12">
+          <AsymmetricLayout variant="overlapping" className="mt-12">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
               <div className="col-span-12 md:col-span-6 md:col-start-1 z-10">
                 <div className="scroll-animate opacity-0">
@@ -110,7 +110,7 @@ const Index = () => {
                 </div>
               </div>
               
-              <div className="col-span-12 md:col-span-6 md:col-start-7 z-10">
+              <div className="col-span-12 md:col-span-7 md:col-start-6 lg:col-start-6 md:-mt-12 md:pt-12 z-0">
                 <div className="relative scroll-animate opacity-0">
                   <div className="relative z-10 rounded-lg overflow-hidden shadow-elegant">
                     <img 
@@ -181,16 +181,16 @@ const Index = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-16">
               {[
-                { value: '500+', label: 'Annual Events', icon: Calendar },
-                { value: '120,000', label: 'Library Resources', icon: BookOpen },
-                { value: '85%', label: 'Student Satisfaction', icon: Target },
-                { value: '50+', label: 'Language Courses', icon: Globe },
-                { value: '35', label: 'Years of Excellence', icon: Award },
-                { value: '76', label: 'Partner Institutions', icon: Flag },
+                { value: '500+', label: 'Annual Events', icon: Calendar, position: 'md:translate-y-12' },
+                { value: '120,000', label: 'Library Resources', icon: BookOpen, position: '' },
+                { value: '85%', label: 'Student Satisfaction', icon: Target, position: 'md:translate-y-8' },
+                { value: '50+', label: 'Language Courses', icon: Globe, position: 'md:-translate-y-6' },
+                { value: '35', label: 'Years of Excellence', icon: Award, position: 'md:translate-y-4' },
+                { value: '76', label: 'Partner Institutions', icon: Flag, position: 'md:-translate-y-10' },
               ].map((stat, index) => (
                 <div 
                   key={index}
-                  className="glass-card p-8 flex flex-col items-center text-center transform transition-all duration-500 hover:-translate-y-2"
+                  className={`glass-card p-8 flex flex-col items-center text-center transform transition-all duration-500 hover:-translate-y-2 ${stat.position}`}
                 >
                   <div className="text-institutional mb-4">
                     {React.createElement(stat.icon, { size: 40 })}
@@ -207,8 +207,9 @@ const Index = () => {
           id="events" 
           title="Upcoming Events" 
           subtitle="Join us for a variety of cultural and educational events happening throughout the year."
+          className="diagonal-container"
         >
-          <div>
+          <div className="diagonal-content">
             <FeaturedContent
               items={[
                 {
@@ -246,16 +247,16 @@ const Index = () => {
           subtitle="Access our curated collection of resources to support your cultural and educational journey."
           background="light"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             {[
-              { icon: <BookOpen size={40} />, title: "Library", description: "Access our extensive collection of books, journals, and digital resources." },
-              { icon: <Globe size={40} />, title: "Online Learning", description: "Explore our digital learning platforms and resources available remotely." },
-              { icon: <GraduationCap size={40} />, title: "Certification", description: "Information about our internationally recognized certification programs." },
-              { icon: <Users size={40} />, title: "Community", description: "Connect with a global community of learners, educators, and cultural enthusiasts." }
+              { icon: <BookOpen size={40} />, title: "Library", description: "Access our extensive collection of books, journals, and digital resources.", position: "md:col-span-5 md:col-start-1" },
+              { icon: <Globe size={40} />, title: "Online Learning", description: "Explore our digital learning platforms and resources available remotely.", position: "md:col-span-6 md:col-start-7 md:-mt-12" },
+              { icon: <GraduationCap size={40} />, title: "Certification", description: "Information about our internationally recognized certification programs.", position: "md:col-span-6 md:col-start-1 md:mt-8" },
+              { icon: <Users size={40} />, title: "Community", description: "Connect with a global community of learners, educators, and cultural enthusiasts.", position: "md:col-span-5 md:col-start-8 md:-mt-6" }
             ].map((item, index) => (
               <div 
                 key={index}
-                className="glass-card p-8 flex flex-col items-center text-center scroll-animate opacity-0"
+                className={`glass-card p-8 flex flex-col items-center text-center scroll-animate opacity-0 ${item.position}`}
                 style={{ animationDelay: `${0.1 * index}s` }}
               >
                 <div className="text-institutional mb-4">{item.icon}</div>

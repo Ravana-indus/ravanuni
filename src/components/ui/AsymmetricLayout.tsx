@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 interface AsymmetricLayoutProps {
   children: React.ReactNode;
   className?: string;
-  variant?: 'diagonal' | 'offset' | 'overlapping' | 'symmetrical';
+  variant?: 'diagonal' | 'offset' | 'overlapping';
 }
 
 const AsymmetricLayout = ({ 
@@ -16,8 +16,7 @@ const AsymmetricLayout = ({
   const variantClasses = {
     'diagonal': 'transform -rotate-2 overflow-visible',
     'offset': 'grid grid-cols-12 gap-6',
-    'overlapping': 'relative',
-    'symmetrical': 'grid grid-cols-12 gap-8'
+    'overlapping': 'relative'
   };
 
   if (variant === 'diagonal') {
@@ -29,14 +28,6 @@ const AsymmetricLayout = ({
   }
 
   if (variant === 'overlapping') {
-    return (
-      <div className={cn(variantClasses[variant], className)}>
-        {children}
-      </div>
-    );
-  }
-
-  if (variant === 'symmetrical') {
     return (
       <div className={cn(variantClasses[variant], className)}>
         {children}
@@ -72,7 +63,7 @@ export const AsymmetricItem = ({
       className={cn(
         colStart !== 'auto' ? `col-start-${colStart}` : '',
         `col-span-12 md:col-span-${colSpan}`,
-        // Remove the transform/translate that causes overlapping
+        offset && "transform translate-y-12",
         className
       )}
       style={{ zIndex }}
