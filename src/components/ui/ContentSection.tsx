@@ -11,6 +11,7 @@ interface ContentSectionProps {
   fullWidth?: boolean;
   titleAlignment?: 'left' | 'center';
   titleSize?: 'default' | 'large';
+  background?: 'white' | 'light' | 'accent';
 }
 
 const ContentSection = ({
@@ -22,13 +23,26 @@ const ContentSection = ({
   fullWidth = false,
   titleAlignment = 'center',
   titleSize = 'default',
+  background = 'white',
 }: ContentSectionProps) => {
+  const getBgColor = () => {
+    switch (background) {
+      case 'light':
+        return 'bg-gray-50';
+      case 'accent':
+        return 'bg-accent/20';
+      case 'white':
+      default:
+        return 'bg-white';
+    }
+  };
+
   return (
     <section 
       id={id} 
       className={cn(
         "py-20", 
-        "bg-white", // Force bg-white for all sections
+        getBgColor(),
         className
       )}
     >
