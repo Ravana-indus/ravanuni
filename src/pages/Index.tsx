@@ -21,22 +21,37 @@ const Index = () => {
   ];
 
   useEffect(() => {
+    // Add a base class to all elements that should animate
+    document.querySelectorAll('.scroll-animate').forEach((elem) => {
+      elem.classList.add('transition-all', 'duration-700', 'ease-in-out');
+      // Ensure elements start invisible
+      elem.classList.add('opacity-0', 'translate-y-8');
+    });
+
+    // Create the intersection observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-up');
+            // When element is visible, remove the translate and add opacity
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px' 
+      }
     );
 
+    // Observe all elements with the scroll-animate class
     document.querySelectorAll('.scroll-animate').forEach((elem) => {
       observer.observe(elem);
     });
 
+    // Cleanup function
     return () => {
       document.querySelectorAll('.scroll-animate').forEach((elem) => {
         observer.unobserve(elem);
@@ -63,7 +78,7 @@ const Index = () => {
           imageCopyright="© Cultural Exchange Program"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="scroll-animate opacity-0">
+            <div className="scroll-animate">
               <h3 className="text-2xl font-semibold mb-4 text-gray-900">Our Mission</h3>
               <p className="text-gray-600 mb-6">
                 Our institution promotes cultural dialogue through language learning, 
@@ -80,7 +95,7 @@ const Index = () => {
               </a>
             </div>
             
-            <div className="relative scroll-animate opacity-0">
+            <div className="relative scroll-animate" style={{ transitionDelay: '200ms' }}>
               <div className="relative z-10 rounded-lg overflow-hidden shadow-elegant">
                 <img 
                   src="https://images.unsplash.com/photo-1574320379713-9744c0868a20?q=80&w=800&auto=format&fit=crop" 
@@ -111,25 +126,25 @@ const Index = () => {
                 icon: <Globe />,
                 value: 151,
                 description: "branches of our institution are active in 98 countries around the world.",
-                color: "lime"
+                color: "purple"
               },
               {
                 icon: <MapPin />,
                 value: 12,
                 description: "of our institutes are located in major cultural centers.",
-                color: "lime"
+                color: "purple"
               },
               {
                 icon: <Building />,
                 value: 1952,
                 description: "the first cultural center opened in Athens.",
-                color: "lime"
+                color: "purple"
               },
               {
                 icon: <Users />,
                 value: "4,396",
                 description: "employees are at work worldwide.",
-                color: "lime"
+                color: "purple"
               }
             ]}
           />
@@ -144,30 +159,33 @@ const Index = () => {
           imageAlt="Language learning program"
           imageCaption="Comprehensive language courses for all levels, taught by native speakers."
         >
-          <FeaturedContent
-            items={[
-              {
-                title: "Language Courses",
-                description: "Comprehensive language courses for all levels, taught by native speakers using the latest teaching methodologies.",
-                imageUrl: programImages[0],
-                link: "#"
-              },
-              {
-                title: "Cultural Workshops",
-                description: "Immersive workshops exploring literature, art, film, and other cultural expressions across diverse traditions.",
-                imageUrl: programImages[1],
-                link: "#"
-              },
-              {
-                title: "Exchange Programs",
-                description: "Opportunities for students and professionals to experience cultural immersion through exchange programs.",
-                imageUrl: programImages[2],
-                link: "#"
-              }
-            ]}
-          />
+          <div className="scroll-animate">
+            <FeaturedContent
+              items={[
+                {
+                  imageUrl: programImages[0],
+                  title: "Language Courses",
+                  description: "Comprehensive language courses for all levels, taught by native speakers using the latest teaching methodologies.",
+                  
+                  link: "#"
+                },
+                {
+                  title: "Cultural Workshops",
+                  description: "Immersive workshops exploring literature, art, film, and other cultural expressions across diverse traditions.",
+                  imageUrl: programImages[1],
+                  link: "#"
+                },
+                {
+                  title: "Exchange Programs",
+                  description: "Opportunities for students and professionals to experience cultural immersion through exchange programs.",
+                  imageUrl: programImages[2],
+                  link: "#"
+                }
+              ]}
+            />
+          </div>
           
-          <div className="mt-12 text-center">
+          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
             <a href="#" className="button-institutional inline-flex">
               View All Programs <MoveRight size={18} className="ml-2" />
             </a>
@@ -179,35 +197,37 @@ const Index = () => {
           title="Upcoming Events" 
           subtitle="Join us for a variety of cultural and educational events happening throughout the year."
           titleAlignment="left"
-          background="accent"
+          background="white"
           imageUrl="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=600&auto=format&fit=crop"
           imageAlt="Cultural event"
           imageCaption="Our annual cultural festival brings together diverse traditions through music, dance, food, and art."
         >
-          <FeaturedContent
-            items={[
-              {
-                title: "Annual Cultural Festival",
-                description: "Celebrate diverse cultural traditions through music, dance, food, and art at our annual festival.",
-                imageUrl: eventImages[0],
-                link: "#"
-              },
-              {
-                title: "Literary Evening",
-                description: "An evening dedicated to contemporary literature with readings, discussions, and meet-the-author sessions.",
-                imageUrl: eventImages[1],
-                link: "#"
-              },
-              {
-                title: "Education Conference",
-                description: "A conference bringing together educators, researchers, and students to discuss the future of education.",
-                imageUrl: eventImages[2],
-                link: "#"
-              }
-            ]}
-          />
+          <div className="scroll-animate">
+            <FeaturedContent
+              items={[
+                {
+                  title: "Annual Cultural Festival",
+                  description: "Celebrate diverse cultural traditions through music, dance, food, and art at our annual festival.",
+                  imageUrl: eventImages[0],
+                  link: "#"
+                },
+                {
+                  title: "Literary Evening",
+                  description: "An evening dedicated to contemporary literature with readings, discussions, and meet-the-author sessions.",
+                  imageUrl: eventImages[1],
+                  link: "#"
+                },
+                {
+                  title: "Education Conference",
+                  description: "A conference bringing together educators, researchers, and students to discuss the future of education.",
+                  imageUrl: eventImages[2],
+                  link: "#"
+                }
+              ]}
+            />
+          </div>
           
-          <div className="mt-12 text-center">
+          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
             <a href="#" className="button-institutional inline-flex">
               View All Events <Calendar size={18} className="ml-2" />
             </a>
@@ -232,8 +252,8 @@ const Index = () => {
             ].map((item, index) => (
               <div 
                 key={index}
-                className="glass-card p-8 flex flex-col items-center text-center scroll-animate opacity-0"
-                style={{ animationDelay: `${0.1 * index}s` }}
+                className="glass-card p-8 flex flex-col items-center text-center scroll-animate"
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="text-institutional mb-4">{item.icon}</div>
                 <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
@@ -248,13 +268,13 @@ const Index = () => {
           title="Contact Us" 
           subtitle="Get in touch with our team to learn more about our programs and initiatives."
           titleAlignment="left"
-          background="light"
+          background="white"
           imageUrl="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=800&auto=format&fit=crop"
           imageAlt="Our institution building"
           imageCaption="Visit our cultural center to experience our programs and facilities firsthand."
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="glass-card p-8 scroll-animate opacity-0">
+            <div className="glass-card p-8 scroll-animate">
               <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -302,7 +322,7 @@ const Index = () => {
               </form>
             </div>
             
-            <div className="scroll-animate opacity-0">
+            <div className="scroll-animate" style={{ transitionDelay: '300ms' }}>
               <div className="glass-card p-8 mb-8">
                 <h3 className="text-2xl font-semibold mb-6">Visit Our Center</h3>
                 <p className="text-gray-600 mb-6">

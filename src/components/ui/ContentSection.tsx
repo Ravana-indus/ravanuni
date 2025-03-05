@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/lib/translation';
 
 interface ContentSectionProps {
   id?: string;
@@ -9,13 +9,16 @@ interface ContentSectionProps {
   children: React.ReactNode;
   className?: string;
   fullWidth?: boolean;
-  background?: 'white' | 'light' | 'accent';
+  background?: 'white';
   titleAlignment?: 'left' | 'center';
   titleSize?: 'default' | 'large';
   imageUrl?: string;
   imageAlt?: string;
   imageCaption?: string;
   imageCopyright?: string;
+  isHero?: boolean;
+  translateTitle?: boolean;
+  translateSubtitle?: boolean;
 }
 
 const ContentSection = ({
@@ -32,14 +35,16 @@ const ContentSection = ({
   imageAlt = '',
   imageCaption,
   imageCopyright,
+  isHero = false,
+  translateTitle = true,
+  translateSubtitle = true,
 }: ContentSectionProps) => {
   const backgroundClasses = {
     'white': 'bg-white',
-    'light': 'bg-gray-50',
-    'accent': 'bg-institutional-50',
   };
   
   const hasImage = Boolean(imageUrl);
+  const { t } = useTranslation();
   
   return (
     <section 
@@ -52,39 +57,56 @@ const ContentSection = ({
       )}
     >
       {hasImage && (
-        <div className="w-full order-1">
-          <figure aria-labelledby={`figcaption-${id}`} className="relative w-full overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-            <img 
-              src={imageUrl} 
-              alt={imageAlt}
-              className="w-full h-[500px] md:h-[600px] object-cover"
-            />
-            {imageCopyright && (
-              <p className="m-0 absolute bottom-4 right-4 z-20">
-                <small className="text-white text-xs opacity-80">{imageCopyright}</small>
-              </p>
+        <div className={cn(
+          "w-full order-1",
+          !isHero && "container-xxxl"
+        )}>
+          <figure 
+            aria-labelledby={`figcaption-${id}`} 
+            className={cn(
+              "relative w-full overflow-hidden",
+              !isHero && "image-wrapper has-dimmer dimmer-strong dimmer-totop"
             )}
-            {imageCaption && (
-              <figcaption 
-                id={`figcaption-${id}`} 
-                className="absolute bottom-0 left-0 right-0 p-4 text-white text-sm z-20"
-              >
-                <span className="block md:hidden">{imageCaption}</span>
-                <span className="hidden md:block">{imageCaption}</span>
-              </figcaption>
+          >
+            <picture>
+              <source 
+                type="image/webp" 
+                srcSet={`${imageUrl}?format=webp&w=160 160w, ${imageUrl}?format=webp&w=320 320w, ${imageUrl}?format=webp&w=480 480w, ${imageUrl}?format=webp&w=640 640w, ${imageUrl}?format=webp&w=800 800w, ${imageUrl}?format=webp&w=960 960w, ${imageUrl}?format=webp&w=1120 1120w, ${imageUrl}?format=webp&w=1280 1280w, ${imageUrl}?format=webp&w=1440 1440w, ${imageUrl}?format=webp&w=1600 1600w`}
+                sizes="(min-width: 1600px) 1600px, (min-width: 1440px) 1440px, (min-width: 1280px) 1280px, (min-width: 1120px) 1120px, (min-width: 960px) 960px, (min-width: 800px) 800px, (min-width: 640px) 640px, (min-width: 480px) 480px, (min-width: 320px) 320px, 160px"
+              />
+              <img 
+                src={imageUrl} 
+                alt={imageAlt ? (translateTitle ? t(imageAlt) : imageAlt) : ''}
+                width="2300"
+                height="1000"
+                className={cn(
+                  "w-full object-cover img-fluid",
+                  isHero ? "h-[650px] md:h-[780px] px-0 sm:px-5 2xl:px-20" : "h-[520px] md:h-[650px] px-0 sm:px-5 2xl:px-20",
+                )}
+                loading="lazy"
+                sizes="(min-width: 1600px) 1600px, (min-width: 1440px) 1440px, (min-width: 1280px) 1280px, (min-width: 1120px) 960px, (min-width: 960px) 960px, (min-width: 800px) 800px, (min-width: 640px) 640px, (min-width: 480px) 480px, (min-width: 320px) 320px, 160px"
+              />
+            </picture>
+            {!isHero && (
+              <>
+                {imageCopyright && (
+                  <p className="m-0 absolute bottom-4 right-4 z-10">
+                    <small className="text-white text-xs opacity-80">{imageCopyright}</small>
+                  </p>
+                )}
+              </>
             )}
           </figure>
         </div>
       )}
       
       <div className={cn(
-        "container-content relative",
+        "container-content relative px-10",
         hasImage ? "-mt-12 md:-mt-24 order-2 mb-20" : ""
       )}>
         <div className={cn(
           "max-w-3xl px-4",
-          hasImage ? "bg-white p-4 md:p-6 shadow-md" : "",
+          hasImage ? "bg-white p-4 md:p-6 shadow-md relative z-20" : "",
           titleAlignment === 'center' ? 'text-center mx-auto' : 'text-left',
           hasImage ? "mb-8" : "mb-12"
         )}>
@@ -93,11 +115,11 @@ const ContentSection = ({
             titleSize === 'large' && "text-4xl sm:text-5xl font-bold",
             hasImage && "mt-2"
           )}>
-            {title}
+            {translateTitle ? t(title) : title}
           </h2>
           {subtitle && (
             <p className="section-subheading animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              {subtitle}
+              {translateSubtitle ? t(subtitle) : subtitle}
             </p>
           )}
         </div>

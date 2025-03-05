@@ -1,5 +1,6 @@
-
 import type { Config } from "tailwindcss";
+// @ts-ignore
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -69,20 +70,20 @@ export default {
 				},
 				// Custom institutional colors
 				institutional: {
-					DEFAULT: '#824470',
-					light: '#a46b92',
-					dark: '#613354',
-					50: '#f7f1f5',
-					100: '#eee3eb',
-					200: '#ddcad8',
-					300: '#c3a6bc',
-					400: '#a97c9c',
-					500: '#824470',
-					600: '#743b64',
-					700: '#613354',
-					800: '#512b45',
-					900: '#43253a',
-					950: '#2a1724',
+					DEFAULT: '#380561',
+					light: '#b195c9', // Lighter purple, close to a lavender
+					dark: '#28034a', // Deeper, slightly bluer purple
+					50: '#f2edf7', // Very light, almost white with a hint of purple
+					100: '#e0d1eb', // Light lavender
+					200: '#c2a9d8', // Soft purple
+					300: '#a281c1', // Medium purple
+					400: '#8259a9', // Slightly deeper purple
+					500: '#613892', // Mid-range purple, more saturated
+					600: '#4d1f7a', // Deep purple, leaning towards blue
+					700: '#380561', // Your default color
+					800: '#28034a', // Darker, more intense purple
+					900: '#1a0233', // Very dark, almost black purple
+					950: '#0f011e', // Extremely dark purple
 				},
 			},
 			borderRadius: {
@@ -129,5 +130,5 @@ export default {
 			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;

@@ -17,7 +17,7 @@ const KeyStat = ({ icon, value, description, color = 'institutional', delay = 0 
     'lime': 'text-lime-600',
     'green': 'text-green-600',
     'blue': 'text-blue-600',
-    'purple': 'text-purple-600',
+    'purple': 'text-purple-900',
   };
 
   return (
