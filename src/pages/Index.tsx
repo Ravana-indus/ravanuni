@@ -56,7 +56,11 @@ const Index = () => {
           title="About Our Institution" 
           subtitle="Founded on principles of cultural exchange and education, we're dedicated to fostering connections between communities worldwide."
           titleAlignment="left"
-          background="light"
+          background="white"
+          imageUrl="https://images.unsplash.com/photo-1574320379713-9744c0868a20?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Cultural exchange program"
+          imageCaption="Our institution promotes cultural dialogue through various programs and exchanges."
+          imageCopyright="© Cultural Exchange Program"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="scroll-animate opacity-0">
@@ -96,6 +100,9 @@ const Index = () => {
           subtitle="For diversity, understanding and trust"
           titleSize="large"
           titleAlignment="left"
+          imageUrl="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Global impact visualization"
+          imageCaption="Our institution's global presence helps facilitate cultural exchange around the world."
         >
           <KeyStatsGrid 
             columns={2}
@@ -133,6 +140,9 @@ const Index = () => {
           title="Our Programs" 
           subtitle="Discover our diverse range of programs designed to promote cultural understanding and exchange."
           titleAlignment="left"
+          imageUrl="https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Language learning program"
+          imageCaption="Comprehensive language courses for all levels, taught by native speakers."
         >
           <FeaturedContent
             items={[
@@ -170,6 +180,9 @@ const Index = () => {
           subtitle="Join us for a variety of cultural and educational events happening throughout the year."
           titleAlignment="left"
           background="accent"
+          imageUrl="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=600&auto=format&fit=crop"
+          imageAlt="Cultural event"
+          imageCaption="Our annual cultural festival brings together diverse traditions through music, dance, food, and art."
         >
           <FeaturedContent
             items={[
@@ -206,6 +219,9 @@ const Index = () => {
           title="Resources"
           subtitle="Access our curated collection of resources to support your cultural and educational journey."
           titleAlignment="left"
+          imageUrl="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Educational resources"
+          imageCaption="Our extensive collection of books, journals, and digital resources support cultural learning."
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -233,6 +249,9 @@ const Index = () => {
           subtitle="Get in touch with our team to learn more about our programs and initiatives."
           titleAlignment="left"
           background="light"
+          imageUrl="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Our institution building"
+          imageCaption="Visit our cultural center to experience our programs and facilities firsthand."
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="glass-card p-8 scroll-animate opacity-0">
