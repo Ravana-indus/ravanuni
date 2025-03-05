@@ -9,9 +9,9 @@ interface ContentSectionProps {
   children: React.ReactNode;
   className?: string;
   fullWidth?: boolean;
+  background?: 'white' | 'light' | 'accent';
   titleAlignment?: 'left' | 'center';
   titleSize?: 'default' | 'large';
-  background?: 'white' | 'light' | 'accent';
 }
 
 const ContentSection = ({
@@ -21,28 +21,24 @@ const ContentSection = ({
   children,
   className,
   fullWidth = false,
+  background = 'white',
   titleAlignment = 'center',
   titleSize = 'default',
-  background = 'white',
 }: ContentSectionProps) => {
-  const getBgColor = () => {
-    switch (background) {
-      case 'light':
-        return 'bg-gray-50';
-      case 'accent':
-        return 'bg-accent/20';
-      case 'white':
-      default:
-        return 'bg-white';
-    }
+  // We'll keep this for backwards compatibility but only use it for hero section
+  const backgroundClasses = {
+    'white': 'bg-white',
+    'light': 'bg-gray-50',
+    'accent': 'bg-institutional-50',
   };
-
+  
   return (
     <section 
       id={id} 
       className={cn(
         "py-20", 
-        getBgColor(),
+        // Force bg-white for all sections except when specifically overridden with className
+        "bg-white",
         className
       )}
     >

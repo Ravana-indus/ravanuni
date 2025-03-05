@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -22,53 +23,48 @@ const HeroSection = () => {
   }, []);
   
   return (
-    <section className="relative flex flex-col">
-      {/* Order 2: Text container */}
-      <div className="container mx-auto px-0 mb-10 order-2 z-10 -mt-24 sm:-mt-32 md:-mt-40">
-        <div className="row">
-          <div className="col-12 md:w-10/12 lg:w-9/12">
-            <div className="px-4 py-3 md:px-7 md:pt-6 md:pb-4 bg-white shadow-md">
-              <div className="bg-institutional py-2 px-3 inline-block mb-3">
-                <h1 id="pagetitle" className="text-sm md:text-lg text-white uppercase font-bold">
-                  Sprache. Kultur. Deutschland.
-                </h1>
-              </div>
-              <h2 className="text-2xl md:text-3xl text-gray-900 font-medium leading-tight">
-                Communicating with the world.<br />
-                For diversity, understanding and trust.
-              </h2>
+    <section className="relative h-screen flex items-center overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-50 via-gray-100 to-gray-200 z-0"></div>
+      
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-institutional-50 rounded-bl-[50%] opacity-70 z-0"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-institutional-100 rounded-tr-[50%] opacity-60 z-0"></div>
+      
+      <div className="container-content relative z-10">
+        <div 
+          ref={heroRef}
+          className="max-w-3xl transition-transform duration-200 ease-out"
+        >
+          <div className="animate-fade-in">
+            <div className="inline-block px-4 py-1.5 text-institutional-900 font-medium bg-institutional-100 rounded-full mb-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              Promoting culture, language & exchange
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 leading-tight mb-6 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+              Discover Our Cultural Institution
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl animate-fade-up" style={{ animationDelay: '0.6s' }}>
+              Join us in fostering cultural dialogue and exchange through language learning, arts, and educational programs.
+            </p>
+            
+            <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.8s' }}>
+              <a href="#programs" className="button-institutional">
+                Explore Programs <ArrowRight size={16} className="ml-2" />
+              </a>
+              <a href="#about" className="button-institutional-outline">
+                About Us
+              </a>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Order 1: Image container */}
-      <div className="order-1 w-full overflow-hidden">
-        <div className="w-full">
-          <figure className="relative">
-            {/* Image with gradient overlay */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1573167420580-8d6bf2f2e9fa?q=80&w=2000&auto=format&fit=crop"
-                alt="Performance art showing a woman with a reflective surface" 
-                className="w-full h-[70vh] object-cover"
-              />
-              <div className="absolute bottom-2 right-2 text-white text-xs z-20">
-                © Artist Name / Photographer
-              </div>
-            </div>
-            
-            {/* Caption */}
-            <figcaption className="px-4 pb-4 text-sm text-white absolute bottom-0 left-0 right-0 z-20">
-              <span className="block md:hidden">
-                As part of the "Halaqat" project, this performance explores cultural exchanges and artistic expression through movement.
-              </span>
-              <span className="hidden md:block">
-                As part of the "Halaqat" project, this performance explores cultural exchanges and artistic expression through movement.
-              </span>
-            </figcaption>
-          </figure>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+        <div className="w-6 h-10 rounded-full border-2 border-gray-400 flex justify-center pt-2">
+          <div className="w-1 h-3 bg-gray-400 rounded-full"></div>
         </div>
       </div>
     </section>
