@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -21,6 +20,7 @@ const ContentSection = ({
   fullWidth = false,
   background = 'white',
 }: ContentSectionProps) => {
+  // We'll keep this for backwards compatibility but only use it for hero section
   const backgroundClasses = {
     'white': 'bg-white',
     'light': 'bg-gray-50',
@@ -32,7 +32,8 @@ const ContentSection = ({
       id={id} 
       className={cn(
         "py-20", 
-        backgroundClasses[background],
+        // Force bg-white for all sections except when specifically overridden with className
+        "bg-white",
         className
       )}
     >
