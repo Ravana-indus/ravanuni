@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -9,6 +10,8 @@ interface ContentSectionProps {
   className?: string;
   fullWidth?: boolean;
   background?: 'white' | 'light' | 'accent';
+  titleAlignment?: 'left' | 'center';
+  titleSize?: 'default' | 'large';
 }
 
 const ContentSection = ({
@@ -19,6 +22,8 @@ const ContentSection = ({
   className,
   fullWidth = false,
   background = 'white',
+  titleAlignment = 'center',
+  titleSize = 'default',
 }: ContentSectionProps) => {
   // We'll keep this for backwards compatibility but only use it for hero section
   const backgroundClasses = {
@@ -38,9 +43,21 @@ const ContentSection = ({
       )}
     >
       <div className={fullWidth ? 'w-full' : 'container-content'}>
-        <div className="mb-12 text-center max-w-3xl mx-auto px-4">
-          <h2 className="section-heading animate-fade-up">{title}</h2>
-          {subtitle && <p className="section-subheading animate-fade-up" style={{ animationDelay: '0.2s' }}>{subtitle}</p>}
+        <div className={cn(
+          "mb-12 max-w-3xl px-4",
+          titleAlignment === 'center' ? 'text-center mx-auto' : 'text-left'
+        )}>
+          <h2 className={cn(
+            "section-heading animate-fade-up",
+            titleSize === 'large' && "text-4xl sm:text-5xl font-bold"
+          )}>
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="section-subheading animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              {subtitle}
+            </p>
+          )}
         </div>
         {children}
       </div>

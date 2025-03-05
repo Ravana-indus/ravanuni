@@ -1,14 +1,13 @@
-
 import React, { useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/ui/HeroSection';
 import ContentSection from '@/components/ui/ContentSection';
 import FeaturedContent from '@/components/ui/FeaturedContent';
-import { Calendar, GraduationCap, Globe, BookOpen, Users, MoveRight } from 'lucide-react';
+import KeyStatsGrid from '@/components/ui/KeyStatsGrid';
+import { Calendar, GraduationCap, Globe, BookOpen, Users, MoveRight, MapPin, Building, Award } from 'lucide-react';
 
 const Index = () => {
-  // Simulate image loading and provide placeholder URLs
   const programImages = [
     'https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?q=80&w=600&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop',
@@ -21,7 +20,6 @@ const Index = () => {
     'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=600&auto=format&fit=crop',
   ];
 
-  // Intersection Observer for scroll animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,6 +55,7 @@ const Index = () => {
           id="about" 
           title="About Our Institution" 
           subtitle="Founded on principles of cultural exchange and education, we're dedicated to fostering connections between communities worldwide."
+          titleAlignment="left"
           background="light"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -92,9 +91,48 @@ const Index = () => {
         </ContentSection>
         
         <ContentSection 
+          id="key-facts" 
+          title="Our Global Impact" 
+          subtitle="For diversity, understanding and trust"
+          titleSize="large"
+          titleAlignment="left"
+        >
+          <KeyStatsGrid 
+            columns={2}
+            stats={[
+              {
+                icon: <Globe />,
+                value: 151,
+                description: "branches of our institution are active in 98 countries around the world.",
+                color: "lime"
+              },
+              {
+                icon: <MapPin />,
+                value: 12,
+                description: "of our institutes are located in major cultural centers.",
+                color: "lime"
+              },
+              {
+                icon: <Building />,
+                value: 1952,
+                description: "the first cultural center opened in Athens.",
+                color: "lime"
+              },
+              {
+                icon: <Users />,
+                value: "4,396",
+                description: "employees are at work worldwide.",
+                color: "lime"
+              }
+            ]}
+          />
+        </ContentSection>
+        
+        <ContentSection 
           id="programs" 
           title="Our Programs" 
           subtitle="Discover our diverse range of programs designed to promote cultural understanding and exchange."
+          titleAlignment="left"
         >
           <FeaturedContent
             items={[
@@ -130,6 +168,7 @@ const Index = () => {
           id="events" 
           title="Upcoming Events" 
           subtitle="Join us for a variety of cultural and educational events happening throughout the year."
+          titleAlignment="left"
           background="accent"
         >
           <FeaturedContent
@@ -166,13 +205,14 @@ const Index = () => {
           id="resources" 
           title="Resources"
           subtitle="Access our curated collection of resources to support your cultural and educational journey."
+          titleAlignment="left"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { icon: <BookOpen size={40} />, title: "Library", description: "Access our extensive collection of books, journals, and digital resources." },
               { icon: <Globe size={40} />, title: "Online Learning", description: "Explore our digital learning platforms and resources available remotely." },
               { icon: <GraduationCap size={40} />, title: "Certification", description: "Information about our internationally recognized certification programs." },
-              { icon: <Users size={40} />, title: "Community", description: "Connect with a global community of learners, educators, and cultural enthusiasts." }
+              { icon: <Award size={40} />, title: "Community", description: "Connect with a global community of learners, educators, and cultural enthusiasts." }
             ].map((item, index) => (
               <div 
                 key={index}
@@ -191,6 +231,7 @@ const Index = () => {
           id="contact" 
           title="Contact Us" 
           subtitle="Get in touch with our team to learn more about our programs and initiatives."
+          titleAlignment="left"
           background="light"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

@@ -86,6 +86,14 @@
   .nav-link-active {
     @apply text-institutional after:w-full;
   }
+  
+  .key-stat-value {
+    @apply text-5xl font-bold mb-2;
+  }
+  
+  .key-stat-description {
+    @apply text-gray-600 text-lg;
+  }
 }
 
 @layer utilities {
