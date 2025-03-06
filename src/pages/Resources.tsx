@@ -3,7 +3,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentSection from '@/components/ui/ContentSection';
 import { AlertTriangle, FileText, Video, Link2, Download, ChevronRight, ExternalLink, BookOpen, MoveRight } from 'lucide-react';
-import { createApi } from 'unsplash-js';
 
 const unsplash = createApi({
   accessKey: 'oinb9fxsSpIwPVQHo7lbOgyjtXuSvwXZmiw3qbC0skI',
