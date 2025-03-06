@@ -4,19 +4,9 @@ import Footer from '@/components/layout/Footer';
 import ContentSection from '@/components/ui/ContentSection';
 import { AlertTriangle, FileText, Video, Link2, Download, ChevronRight, ExternalLink, BookOpen, MoveRight } from 'lucide-react';
 
-const unsplash = createApi({
-  accessKey: 'oinb9fxsSpIwPVQHo7lbOgyjtXuSvwXZmiw3qbC0skI',
-});
 
-// Function to get a specific image by ID
-const getSpecificImage = async (imageId) => {
-  try {
-    const result = await unsplash.photos.get({ photoId: imageId });
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
-};
+
+
 
 const Resources = () => {
   useEffect(() => {
