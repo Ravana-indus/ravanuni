@@ -5,19 +5,27 @@ import HeroSection from '@/components/ui/HeroSection';
 import ContentSection from '@/components/ui/ContentSection';
 import FeaturedContent from '@/components/ui/FeaturedContent';
 import KeyStatsGrid from '@/components/ui/KeyStatsGrid';
-import { Calendar, GraduationCap, Globe, BookOpen, Users, MoveRight, MapPin, Building, Award } from 'lucide-react';
+import { Calendar, BookOpen, Shield, Globe, Users, MoveRight, MapPin, Award, Monitor, MessageSquare, Phone, Clock } from 'lucide-react';
 
 const Index = () => {
+  // Updated program images for Digital Safety course
   const programImages = [
-    'https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?q=80&w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?q=80&w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1554224155-8d04cb21ed6c?q=80&w=600&auto=format&fit=crop', // Digital safety
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?q=80&w=600&auto=format&fit=crop', // Online learning
+    'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=600&auto=format&fit=crop', // Seniors with technology
   ];
 
-  const eventImages = [
-    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=600&auto=format&fit=crop',
+  // Updated course format images
+  const courseFormatImages = [
+    'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=600&auto=format&fit=crop', // In-person class
+    'https://images.unsplash.com/photo-1610851467983-db88ad7e97f7?q=80&w=600&auto=format&fit=crop', // Online learning
+  ];
+  
+  // Resources images
+  const resourceImages = [
+    'https://images.unsplash.com/photo-1586769852836-bc069f19e1be?q=80&w=600&auto=format&fit=crop', // Guides
+    'https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?q=80&w=600&auto=format&fit=crop', // Videos
+    'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=600&auto=format&fit=crop', // Blog
   ];
 
   useEffect(() => {
@@ -64,42 +72,52 @@ const Index = () => {
       <Navbar />
       
       <main>
+        {/* Custom Hero Section based on website content */}
         <HeroSection />
         
         <ContentSection 
           id="about" 
-          title="About Our Institution" 
-          subtitle="Founded on principles of cultural exchange and education, we're dedicated to fostering connections between communities worldwide."
+          title="Ravana Institute of Future" 
+          titleSize="large"
+          subtitle="Founded to bridge the digital and language divide in the world."
           titleAlignment="left"
           background="white"
-          imageUrl="https://images.unsplash.com/photo-1574320379713-9744c0868a20?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Cultural exchange program"
-          imageCaption="Our institution promotes cultural dialogue through various programs and exchanges."
-          imageCopyright="© Cultural Exchange Program"
+          imageUrl="https://images.unsplash.com/photo-1624963146266-4481df1e40b5?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Institute building"
+          imageCaption="Our institute focuses on practical digital skills for all Sri Lankans"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="scroll-animate">
               <h3 className="text-2xl font-semibold mb-4 text-gray-900">Our Mission</h3>
               <p className="text-gray-600 mb-6">
-                Our institution promotes cultural dialogue through language learning, 
-                artistic expression, and intellectual exchange. We seek to build bridges between cultures,
-                fostering mutual understanding in an increasingly interconnected world.
+                To empower people with the knowledge and skills to navigate the future world safely and confidently,
+                creating more inclusive access to technology and language's benefits across all age groups and communities.
               </p>
-              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Our Vision</h3>
-              <p className="text-gray-600 mb-6">
-                We envision a future where cultural differences are celebrated as a source of strength and innovation.
-                By facilitating meaningful exchanges, we contribute to a more open, inclusive global community.
-              </p>
-              <a href="#" className="button-institutional inline-flex">
-                Learn More About Us <MoveRight size={18} className="ml-2" />
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Our Values</h3>
+              <ul className="text-gray-600 mb-6 space-y-2">
+                <li className="flex items-start">
+                  <span className="text-institutional mr-2">•</span> 
+                  <span>Inclusive Access: Making technology and language education available to everyone</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-institutional mr-2">•</span> 
+                  <span>Practical Application: Teaching real-world skills for immediate use with the help of AI</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-institutional mr-2">•</span> 
+                  <span>Cultural Relevance: Creating learning experiences that reflect local contexts</span>
+                </li>
+              </ul>
+              <a href="/about" className="button-institutional inline-flex">
+                Learn About Our Mission <MoveRight size={18} className="ml-2" />
               </a>
             </div>
             
             <div className="relative scroll-animate" style={{ transitionDelay: '200ms' }}>
               <div className="relative z-10 rounded-lg overflow-hidden shadow-elegant">
                 <img 
-                  src="https://images.unsplash.com/photo-1574320379713-9744c0868a20?q=80&w=800&auto=format&fit=crop" 
-                  alt="Our institution" 
+                  src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop" 
+                  alt="Technology education for adults" 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -110,145 +128,32 @@ const Index = () => {
         </ContentSection>
         
         <ContentSection 
-          id="key-facts" 
-          title="Our Global Impact" 
-          subtitle="For diversity, understanding and trust"
+          id="benefits" 
+          title="Why Learn Digital Safety" 
+          subtitle="Essential skills for navigating today's digital world with confidence"
           titleSize="large"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Global impact visualization"
-          imageCaption="Our institution's global presence helps facilitate cultural exchange around the world."
+          imageUrl="https://images.unsplash.com/photo-1626384933011-8b4560eadc84?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Digital safety benefits"
+          imageCaption="Practical training helps adults protect themselves online and use technology confidently."
         >
-          <KeyStatsGrid 
-            columns={2}
-            stats={[
-              {
-                icon: <Globe />,
-                value: 151,
-                description: "branches of our institution are active in 98 countries around the world.",
-                color: "purple"
-              },
-              {
-                icon: <MapPin />,
-                value: 12,
-                description: "of our institutes are located in major cultural centers.",
-                color: "purple"
-              },
-              {
-                icon: <Building />,
-                value: 1952,
-                description: "the first cultural center opened in Athens.",
-                color: "purple"
-              },
-              {
-                icon: <Users />,
-                value: "4,396",
-                description: "employees are at work worldwide.",
-                color: "purple"
-              }
-            ]}
-          />
-        </ContentSection>
-        
-        <ContentSection 
-          id="programs" 
-          title="Our Programs" 
-          subtitle="Discover our diverse range of programs designed to promote cultural understanding and exchange."
-          titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Language learning program"
-          imageCaption="Comprehensive language courses for all levels, taught by native speakers."
-        >
-          <div className="scroll-animate">
-            <FeaturedContent
-              items={[
-                {
-                  imageUrl: programImages[0],
-                  title: "Language Courses",
-                  description: "Comprehensive language courses for all levels, taught by native speakers using the latest teaching methodologies.",
-                  
-                  link: "#"
-                },
-                {
-                  title: "Cultural Workshops",
-                  description: "Immersive workshops exploring literature, art, film, and other cultural expressions across diverse traditions.",
-                  imageUrl: programImages[1],
-                  link: "#"
-                },
-                {
-                  title: "Exchange Programs",
-                  description: "Opportunities for students and professionals to experience cultural immersion through exchange programs.",
-                  imageUrl: programImages[2],
-                  link: "#"
-                }
-              ]}
-            />
-          </div>
-          
-          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
-            <a href="#" className="button-institutional inline-flex">
-              View All Programs <MoveRight size={18} className="ml-2" />
-            </a>
-          </div>
-        </ContentSection>
-        
-        <ContentSection 
-          id="events" 
-          title="Upcoming Events" 
-          subtitle="Join us for a variety of cultural and educational events happening throughout the year."
-          titleAlignment="left"
-          background="white"
-          imageUrl="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=600&auto=format&fit=crop"
-          imageAlt="Cultural event"
-          imageCaption="Our annual cultural festival brings together diverse traditions through music, dance, food, and art."
-        >
-          <div className="scroll-animate">
-            <FeaturedContent
-              items={[
-                {
-                  title: "Annual Cultural Festival",
-                  description: "Celebrate diverse cultural traditions through music, dance, food, and art at our annual festival.",
-                  imageUrl: eventImages[0],
-                  link: "#"
-                },
-                {
-                  title: "Literary Evening",
-                  description: "An evening dedicated to contemporary literature with readings, discussions, and meet-the-author sessions.",
-                  imageUrl: eventImages[1],
-                  link: "#"
-                },
-                {
-                  title: "Education Conference",
-                  description: "A conference bringing together educators, researchers, and students to discuss the future of education.",
-                  imageUrl: eventImages[2],
-                  link: "#"
-                }
-              ]}
-            />
-          </div>
-          
-          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
-            <a href="#" className="button-institutional inline-flex">
-              View All Events <Calendar size={18} className="ml-2" />
-            </a>
-          </div>
-        </ContentSection>
-        
-        <ContentSection 
-          id="resources" 
-          title="Resources"
-          subtitle="Access our curated collection of resources to support your cultural and educational journey."
-          titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Educational resources"
-          imageCaption="Our extensive collection of books, journals, and digital resources support cultural learning."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: <BookOpen size={40} />, title: "Library", description: "Access our extensive collection of books, journals, and digital resources." },
-              { icon: <Globe size={40} />, title: "Online Learning", description: "Explore our digital learning platforms and resources available remotely." },
-              { icon: <GraduationCap size={40} />, title: "Certification", description: "Information about our internationally recognized certification programs." },
-              { icon: <Award size={40} />, title: "Community", description: "Connect with a global community of learners, educators, and cultural enthusiasts." }
+              { 
+                icon: <Shield size={40} />, 
+                title: "Stay Protected", 
+                description: "Learn to identify and avoid digital scams targeting older Sri Lankan adults" 
+              },
+              { 
+                icon: <Award size={40} />, 
+                title: "Build Confidence", 
+                description: "Master essential digital skills through step-by-step, hands-on practice" 
+              },
+              { 
+                icon: <Globe size={40} />, 
+                title: "Connect Securely", 
+                description: "Use online banking, video calls, and social media safely and confidently" 
+              }
             ].map((item, index) => (
               <div 
                 key={index}
@@ -262,93 +167,129 @@ const Index = () => {
             ))}
           </div>
         </ContentSection>
-        
+
         <ContentSection 
-          id="contact" 
-          title="Contact Us" 
-          subtitle="Get in touch with our team to learn more about our programs and initiatives."
+          id="upcoming-sessions" 
+          title="Upcoming Course Dates" 
+          titleSize="large"
+
+          subtitle="Secure your spot in our next session"
           titleAlignment="left"
           background="white"
-          imageUrl="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Our institution building"
-          imageCaption="Visit our cultural center to experience our programs and facilities firsthand."
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="glass-card p-8 scroll-animate">
-              <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                    <input 
-                      type="text" 
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-institutional focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <input 
-                      type="text" 
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-institutional focus:border-transparent"
-                    />
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { 
+                icon: <MapPin size={24} />, 
+                title: "In-Person (Colombo)", 
+                dates: "May 7, 14, 21, 2025",
+                spots: "12 spots remaining" 
+              },
+              { 
+                icon: <Monitor size={24} />, 
+                title: "Online (Sri Lanka time)", 
+                dates: "May 10-14, 2025",
+                spots: "15 spots remaining" 
+              },
+              { 
+                icon: <Globe size={24} />, 
+                title: "Online (Europe time)", 
+                dates: "June 3-7, 2025",
+                spots: "20 spots remaining" 
+              }
+            ].map((item, index) => (
+              <div 
+                key={index}
+                className="glass-card p-8 scroll-animate"
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="flex items-center mb-4">
+                  <div className="p-2 bg-institutional-100 rounded-full text-institutional mr-3">{item.icon}</div>
+                  <h3 className="text-xl font-semibold">{item.title}</h3>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input 
-                    type="email" 
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-institutional focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                  <input 
-                    type="text" 
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-institutional focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea 
-                    rows={4} 
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-institutional focus:border-transparent"
-                  ></textarea>
-                </div>
-                <div>
-                  <button type="submit" className="button-institutional w-full">
-                    Send Message
-                  </button>
-                </div>
-              </form>
-            </div>
-            
-            <div className="scroll-animate" style={{ transitionDelay: '300ms' }}>
-              <div className="glass-card p-8 mb-8">
-                <h3 className="text-2xl font-semibold mb-6">Visit Our Center</h3>
-                <p className="text-gray-600 mb-6">
-                  We invite you to visit our cultural center to experience our programs and facilities firsthand.
-                </p>
-                <div className="rounded-lg overflow-hidden h-64 mb-6">
-                  <img 
-                    src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=800&auto=format&fit=crop" 
-                    alt="Our institution building" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="text-gray-600">
-                  <strong>Address:</strong> 123 Institution Street, City, 10001, Country<br />
-                  <strong>Opening Hours:</strong> Monday to Friday, 9:00 AM - 6:00 PM
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <a href="#" className="button-institutional-outline inline-flex">
-                  View on Map <MoveRight size={18} className="ml-2" />
+                <p className="text-gray-600 mb-2"><Calendar size={16} className="inline mr-2" /> {item.dates}</p>
+                <p className="text-gray-600 mb-6"><Users size={16} className="inline mr-2" /> {item.spots}</p>
+                <a href="/register" className="button-institutional-outline w-full text-center block">
+                  Reserve Your Spot
                 </a>
               </div>
-            </div>
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '300ms' }}>
+            <a href="/register" className="button-institutional inline-flex">
+              Secure Your Spot <MoveRight size={18} className="ml-2" />
+            </a>
           </div>
         </ContentSection>
+        
+        
+        <ContentSection 
+          id="course-formats" 
+          title="Our Courses" 
+          titleSize="large"
+
+          subtitle="Explore our diverse range of AI-enhanced courses"
+          titleAlignment="left"
+          background="white"
+          imageUrl="https://images.unsplash.com/photo-1551739502-2af0c32df4d5?q=80&w=800&auto=format&fit=crop"
+          imageAlt="Courses banner"
+          imageCaption="Explore our diverse range of AI-enhanced courses."
+        >
+          <div className="scroll-animate">
+            <FeaturedContent
+              items={[
+                {
+                  imageUrl: "https://images.unsplash.com/photo-1563309480-5aca14189417?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for German Language Courses
+                  title: "German Language Courses with AI",
+                  description: "Get access to Germany's free higher education with full confidence.",
+                  link: "/german-courses"
+                },
+                {
+                  imageUrl: "https://images.unsplash.com/photo-1517849325426-6eac321919a0?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for IELTS Coaching
+                  title: "IELTS Coaching with AI",
+                  description: "Prepare for your IELTS exam with tailored AI support and resources.",
+                  link: "/ielts-coaching"
+                },
+                {
+                  imageUrl: "https://images.unsplash.com/photo-1612117150828-78a83cd63ef2?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI for Kids
+                  title: "AI for Kids",
+                  description: "Engaging AI courses designed to introduce children to technology.",
+                  link: "/ai-for-kids"
+                },
+                {
+                  imageUrl: "https://images.unsplash.com/photo-1525338078858-d762b5e32f2c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI for Adults
+                  title: "AI for Adults",
+                  description: "Learn how to leverage AI tools for personal growth.",
+                  link: "/ai-for-adults"
+                },
+                {
+                  imageUrl: "https://images.unsplash.com/photo-1652565437094-ce12e77dcf0e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI at Work
+                  title: "AI at Work",
+                  description: "Discover how AI can enhance productivity and efficiency in the workplace.",
+                  link: "/ai-at-work"
+                },
+                {
+                  imageUrl: "https://images.unsplash.com/photo-1600437493529-cbab154790be?q=80&w=3734&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for Coding for Kids and Teens
+                  title: "Coding for Kids and Teens",
+                  description: "Fun and interactive coding courses designed for young learners.",
+                  link: "/coding-for-kids-and-teens"
+                }
+              ]}
+            />
+          </div>
+          
+          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
+            <a href="/courses" className="button-institutional inline-flex">
+              View All Courses <MoveRight size={18} className="ml-2" />
+            </a>
+          </div>
+        </ContentSection>
+        
+        
+        
+       
+      
       </main>
       
       <Footer />

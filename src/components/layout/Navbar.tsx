@@ -61,7 +61,6 @@ const Navbar = () => {
   const navLinks = [
     { name: t('Digital Safety Course'), path: '/digital-safety-course' },
     { name: t('About'), path: '/about' },
-    { name: t('Resources'), path: '/resources' },
     { name: t('Contact'), path: '/contact' },
     { name: t('Register'), path: '/registration' },
   ];
@@ -102,7 +101,7 @@ const Navbar = () => {
             <div className="flex items-center gap-12">
               <Link to="/" className="flex items-center">
                 <div className={cn("font-semibold text-2xl tracking-tight", isScrolled && isNotHome ? "text-black" : isNotHome ? "text-white" : "text-institutional", "hover:text-institutional-100")}>
-                  Ravana Institute
+                  RavanUNI
                 </div>
               </Link>
               

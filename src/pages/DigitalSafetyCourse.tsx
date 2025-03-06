@@ -6,7 +6,7 @@ import ContentSection from '@/components/ui/ContentSection';
 import FeaturedContent from '@/components/ui/FeaturedContent';
 import KeyStatsGrid from '@/components/ui/KeyStatsGrid';
 import CompactCourseModules from '@/components/ui/CompactCourseModules';
-import { Shield, Award, Users, BookOpen, CheckCircle, Calendar, MoveRight, Target, Lightbulb, UserCheck, Laptop, VideoIcon } from 'lucide-react';
+import { Shield, Award, Users, BookOpen, CheckCircle, Calendar, MoveRight, Target, Lightbulb, UserCheck, Laptop, VideoIcon, MapPin, Monitor, Globe } from 'lucide-react';
 
 const DigitalSafetyCourse = () => {
   const moduleImages = [
@@ -17,8 +17,8 @@ const DigitalSafetyCourse = () => {
   ];
 
   const formatImages = [
-    'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1557989048-03456d01a26e?q=80&w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581547848438-56681f9cdce0??q=80&w=600&auto=format&fit=crop',
   ];
 
   useEffect(() => {
@@ -75,10 +75,10 @@ const DigitalSafetyCourse = () => {
                   Practical skills for navigating technology with confidence, designed specifically for adults 45+ in Sri Lanka.
                 </p>
                 <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-                  <a href="#course-details" className="bg-white text-institutional hover:bg-institutional-50 hover:text-white px-6 py-3 rounded-md font-medium transition duration-300">
+                  <a href="#course-overview" className="bg-white text-institutional hover:bg-institutional-50 hover:text-white px-6 py-3 rounded-md font-medium transition duration-300">
                     View Course Details
                   </a>
-                  <a href="#register" className="bg-institutional-500 hover:bg-institutional-600 text-white px-6 py-3 rounded-md font-medium transition duration-300 border border-institutional-400">
+                  <a href="/registration" className="bg-institutional-500 hover:bg-institutional-600 text-white px-6 py-3 rounded-md font-medium transition duration-300 border border-institutional-400">
                     Register Now
                   </a>
                 </div>
@@ -86,7 +86,7 @@ const DigitalSafetyCourse = () => {
               <div className="relative animate-fade-in" style={{ animationDelay: '0.5s' }}>
                 <div className="rounded-xl overflow-hidden shadow-elegant relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1540294668169-b6743bd0e94e?q=80&w=800&auto=format&fit=crop"
                     alt="Senior adults learning digital skills" 
                     className="w-full h-auto"
                   />
@@ -105,7 +105,6 @@ const DigitalSafetyCourse = () => {
           subtitle="Practical skills for navigating technology with confidence"
           titleAlignment="left"
           background="white"
-          imageUrl="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop"
           imageAlt="Adults learning digital safety"
           imageCaption="Our hands-on approach makes learning digital safety skills accessible and engaging for adults 45+."
         >
@@ -174,7 +173,6 @@ const DigitalSafetyCourse = () => {
           title="Course Modules" 
           subtitle="A comprehensive curriculum designed for practical application"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=800&auto=format&fit=crop"
           imageAlt="Course curriculum"
           imageCaption="Our curriculum covers essential digital safety topics from the basics to advanced protection strategies."
         >
@@ -263,7 +261,6 @@ const DigitalSafetyCourse = () => {
           subtitle="Learning options that fit your life and preferences"
           titleAlignment="left"
           background="white"
-          imageUrl="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop"
           imageAlt="Learning formats"
           imageCaption="We offer both in-person and online learning experiences to suit your schedule and learning preferences."
         >
@@ -358,7 +355,6 @@ const DigitalSafetyCourse = () => {
           title="Our Teaching Philosophy" 
           subtitle="An approach designed with you in mind"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=800&auto=format&fit=crop"
           imageAlt="Teaching approach"
           imageCaption="Our teaching methods are designed specifically for adults 45+ with limited technology experience."
         >
@@ -384,7 +380,7 @@ const DigitalSafetyCourse = () => {
           </div>
         </ContentSection>
         
-        {/* Testimonials Section */}
+        {/* Testimonials Section
         <ContentSection 
           id="testimonials" 
           title="Success Stories from Participants" 
@@ -447,14 +443,13 @@ const DigitalSafetyCourse = () => {
             ))}
           </div>
         </ContentSection>
-        
+         */}
         {/* FAQ Section */}
         <ContentSection 
           id="faq" 
           title="Common Questions" 
           subtitle="Get answers to frequently asked questions about our course"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1521790797524-b2497295b8a0?q=80&w=800&auto=format&fit=crop"
           imageAlt="FAQ"
           imageCaption="We're here to answer all your questions about our digital safety course."
         >
@@ -501,43 +496,85 @@ const DigitalSafetyCourse = () => {
           </div>
         </ContentSection>
         
-        {/* Registration CTA Section */}
+
         <ContentSection 
-          id="register" 
-          title="Join Our Next Course" 
-          subtitle="Classes beginning soon - secure your spot today"
-          titleAlignment="center"
+          id="upcoming-sessions" 
+          title="Upcoming Course Dates" 
+          titleSize="default"
+          subtitle="Secure your spot in our next session"
+          titleAlignment="left"
           background="white"
         >
-          <div className="max-w-3xl mx-auto">
-            <div className="glass-card p-8 rounded-lg shadow-elegant scroll-animate">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-semibold mb-4">Upcoming Course Dates</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="border border-gray-200 p-4 rounded-md">
-                    <h4 className="font-medium text-lg mb-2">In-Person (Colombo)</h4>
-                    <p className="text-gray-600 mb-2">July 6, 13, 20, 2025</p>
-                    <p className="text-blue-600 font-medium">12 spots remaining</p>
-                  </div>
-                  <div className="border border-gray-200 p-4 rounded-md">
-                    <h4 className="font-medium text-lg mb-2">Online (Sri Lanka time)</h4>
-                    <p className="text-gray-600 mb-2">July 1-5, 2025 (6PM-8PM)</p>
-                    <p className="text-blue-600 font-medium">15 spots remaining</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { 
+                icon: <MapPin size={24} />, 
+                title: "In-Person (Sri Lanka)", 
+                dates: "April 7, 14, 21, 2025",
+                spots: "11 spots remaining" 
+              },
+              { 
+                icon: <Monitor size={24} />, 
+                title: "Online (Sri Lankan time)", 
+                dates: "May 20-04, 2025",
+                spots: "07 spots remaining" 
+              },
+              { 
+                icon: <Globe size={24} />, 
+                title: "Online (European time)", 
+                dates: "April 3-7, 2025",
+                spots: "15 spots remaining" 
+              },
+              { 
+                icon: <Globe size={24} />, 
+                title: "Online (North American time)", 
+                dates: "April 3-7, 2025",
+                spots: "15 spots remaining" 
+              },
+              { 
+                icon: <Globe size={24} />, 
+                title: "Online (Australia/New Zealand time)", 
+                dates: "April 3-7, 2025",
+                spots: "12 spots remaining" 
+              },
+              { 
+                icon: <Globe size={24} />, 
+                title: "Online (Malaysia/Singapore time)", 
+                dates: "April 3-7, 2025",
+                spots: "14 spots remaining" 
+              }
+            ].map((item, index) => (
+              <div 
+                key={index}
+                className="glass-card p-8 scroll-animate"
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="flex items-center mb-4">
+                  <div className="p-2 bg-institutional-100 rounded-full text-institutional mr-3">{item.icon}</div>
+                  <h3 className="text-xl font-semibold">{item.title}</h3>
                 </div>
+                <p className="text-gray-600 mb-2"><Calendar size={16} className="inline mr-2" /> {item.dates}</p>
+                <p className="text-gray-600 mb-6"><Users size={16} className="inline mr-2" /> {item.spots}</p>
+                <a href="/register" className="button-institutional-outline w-full text-center block">
+                  Reserve Your Spot
+                </a>
               </div>
-              
-              <div className="text-center">
-                <a href="/registration" className="bg-institutional hover:bg-institutional-dark text-white px-8 py-4 rounded-md font-medium text-lg transition duration-300 inline-flex items-center">
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '300ms' }}>
+          <a href="/registration" className="bg-institutional hover:bg-institutional-dark text-white px-8 py-4 rounded-md font-medium text-lg transition duration-300 inline-flex items-center">
                   Secure Your Spot Now <MoveRight size={20} className="ml-2" />
                 </a>
                 <p className="mt-4 text-gray-500">
                   Questions? Contact us at <a href="mailto:info@ravanainstitute.lk" className="text-institutional hover:underline">info@ravanainstitute.lk</a> or call +94 11 234 5678
                 </p>
-              </div>
-            </div>
           </div>
-        </ContentSection>
+        </ContentSection>       
+
+
+
+       
       </main>
       
       <Footer />

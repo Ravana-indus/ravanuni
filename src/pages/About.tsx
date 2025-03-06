@@ -54,12 +54,12 @@ const About = () => {
         <div className="bg-institutional-dark text-white py-24">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 scroll-animate">Bridging the Digital Divide</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 scroll-animate">Bridging the Divide</h1>
               <p className="text-xl mb-8 scroll-animate" style={{ transitionDelay: '100ms' }}>
-                Technology education for all Sri Lankans
+                Technology and language education for all Sri Lankans
               </p>
               <p className="text-lg mb-8 scroll-animate" style={{ transitionDelay: '200ms' }}>
-                Ravana Institute of Future was established with a clear purpose: to provide technology education that's accessible, 
+                Ravana Institute of Future was established with a clear purpose by Ravana Industries Group: to provide technology education that's accessible, 
                 practical, and culturally relevant to Sri Lankans. We believe that digital skills should be available to everyone, 
                 regardless of age, background, or previous experience.
               </p>
@@ -96,7 +96,6 @@ const About = () => {
           title="What We Stand For" 
           subtitle="Our core values define how we operate"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop"
           imageAlt="Our values in action"
           imageCaption="Our team works together to create inclusive learning experiences for all."
         >
@@ -147,140 +146,8 @@ const About = () => {
         </ContentSection>
         
         {/* Team Section */}
-        <ContentSection 
-          id="team" 
-          title="The People Behind Ravana Institute" 
-          subtitle="Meet our dedicated leadership team"
-          titleAlignment="left"
-          background="white"
-          imageUrl="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Our leadership team"
-          imageCaption="Our diverse team brings together expertise in technology, education, and community development."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Amara Perera",
-                title: "Founder & Director",
-                bio: "Former technology executive with 15+ years of experience in digital security. Passionate about making technology accessible to all Sri Lankans.",
-                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop"
-              },
-              {
-                name: "Raj Mendis",
-                title: "Director of Education",
-                bio: "Educational specialist with background in adult learning methodologies. Expert in developing culturally relevant teaching materials.",
-                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop"
-              },
-              {
-                name: "Priya Navaratne",
-                title: "Technical Program Lead",
-                bio: "Software engineer with 10+ years of experience in cybersecurity. Previously led training programs at major technology companies.",
-                image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop"
-              }
-            ].map((person, index) => (
-              <div 
-                key={index}
-                className="glass-card p-8 rounded-lg shadow-elegant scroll-animate"
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className="flex flex-col items-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden mb-6">
-                    <img 
-                      src={person.image} 
-                      alt={person.name} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-1 text-center">{person.name}</h3>
-                  <p className="text-blue-600 mb-4 text-center">{person.title}</p>
-                  <p className="text-gray-600 text-center">{person.bio}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </ContentSection>
-        
-        {/* Partners Section */}
-        <ContentSection 
-          id="partners" 
-          title="Our Collaborators" 
-          subtitle="Working together for digital empowerment"
-          titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Partnership in action"
-          imageCaption="Our partnerships extend our reach and impact across Sri Lanka."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="scroll-animate">
-              <h3 className="text-2xl font-semibold mb-6 text-gray-900">Educational Institutions</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <GraduationCap className="text-blue-600 mr-3" />
-                  <span>University of Colombo School of Computing</span>
-                </li>
-                <li className="flex items-center">
-                  <GraduationCap className="text-blue-600 mr-3" />
-                  <span>Sri Lanka Institute of Information Technology</span>
-                </li>
-                <li className="flex items-center">
-                  <GraduationCap className="text-blue-600 mr-3" />
-                  <span>National Institute of Education</span>
-                </li>
-              </ul>
-              
-              <h3 className="text-2xl font-semibold mb-6 mt-10 text-gray-900">Government Collaborations</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <Building className="text-blue-600 mr-3" />
-                  <span>Ministry of Digital Infrastructure and Information Technology</span>
-                </li>
-                <li className="flex items-center">
-                  <Building className="text-blue-600 mr-3" />
-                  <span>Sri Lanka CERT (Computer Emergency Readiness Team)</span>
-                </li>
-                <li className="flex items-center">
-                  <Building className="text-blue-600 mr-3" />
-                  <span>Information and Communication Technology Agency</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="scroll-animate" style={{ transitionDelay: '200ms' }}>
-              <h3 className="text-2xl font-semibold mb-6 text-gray-900">Industry Affiliations</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <Globe className="text-blue-600 mr-3" />
-                  <span>Sri Lanka Association of Software and Service Companies</span>
-                </li>
-                <li className="flex items-center">
-                  <Globe className="text-blue-600 mr-3" />
-                  <span>Federation of Information Technology Sri Lanka</span>
-                </li>
-                <li className="flex items-center">
-                  <Globe className="text-blue-600 mr-3" />
-                  <span>Digital Security Association of Sri Lanka</span>
-                </li>
-              </ul>
-              
-              <h3 className="text-2xl font-semibold mb-6 mt-10 text-gray-900">Community Organizations</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center">
-                  <Users className="text-blue-600 mr-3" />
-                  <span>Senior Citizens Association of Sri Lanka</span>
-                </li>
-                <li className="flex items-center">
-                  <Users className="text-blue-600 mr-3" />
-                  <span>Sarvodaya Movement</span>
-                </li>
-                <li className="flex items-center">
-                  <Users className="text-blue-600 mr-3" />
-                  <span>Chamber of Commerce Community Outreach</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </ContentSection>
-        
+       
+       
         {/* Approach Section */}
         <ContentSection 
           id="approach" 
@@ -288,7 +155,6 @@ const About = () => {
           subtitle="Our approach to effective technology education"
           titleAlignment="left"
           background="white"
-          imageUrl="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop"
           imageAlt="Our teaching approach"
           imageCaption="We focus on practical, hands-on learning that builds confidence with technology."
         >
@@ -337,7 +203,6 @@ const About = () => {
           title="Our Learning Spaces" 
           subtitle="Purpose-built environments for effective technology education"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop"
           imageAlt="Our facilities"
           imageCaption="Our modern learning spaces are designed to make technology learning accessible and engaging."
         >

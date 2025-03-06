@@ -15,7 +15,7 @@ interface CompactCourseModulesProps {
 
 const CompactCourseModules: React.FC<CompactCourseModulesProps> = ({ modules }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {modules.map((module, index) => (
         <div 
           key={index} 

@@ -79,20 +79,20 @@ const Contact = () => {
               {
                 icon: <Phone size={24} />,
                 title: "Phone",
-                info: "+94 11 234 5678",
+                info: "+94 11 258 1181",
                 action: {
                   text: "Call Us",
-                  link: "tel:+94112345678"
+                  link: "tel:+94112581181"
                 },
                 color: "blue"
               },
               {
                 icon: <Mail size={24} />,
                 title: "Email",
-                info: "info@ravanainstitute.lk",
+                info: "future@uni.ravan.lk",
                 action: {
                   text: "Send Email",
-                  link: "mailto:info@ravanainstitute.lk"
+                  link: "mailto:future@uni.ravan.lk"
                 },
                 color: "indigo"
               },
@@ -101,8 +101,7 @@ const Contact = () => {
                 title: "Hours",
                 info: "Monday to Friday, 9:00 AM - 5:00 PM",
                 action: {
-                  text: "View Schedule",
-                  link: "#"
+                  text: "",
                 },
                 color: "teal"
               },
@@ -112,7 +111,7 @@ const Contact = () => {
                 info: "123 Colombo Road, Colombo 04, Sri Lanka",
                 action: {
                   text: "Get Directions",
-                  link: "#"
+                  link: "https://g.co/kgs/mV83cgz"
                 },
                 color: "emerald"
               }
@@ -144,7 +143,6 @@ const Contact = () => {
           title="Send a Message" 
           subtitle="We'll respond to your inquiry within 24 hours"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?q=80&w=800&auto=format&fit=crop"
           imageAlt="Contact our team"
           imageCaption="Our team is ready to answer your questions about digital safety education."
         >

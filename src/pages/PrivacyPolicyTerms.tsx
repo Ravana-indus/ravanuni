@@ -3,9 +3,11 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentSection from '@/components/ui/ContentSection';
 import { Shield, File, Check, AlertTriangle } from 'lucide-react';
+import { useTranslation } from '@/lib/translation';
 
 const PrivacyPolicyTerms = () => {
   const [activeTab, setActiveTab] = useState<'privacy' | 'terms'>('privacy');
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Add a base class to all elements that should animate
@@ -55,12 +57,12 @@ const PrivacyPolicyTerms = () => {
         <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-24">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 scroll-animate">Privacy Policy & Terms</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 scroll-animate">{t('Privacy Policy & Terms')}</h1>
               <p className="text-xl mb-8 scroll-animate" style={{ transitionDelay: '100ms' }}>
-                Information about how we handle your data and the terms governing course participation
+                {t('Information about how we handle your data and the terms governing course participation')}
               </p>
               <p className="text-lg mb-8 scroll-animate" style={{ transitionDelay: '200ms' }}>
-                Last Updated: June 1, 2025
+                {t('Last Updated')}: June 1, 2025
               </p>
             </div>
           </div>
@@ -78,7 +80,7 @@ const PrivacyPolicyTerms = () => {
                 }`}
                 onClick={() => setActiveTab('privacy')}
               >
-                Privacy Policy
+                {t('Privacy Policy')}
               </button>
               
               <button
@@ -89,7 +91,7 @@ const PrivacyPolicyTerms = () => {
                 }`}
                 onClick={() => setActiveTab('terms')}
               >
-                Terms of Service
+                {t('Terms of Service')}
               </button>
             </div>
           </div>
@@ -100,157 +102,165 @@ const PrivacyPolicyTerms = () => {
           <>
             <ContentSection 
               id="privacy-intro" 
-              title="Privacy Policy" 
-              subtitle="How we collect, use, and protect your information"
+              title={t('Privacy Policy')}
+              subtitle={t('How we collect, use, and protect your information')}
               titleAlignment="left"
               background="white"
-              imageUrl="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?q=80&w=800&auto=format&fit=crop"
-              imageAlt="Data privacy"
-              imageCaption="We take the privacy and security of your personal information seriously."
+              imageUrl="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
+              imageAlt="Privacy policy"
+              imageCaption={t('We take the privacy and security of your personal information seriously.')}
             >
               <div className="max-w-4xl scroll-animate">
                 <div className="flex items-start mb-8">
                   <Shield className="text-blue-600 w-8 h-8 mr-4 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="text-xl font-semibold mb-4">Introduction</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Your Privacy Matters')}</h3>
                     <p className="text-gray-600 mb-4">
-                      Your privacy matters to us. This policy explains how we collect, use, and protect your personal 
-                      information when you use our website or participate in our courses.
+                      {t('This Privacy Policy explains how we collect, use, and protect your personal information.')}
                     </p>
                     <p className="text-gray-600">
-                      At Ravana Institute of Future, we are committed to protecting your personal data and being transparent 
-                      about how we collect and use it. We follow all applicable data protection laws and regulations.
+                      {t('By using our services, you consent to the data practices described in this policy.')}
                     </p>
                   </div>
                 </div>
                 
                 <div className="space-y-8">
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Information We Collect</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Information We Collect')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span><strong>Registration Information:</strong> Name, age, contact details provided during course registration</span>
+                        <span>{t('Contact information (name, email, phone number)')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span><strong>Course Participation:</strong> Attendance, progress, and completion records</span>
+                        <span>{t('Demographic information (age, education level)')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span><strong>Website Usage:</strong> How you interact with our website and resources</span>
+                        <span>{t('Payment information for course registration')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span><strong>Payment Records:</strong> Transaction information (but not full payment details)</span>
+                        <span>{t('Course participation and progress data')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Feedback and survey responses')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">How We Use Your Information</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('How We Use Your Information')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>To provide and administer our courses</span>
+                        <span>{t('To process your registration and payments')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>To communicate important course information</span>
+                        <span>{t('To provide and improve our educational services')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>To improve our teaching methods and materials</span>
+                        <span>{t('To communicate with you about courses and events')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>To respond to your queries and requests</span>
+                        <span>{t('To analyze and improve our website and services')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>To comply with legal requirements</span>
+                        <span>{t('To comply with legal obligations')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Information Sharing</h3>
-                    <p className="text-gray-600 mb-4 font-bold">We never sell your information to third parties</p>
-                    <p className="text-gray-600 mb-4">We only share information when:</p>
+                    <h3 className="text-xl font-semibold mb-4">{t('Information Sharing')}</h3>
+                    <p className="text-gray-600 mb-4">{t('We may share your information with:')}</p>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Working with service providers who help run our courses</span>
+                        <span>{t('Service providers who help us operate our business')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Partnering with certification organizations</span>
+                        <span>{t('Educational partners for course delivery')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Required by law or legal process</span>
+                        <span>{t('Government authorities when required by law')}</span>
+                      </li>
+                    </ul>
+                    <p className="text-gray-600 mt-4">
+                      {t('We do not sell or rent your personal information to third parties.')}
+                    </p>
+                  </div>
+                  
+                  <div className="glass-card p-6 rounded-lg">
+                    <h3 className="text-xl font-semibold mb-4">{t('Data Security')}</h3>
+                    <p className="text-gray-600 mb-4">{t('We implement security measures to protect your information:')}</p>
+                    <ul className="space-y-3 text-gray-600">
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('We use encryption to protect sensitive data')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('We use current security measures to protect your information')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('We restrict access to personal data')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('We have procedures for handling potential data breaches')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Data Security</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Your Rights')}</h3>
+                    <p className="text-gray-600 mb-4">{t('You have the right to:')}</p>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>We use current security measures to protect your information</span>
+                        <span>{t('Access and review your personal information')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>We restrict access to personal data</span>
+                        <span>{t('Correct any inaccurate information')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>We have procedures for handling potential data breaches</span>
+                        <span>{t('Request deletion of your data')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Object to certain data processing')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Request data portability')}</span>
+                      </li>
+                      <li className="flex items-start">
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Withdraw consent at any time')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Your Rights</h3>
-                    <p className="text-gray-600 mb-4">You have the right to:</p>
-                    <ul className="space-y-3 text-gray-600">
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Access and review your personal information</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Correct any inaccurate information</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Request deletion of your data</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Object to certain data processing</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Request data portability</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Withdraw consent at any time</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Contact for Privacy Questions</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Contact for Privacy Questions')}</h3>
                     <p className="text-gray-600 mb-4">
-                      If you have any questions about our privacy practices or wish to exercise your rights, please contact us:
+                      {t('If you have any questions about our privacy practices or wish to exercise your rights, please contact us:')}
                     </p>
                     <ul className="space-y-2 text-gray-600">
-                      <li><strong>Email:</strong> privacy@ravanainstitute.lk</li>
-                      <li><strong>Phone:</strong> +94 11 234 5678</li>
-                      <li><strong>Address:</strong> 123 Colombo Road, Colombo 04, Sri Lanka</li>
+                      <li><strong>Email:</strong> {t('privacy@ravanaiof.org')}</li>
+                      <li><strong>Phone:</strong> {t('+94 11 234 5678')}</li>
                     </ul>
                   </div>
                 </div>
@@ -264,186 +274,167 @@ const PrivacyPolicyTerms = () => {
           <>
             <ContentSection 
               id="terms-intro" 
-              title="Terms of Service" 
-              subtitle="The agreement between participants and Ravana Institute of Future"
+              title={t('Terms of Service')}
+              subtitle={t('The agreement between participants and the Ravana Institute of Future')}
               titleAlignment="left"
               background="white"
               imageUrl="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop"
               imageAlt="Terms of service"
-              imageCaption="Our terms outline your rights and responsibilities as a participant in our courses."
+              imageCaption={t('Please read these terms carefully as they contain important information about your rights and obligations.')}
             >
               <div className="max-w-4xl scroll-animate">
                 <div className="flex items-start mb-8">
                   <File className="text-blue-600 w-8 h-8 mr-4 flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="text-xl font-semibold mb-4">Introduction</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Introduction')}</h3>
                     <p className="text-gray-600 mb-4">
-                      These terms outline the agreement between participants and Ravana Institute of Future. 
-                      By registering for our courses, you accept these terms.
+                      {t('These Terms of Service govern your participation in courses offered by the Ravana Institute of Future.')}
                     </p>
                     <p className="text-gray-600">
-                      Please read these terms carefully as they contain important information about your rights
-                      and obligations. If you have any questions, please contact us before registering.
+                      {t('By registering for our courses, you agree to these terms, which constitute a binding agreement.')}
                     </p>
                   </div>
                 </div>
                 
                 <div className="space-y-8">
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Registration & Eligibility</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Registration & Eligibility')}</h3>
+                    <p className="text-gray-600 mb-4">{t('To participate in our courses, you must:')}</p>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Registration is confirmed only after payment is received</span>
+                        <span>{t('Have confirmed payment or an approved payment plan')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>All registration information must be accurate and complete</span>
+                        <span>{t('Provide accurate registration information')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Minimum age requirement of 45+ (exceptions may be considered)</span>
+                        <span>{t('Be at least 45+ years of age (unless specifically exempted)')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Registration cannot be transferred without prior approval</span>
+                        <span>{t('Not transfer your registration without prior approval')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Payment Terms</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Payment Terms')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Full payment or approved deposit required to secure enrollment</span>
+                        <span>{t('Full payment or approved deposit is required to secure enrollment')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>All fees must be paid before course completion</span>
+                        <span>{t('All fees must be paid before course completion')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Additional costs may apply for special accommodations</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Payment processing as detailed during registration</span>
+                        <span>{t('Payment plans are available upon request and approval')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Cancellation & Refunds</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Cancellation & Refunds')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Full refund provided if cancellation is 7+ days before course start</span>
+                        <span>{t('Cancellations made 14+ days before course start: Full refund minus processing fee')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>50% refund for cancellations 3-7 days before start</span>
+                        <span>{t('Cancellations 7-13 days before course start: 50% refund')}</span>
                       </li>
                       <li className="flex items-start">
                         <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>No refunds for cancellations less than 3 days before start</span>
+                        <span>{t('Cancellations less than 7 days before course start: No refund')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Course date changes subject to availability</span>
+                        <span>{t('Special circumstances may be considered at our discretion')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Attendance & Participation</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Attendance & Participation')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Participants should attend all scheduled sessions</span>
+                        <span>{t('Participants are expected to attend all scheduled sessions')}</span>
                       </li>
                       <li className="flex items-start">
                         <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>We cannot guarantee makeup sessions for missed classes</span>
-                      </li>
-                      <li className="flex items-start">
-                        <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Disruptive behavior may result in removal without refund</span>
+                        <span>{t('Disruptive behavior may result in removal without refund')}</span>
                       </li>
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Certificates require at least 80% attendance</span>
+                        <span>{t('Consistent non-attendance may affect certification eligibility')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Course Materials</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Course Materials')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
                         <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>All course materials are protected by copyright</span>
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Materials are provided for personal use only</span>
+                        <span>{t('All materials are protected by copyright and for personal use only')}</span>
                       </li>
                       <li className="flex items-start">
                         <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Session recording is not permitted without express permission</span>
+                        <span>{t('Sharing or distributing materials is prohibited')}</span>
                       </li>
                       <li className="flex items-start">
-                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>You retain rights to any work you create during the course</span>
+                        <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Recording of sessions is not permitted without explicit permission')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Liability Limitations</h3>
-                    <p className="text-gray-600 mb-4">Ravana Institute is not responsible for:</p>
+                    <h3 className="text-xl font-semibold mb-4">{t('Liability Limitations')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
-                        <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Personal items brought to in-person sessions</span>
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('The Ravana Institute is not responsible for personal items')}</span>
                       </li>
                       <li className="flex items-start">
-                        <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Technical issues with participant's own equipment</span>
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('We are not liable for technical issues beyond our control')}</span>
                       </li>
                       <li className="flex items-start">
-                        <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Application of course information in personal situations</span>
-                      </li>
-                      <li className="flex items-start">
-                        <AlertTriangle className="text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Indirect damages related to course participation</span>
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Our liability is limited to the amount paid for the course')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Terms Updates</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Terms Updates')}</h3>
                     <ul className="space-y-3 text-gray-600">
                       <li className="flex items-start">
-                        <Info className="text-blue-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>We may update these terms with notice to participants</span>
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Terms may be updated with notice to participants')}</span>
                       </li>
                       <li className="flex items-start">
-                        <Info className="text-blue-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>Continued participation indicates acceptance of revised terms</span>
+                        <Check className="text-green-500 mr-3 mt-1 flex-shrink-0" />
+                        <span>{t('Continued participation indicates acceptance of revised terms')}</span>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="glass-card p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Contact for Terms Questions</h3>
+                    <h3 className="text-xl font-semibold mb-4">{t('Contact for Terms Questions')}</h3>
                     <p className="text-gray-600 mb-4">
-                      If you have any questions about these terms, please contact us:
+                      {t('For questions about these terms, please contact:')}
                     </p>
                     <ul className="space-y-2 text-gray-600">
-                      <li><strong>Email:</strong> admin@ravanainstitute.lk</li>
-                      <li><strong>Phone:</strong> +94 11 234 5678</li>
+                      <li><strong>Email:</strong> {t('terms@ravanaiof.org')}</li>
                     </ul>
                   </div>
                 </div>

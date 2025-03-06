@@ -95,7 +95,7 @@ const Registration = () => {
                 <h3 className="text-2xl font-semibold">In-Person Format</h3>
               </div>
               
-              <p className="text-blue-600 font-medium mb-6">Colombo City Centre</p>
+              <p className="text-blue-600 font-medium mb-6">Within 5km from your home</p>
               
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start">
@@ -201,7 +201,6 @@ const Registration = () => {
           title="Your Information" 
           subtitle="Please complete all fields to register for the course"
           titleAlignment="left"
-          imageUrl="https://images.unsplash.com/photo-1587614295999-6c1c13675117?q=80&w=800&auto=format&fit=crop"
           imageAlt="Registration form"
           imageCaption="Complete your registration to secure your spot in our upcoming course."
         >
@@ -414,7 +413,6 @@ const Registration = () => {
           subtitle="Flexible payment methods to suit your needs"
           titleAlignment="left"
           background="white"
-          imageUrl="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=800&auto=format&fit=crop"
           imageAlt="Payment options"
           imageCaption="We offer multiple payment methods for your convenience."
         >
@@ -586,12 +584,12 @@ const Registration = () => {
                 {
                   icon: <Phone size={24} />,
                   title: "Phone Assistance",
-                  description: "+94 11 234 5678",
+                  description: "+94 11 258 1181",
                 },
                 {
                   icon: <Mail size={24} />,
                   title: "Email Help",
-                  description: "registration@ravanainstitute.lk",
+                  description: "future@uni.ravan.lk",
                 },
                 {
                   icon: <MessageSquare size={24} />,

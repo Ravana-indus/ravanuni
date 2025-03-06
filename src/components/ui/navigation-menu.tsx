@@ -24,7 +24,7 @@ const NavigationMenu = React.forwardRef<
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           const isNotHome = location.pathname !== '/'
-          return React.cloneElement(child, {
+          return React.cloneElement(child as React.ReactElement<any>, {
             className: cn(isNotHome ? "text-white" : "text-black", child.props.className),
           })
         }
