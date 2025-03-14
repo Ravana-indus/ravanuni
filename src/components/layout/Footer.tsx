@@ -11,9 +11,9 @@ const Footer = () => {
       <div className="container-content">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
           <div className="md:col-span-1">
-            <div className="text-institutional font-semibold text-2xl tracking-tight mb-6">RavanaUNI</div>
+            <div className="text-institutional font-semibold text-2xl tracking-tight mb-6">riftuni</div>
             <p className="text-gray-600 mb-6 max-w-xs">
-              Empowering Sri Lankans with practical technology skills for the digital age.
+              {t('Empowering Sri Lankans with practical technology skills for the digital age.')}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-500 hover:text-institutional transition-colors" aria-label="Facebook">
@@ -34,10 +34,9 @@ const Footer = () => {
           <div className="space-y-5">
             <h3 className="font-semibold text-lg">{t('Quick Links')}</h3>
             <ul className="space-y-3">
-              <li><Link to="/" className="text-gray-600 hover:text-institutional transition-colors">Home</Link></li>
+              <li><Link to="/" className="text-gray-600 hover:text-institutional transition-colors">{t('Home')}</Link></li>
               <li><Link to="/digital-safety-course" className="text-gray-600 hover:text-institutional transition-colors">{t('Digital Safety Course')}</Link></li>
               <li><Link to="/about" className="text-gray-600 hover:text-institutional transition-colors">{t('About')}</Link></li>
-        
               <li><Link to="/contact" className="text-gray-600 hover:text-institutional transition-colors">{t('Contact')}</Link></li>
             </ul>
           </div>
@@ -45,10 +44,9 @@ const Footer = () => {
           <div className="space-y-5">
             <h3 className="font-semibold text-lg">{t('Ravana Industries Pvt Ltd')}</h3>
             <ul className="space-y-4">
-              
               <li className="flex items-start">
                 <MapPin size={20} className="text-institutional mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-600">No 10, 30/1/1 Pamankada Ln, Colombo 00600, Sri Lanka</span>
+                <span className="text-gray-600">{t('No 10, 30/1/1 Pamankada Ln, Colombo 00600, Sri Lanka')}</span>
               </li>
               <li className="flex items-center">
                 <Phone size={20} className="text-institutional mr-3 flex-shrink-0" />
@@ -56,7 +54,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="text-institutional mr-3 flex-shrink-0" />
-                <a href="mailto:sl@uni.ravan.lk" className="text-gray-600 hover:text-institutional transition-colors">sl@uni.ravan.lk</a>
+                <a href="mailto:sl@uni.ravan.lk" className="text-gray-600 hover:text-institutional transition-colors">sl@riftuni.com</a>
               </li>
             </ul>
           </div>
@@ -66,7 +64,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin size={20} className="text-institutional mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-600">Office 27, 145 1/2 Church Street, Unit 5, Toronto, Ontario, M5B 1Y4, Canada</span>
+                <span className="text-gray-600">{t('Office 27, 145 1/2 Church Street, Unit 5, Toronto, Ontario, M5B 1Y4, Canada')}</span>
               </li>
               <li className="flex items-center">
                 <Phone size={20} className="text-institutional mr-3 flex-shrink-0" />
@@ -74,14 +72,14 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="text-institutional mr-3 flex-shrink-0" />
-                <a href="mailto:ca@uni.ravan.lk" className="text-gray-600 hover:text-institutional transition-colors">ca@uni.ravan.lk</a>
+                <a href="mailto:ca@uni.ravan.lk" className="text-gray-600 hover:text-institutional transition-colors">ca@riftuni.com</a>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-sm mb-4 md:mb-0">© {new Date().getFullYear()} Ravana Industries Group. All rights reserved.</p>
+          <p className="text-gray-500 text-sm mb-4 md:mb-0">© {new Date().getFullYear()} {t('Ravana Industries Group. All rights reserved.')}</p>
           <div className="flex space-x-6">
             <Link to="/privacy-policy" className="text-gray-500 hover:text-institutional text-sm transition-colors">{t('Privacy Policy')}</Link>
             <Link to="/privacy-policy" className="text-gray-500 hover:text-institutional text-sm transition-colors">{t('Terms of Service')}</Link>

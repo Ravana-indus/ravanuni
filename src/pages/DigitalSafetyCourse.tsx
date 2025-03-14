@@ -567,7 +567,7 @@ const DigitalSafetyCourse = () => {
                   Secure Your Spot Now <MoveRight size={20} className="ml-2" />
                 </a>
                 <p className="mt-4 text-gray-500">
-                  Questions? Contact us at <a href="mailto:info@ravanainstitute.lk" className="text-institutional hover:underline">info@ravanainstitute.lk</a> or call +94 11 234 5678
+                  Questions? Contact us at <a href="mailto:info@riftuni.com" className="text-institutional hover:underline">info@riftuni.com</a> or call +94 11 234 5678
                 </p>
           </div>
         </ContentSection>       

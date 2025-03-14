@@ -6,8 +6,11 @@ import ContentSection from '@/components/ui/ContentSection';
 import FeaturedContent from '@/components/ui/FeaturedContent';
 import KeyStatsGrid from '@/components/ui/KeyStatsGrid';
 import { Calendar, BookOpen, Shield, Globe, Users, MoveRight, MapPin, Award, Monitor, MessageSquare, Phone, Clock } from 'lucide-react';
+import { useTranslation } from '@/lib/translation';
 
 const Index = () => {
+  const { t } = useTranslation();
+  
   // Updated program images for Digital Safety course
   const programImages = [
     'https://images.unsplash.com/photo-1554224155-8d04cb21ed6c?q=80&w=600&auto=format&fit=crop', // Digital safety
@@ -77,39 +80,38 @@ const Index = () => {
         
         <ContentSection 
           id="about" 
-          title="Ravana Institute of Future" 
+          title={t("Ravana Institute of Future")}
           titleSize="large"
-          subtitle="Founded to bridge the digital and language divide in the world."
+          subtitle={t("Founded to bridge the digital and language divide in the world.")}
           titleAlignment="left"
           background="white"
           imageUrl="https://images.unsplash.com/photo-1624963146266-4481df1e40b5?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Institute building"
-          imageCaption="Our institute focuses on practical digital skills for all Sri Lankans"
+          imageAlt={t("Institute building")}
+          imageCaption={t("Our institute focuses on practical digital skills for all Sri Lankans")}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="scroll-animate">
-              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Our Mission</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">{t("Our Mission")}</h3>
               <p className="text-gray-600 mb-6">
-                To empower people with the knowledge and skills to navigate the future world safely and confidently,
-                creating more inclusive access to technology and language's benefits across all age groups and communities.
+                {t("To empower people with the knowledge and skills to navigate the future world safely and confidently, creating more inclusive access to technology and language's benefits across all age groups and communities.")}
               </p>
-              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Our Values</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900">{t("Our Values")}</h3>
               <ul className="text-gray-600 mb-6 space-y-2">
                 <li className="flex items-start">
                   <span className="text-institutional mr-2">•</span> 
-                  <span>Inclusive Access: Making technology and language education available to everyone</span>
+                  <span>{t("Inclusive Access: Making technology and language education available to everyone")}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-institutional mr-2">•</span> 
-                  <span>Practical Application: Teaching real-world skills for immediate use with the help of AI</span>
+                  <span>{t("Practical Application: Teaching real-world skills for immediate use with the help of AI")}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-institutional mr-2">•</span> 
-                  <span>Cultural Relevance: Creating learning experiences that reflect local contexts</span>
+                  <span>{t("Cultural Relevance: Creating learning experiences that reflect local contexts")}</span>
                 </li>
               </ul>
               <a href="/about" className="button-institutional inline-flex">
-                Learn About Our Mission <MoveRight size={18} className="ml-2" />
+                {t("Learn About Our Mission")} <MoveRight size={18} className="ml-2" />
               </a>
             </div>
             
@@ -117,7 +119,7 @@ const Index = () => {
               <div className="relative z-10 rounded-lg overflow-hidden shadow-elegant">
                 <img 
                   src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop" 
-                  alt="Technology education for adults" 
+                  alt={t("Technology education for adults")}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -129,30 +131,30 @@ const Index = () => {
         
         <ContentSection 
           id="benefits" 
-          title="Why Learn Digital Safety" 
-          subtitle="Essential skills for navigating today's digital world with confidence"
+          title={t("Why Learn Digital Safety")}
+          subtitle={t("Essential skills for navigating today's digital world with confidence")}
           titleSize="large"
           titleAlignment="left"
           imageUrl="https://images.unsplash.com/photo-1626384933011-8b4560eadc84?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Digital safety benefits"
-          imageCaption="Practical training helps adults protect themselves online and use technology confidently."
+          imageAlt={t("Digital safety benefits")}
+          imageCaption={t("Practical training helps adults protect themselves online and use technology confidently.")}
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { 
                 icon: <Shield size={40} />, 
-                title: "Stay Protected", 
-                description: "Learn to identify and avoid digital scams targeting older Sri Lankan adults" 
+                title: t("Stay Protected"), 
+                description: t("Learn to identify and avoid digital scams targeting older Sri Lankan adults") 
               },
               { 
                 icon: <Award size={40} />, 
-                title: "Build Confidence", 
-                description: "Master essential digital skills through step-by-step, hands-on practice" 
+                title: t("Build Confidence"), 
+                description: t("Master essential digital skills through step-by-step, hands-on practice") 
               },
               { 
                 icon: <Globe size={40} />, 
-                title: "Connect Securely", 
-                description: "Use online banking, video calls, and social media safely and confidently" 
+                title: t("Connect Securely"), 
+                description: t("Use online banking, video calls, and social media safely and confidently") 
               }
             ].map((item, index) => (
               <div 
@@ -170,10 +172,9 @@ const Index = () => {
 
         <ContentSection 
           id="upcoming-sessions" 
-          title="Upcoming Course Dates" 
+          title={t("Upcoming Course Dates")}
           titleSize="large"
-
-          subtitle="Secure your spot in our next session"
+          subtitle={t("Secure your spot in our next session")}
           titleAlignment="left"
           background="white"
         >
@@ -181,21 +182,21 @@ const Index = () => {
             {[
               { 
                 icon: <MapPin size={24} />, 
-                title: "In-Person (Colombo)", 
-                dates: "May 7, 14, 21, 2025",
-                spots: "12 spots remaining" 
+                title: t("In-Person (Colombo)"), 
+                dates: t("May 7, 14, 21, 2025"),
+                spots: t("12 spots remaining")
               },
               { 
                 icon: <Monitor size={24} />, 
-                title: "Online (Sri Lanka time)", 
-                dates: "May 10-14, 2025",
-                spots: "15 spots remaining" 
+                title: t("Online (Sri Lanka time)"), 
+                dates: t("May 10-14, 2025"),
+                spots: t("15 spots remaining")
               },
               { 
                 icon: <Globe size={24} />, 
-                title: "Online (Europe time)", 
-                dates: "June 3-7, 2025",
-                spots: "20 spots remaining" 
+                title: t("Online (Europe time)"), 
+                dates: t("June 3-7, 2025"),
+                spots: t("20 spots remaining")
               }
             ].map((item, index) => (
               <div 
@@ -210,7 +211,7 @@ const Index = () => {
                 <p className="text-gray-600 mb-2"><Calendar size={16} className="inline mr-2" /> {item.dates}</p>
                 <p className="text-gray-600 mb-6"><Users size={16} className="inline mr-2" /> {item.spots}</p>
                 <a href="/register" className="button-institutional-outline w-full text-center block">
-                  Reserve Your Spot
+                  {t("Reserve Your Spot")}
                 </a>
               </div>
             ))}
@@ -218,7 +219,7 @@ const Index = () => {
           
           <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '300ms' }}>
             <a href="/register" className="button-institutional inline-flex">
-              Secure Your Spot <MoveRight size={18} className="ml-2" />
+              {t("Secure Your Spot")} <MoveRight size={18} className="ml-2" />
             </a>
           </div>
         </ContentSection>
@@ -226,53 +227,52 @@ const Index = () => {
         
         <ContentSection 
           id="course-formats" 
-          title="Our Courses" 
+          title={t("Our Courses")}
           titleSize="large"
-
-          subtitle="Explore our diverse range of AI-enhanced courses"
+          subtitle={t("Explore our diverse range of AI-enhanced courses")}
           titleAlignment="left"
           background="white"
           imageUrl="https://images.unsplash.com/photo-1551739502-2af0c32df4d5?q=80&w=800&auto=format&fit=crop"
-          imageAlt="Courses banner"
-          imageCaption="Explore our diverse range of AI-enhanced courses."
+          imageAlt={t("Courses banner")}
+          imageCaption={t("Explore our diverse range of AI-enhanced courses.")}
         >
           <div className="scroll-animate">
             <FeaturedContent
               items={[
                 {
                   imageUrl: "https://images.unsplash.com/photo-1563309480-5aca14189417?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for German Language Courses
-                  title: "German Language Courses with AI",
-                  description: "Get access to Germany's free higher education with full confidence.",
+                  title: t("German Language Courses with AI"),
+                  description: t("Get access to Germany's free higher education with full confidence."),
                   link: "/german-courses"
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1517849325426-6eac321919a0?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for IELTS Coaching
-                  title: "IELTS Coaching with AI",
-                  description: "Prepare for your IELTS exam with tailored AI support and resources.",
+                  title: t("IELTS Coaching with AI"),
+                  description: t("Prepare for your IELTS exam with tailored AI support and resources."),
                   link: "/ielts-coaching"
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1612117150828-78a83cd63ef2?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI for Kids
-                  title: "AI for Kids",
-                  description: "Engaging AI courses designed to introduce children to technology.",
+                  title: t("AI for Kids"),
+                  description: t("Engaging AI courses designed to introduce children to technology."),
                   link: "/ai-for-kids"
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1525338078858-d762b5e32f2c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI for Adults
-                  title: "AI for Adults",
-                  description: "Learn how to leverage AI tools for personal growth.",
+                  title: t("AI for Adults"),
+                  description: t("Learn how to leverage AI tools for personal growth."),
                   link: "/ai-for-adults"
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1652565437094-ce12e77dcf0e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI at Work
-                  title: "AI at Work",
-                  description: "Discover how AI can enhance productivity and efficiency in the workplace.",
+                  title: t("AI at Work"),
+                  description: t("Discover how AI can enhance productivity and efficiency in the workplace."),
                   link: "/ai-at-work"
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1600437493529-cbab154790be?q=80&w=3734&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for Coding for Kids and Teens
-                  title: "Coding for Kids and Teens",
-                  description: "Fun and interactive coding courses designed for young learners.",
+                  title: t("Coding for Kids and Teens"),
+                  description: t("Fun and interactive coding courses designed for young learners."),
                   link: "/coding-for-kids-and-teens"
                 }
               ]}
@@ -281,15 +281,10 @@ const Index = () => {
           
           <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
             <a href="/courses" className="button-institutional inline-flex">
-              View All Courses <MoveRight size={18} className="ml-2" />
+              {t("View All Courses")} <MoveRight size={18} className="ml-2" />
             </a>
           </div>
         </ContentSection>
-        
-        
-        
-       
-      
       </main>
       
       <Footer />

@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
+import { useTranslation } from '@/lib/translation';
 
 interface KeyStatProps {
   icon: React.ReactNode;
@@ -9,9 +9,17 @@ interface KeyStatProps {
   description: string;
   color?: string;
   delay?: number;
+  translateDescription?: boolean;
 }
 
-const KeyStat = ({ icon, value, description, color = 'institutional', delay = 0 }: KeyStatProps) => {
+const KeyStat = ({ 
+  icon, 
+  value, 
+  description, 
+  color = 'institutional', 
+  delay = 0,
+  translateDescription = true 
+}: KeyStatProps) => {
   const colorClasses = {
     'institutional': 'text-institutional',
     'lime': 'text-lime-600',
@@ -19,6 +27,8 @@ const KeyStat = ({ icon, value, description, color = 'institutional', delay = 0 
     'blue': 'text-blue-600',
     'purple': 'text-purple-900',
   };
+  
+  const { t } = useTranslation();
 
   return (
     <div 
@@ -33,7 +43,7 @@ const KeyStat = ({ icon, value, description, color = 'institutional', delay = 0 
           {value}
         </span>
         <p className="text-gray-600">
-          {description}
+          {translateDescription ? t(description) : description}
         </p>
       </div>
     </div>
@@ -46,6 +56,7 @@ interface KeyStatsGridProps {
     value: string | number;
     description: string;
     color?: string;
+    translateDescription?: boolean;
   }[];
   columns?: 2 | 3 | 4;
   className?: string;
@@ -71,6 +82,7 @@ const KeyStatsGrid = ({ stats, columns = 2, className }: KeyStatsGridProps) => {
           description={stat.description}
           color={stat.color}
           delay={index * 0.1}
+          translateDescription={stat.translateDescription}
         />
       ))}
     </div>

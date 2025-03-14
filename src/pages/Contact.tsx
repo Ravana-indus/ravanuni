@@ -4,8 +4,11 @@ import Footer from '@/components/layout/Footer';
 import ContentSection from '@/components/ui/ContentSection';
 import { Phone, Mail, Clock, MapPin, Facebook, Linkedin, Youtube, Instagram, HelpCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useTranslation } from '@/lib/translation';
 
 const Contact = () => {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     // Add a base class to all elements that should animate
     document.querySelectorAll('.scroll-animate').forEach((elem) => {
@@ -54,13 +57,12 @@ const Contact = () => {
         <div className="bg-institutional-dark text-white py-24">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 scroll-animate">Contact Us</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 scroll-animate">{t('Contact Us')}</h1>
               <p className="text-xl mb-8 scroll-animate" style={{ transitionDelay: '100ms' }}>
-                We're here to help
+                {t('We\'re here to help')}
               </p>
               <p className="text-lg mb-8 scroll-animate" style={{ transitionDelay: '200ms' }}>
-                Have questions about our courses, resources, or digital safety in general? 
-                Our team is ready to assist you. Choose your preferred contact method below.
+                {t('Have questions about our courses, resources, or digital safety in general? Our team is ready to assist you. Choose your preferred contact method below.')}
               </p>
             </div>
           </div>
@@ -69,8 +71,8 @@ const Contact = () => {
         {/* Contact Information Section */}
         <ContentSection 
           id="contact-info" 
-          title="Reach Us Directly" 
-          subtitle="Multiple ways to get in touch with our team"
+          title={t('Reach Us Directly')}
+          subtitle={t('Multiple ways to get in touch with our team')}
           titleAlignment="center"
           background="white"
         >
@@ -78,28 +80,28 @@ const Contact = () => {
             {[
               {
                 icon: <Phone size={24} />,
-                title: "Phone",
-                info: "+94 11 258 1181",
+                title: t('Phone'),
+                info: "+94 11 258 1181 (Sri Lanka) | +1 437 830 2199 (Canada)",
                 action: {
-                  text: "Call Us",
+                  text: t('Call Us'),
                   link: "tel:+94112581181"
                 },
                 color: "blue"
               },
               {
                 icon: <Mail size={24} />,
-                title: "Email",
-                info: "future@uni.ravan.lk",
+                title: t('Email'),
+                info: "info@riftuni.com",
                 action: {
-                  text: "Send Email",
-                  link: "mailto:future@uni.ravan.lk"
+                  text: t('Send Email'),
+                  link: "mailto:info@riftuni.com"
                 },
                 color: "indigo"
               },
               {
                 icon: <Clock size={24} />,
-                title: "Hours",
-                info: "Monday to Friday, 9:00 AM - 5:00 PM",
+                title: t('Hours'),
+                info: t('Monday to Friday, 9:00 AM - 5:00 PM'),
                 action: {
                   text: "",
                 },
@@ -107,10 +109,10 @@ const Contact = () => {
               },
               {
                 icon: <MapPin size={24} />,
-                title: "Address",
-                info: "123 Colombo Road, Colombo 04, Sri Lanka",
+                title: t('Address'),
+                info: t('123 Colombo Road, Colombo 04, Sri Lanka'),
                 action: {
-                  text: "Get Directions",
+                  text: t('Get Directions'),
                   link: "https://g.co/kgs/mV83cgz"
                 },
                 color: "emerald"
@@ -140,74 +142,74 @@ const Contact = () => {
         {/* Contact Form Section */}
         <ContentSection 
           id="contact-form" 
-          title="Send a Message" 
-          subtitle="We'll respond to your inquiry within 24 hours"
+          title={t('Send a Message')}
+          subtitle={t('We\'ll respond to your inquiry within 24 hours')}
           titleAlignment="left"
-          imageAlt="Contact our team"
-          imageCaption="Our team is ready to answer your questions about digital safety education."
+          imageAlt={t('Contact our team')}
+          imageCaption={t('Our team is ready to answer your questions about digital safety education.')}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div className="glass-card p-8 rounded-lg shadow-elegant scroll-animate">
               <form className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('Full Name')}</label>
                   <Input 
                     type="text" 
-                    placeholder="Your name"
+                    placeholder={t('Your name')}
                     className="w-full"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('Email Address')}</label>
                   <Input 
                     type="email" 
-                    placeholder="your.email@example.com"
+                    placeholder={t('your.email@example.com')}
                     className="w-full"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('Phone Number')}</label>
                   <Input 
                     type="tel" 
-                    placeholder="+94 7X XXX XXXX"
+                    placeholder={t('+94 7X XXX XXXX')}
                     className="w-full"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Inquiry Type</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('Inquiry Type')}</label>
                   <select 
                     className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                   >
-                    <option value="">Select an option</option>
-                    <option value="course">Course Information</option>
-                    <option value="business">Business Training</option>
-                    <option value="technical">Technical Question</option>
-                    <option value="other">Other</option>
+                    <option value="">{t('Select an option')}</option>
+                    <option value="course">{t('Course Information')}</option>
+                    <option value="business">{t('Business Training')}</option>
+                    <option value="technical">{t('Technical Question')}</option>
+                    <option value="other">{t('Other')}</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('Message')}</label>
                   <textarea 
                     rows={5} 
-                    placeholder="How can we help you?"
+                    placeholder={t('How can we help you?')}
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm resize-none"
                   ></textarea>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Preferred Contact Method</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">{t('Preferred Contact Method')}</label>
                   <div className="flex items-center space-x-6">
                     <label className="flex items-center">
                       <input type="radio" name="contactMethod" value="email" className="mr-2" />
-                      <span>Email</span>
+                      <span>{t('Email')}</span>
                     </label>
                     <label className="flex items-center">
                       <input type="radio" name="contactMethod" value="phone" className="mr-2" />
-                      <span>Phone</span>
+                      <span>{t('Phone')}</span>
                     </label>
                   </div>
                 </div>
@@ -217,32 +219,32 @@ const Contact = () => {
                     type="submit" 
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-300"
                   >
-                    Send Message
+                    {t('Send Message')}
                   </button>
                 </div>
               </form>
             </div>
             
             <div className="scroll-animate" style={{ transitionDelay: '300ms' }}>
-              <h3 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h3>
+              <h3 className="text-2xl font-semibold mb-6">{t('Frequently Asked Questions')}</h3>
               
               <div className="space-y-6">
                 {[
                   {
-                    question: "How do I sign up for a course?",
-                    answer: "You can register directly through our website, call us at +94 11 234 5678, or visit our institute in person."
+                    question: t('How do I sign up for a course?'),
+                    answer: t('You can register directly through our website, call us at +94 11 234 5678, or visit our institute in person.')
                   },
                   {
-                    question: "Do you offer training for businesses?",
-                    answer: "Yes, we provide customized digital safety training for organizations of all sizes. Contact us for a tailored proposal."
+                    question: t('Do you offer training for businesses?'),
+                    answer: t('Yes, we provide customized digital safety training for organizations of all sizes. Contact us for a tailored proposal.')
                   },
                   {
-                    question: "Who can attend your courses?",
-                    answer: "Our Digital Safety & AI Awareness course is designed for adults 45 and older, but we welcome anyone who feels the content would benefit them."
+                    question: t('Who can attend your courses?'),
+                    answer: t('Our Digital Safety & AI Awareness course is designed for adults 45 and older, but we welcome anyone who feels the content would benefit them.')
                   },
                   {
-                    question: "Can you conduct training at our location?",
-                    answer: "Yes, for groups of 10 or more, we can arrange on-site training at your location in the Colombo area."
+                    question: t('Can you conduct training at our location?'),
+                    answer: t('Yes, for groups of 10 or more, we can arrange on-site training at your location in the Colombo area.')
                   }
                 ].map((faq, index) => (
                   <div key={index} className="glass-card p-6 rounded-lg">
@@ -263,8 +265,8 @@ const Contact = () => {
         {/* Map Section */}
         <ContentSection 
           id="location" 
-          title="Visit Our Location" 
-          subtitle="We're conveniently located in central Colombo"
+          title={t('Visit Our Location')}
+          subtitle={t('We\'re conveniently located in central Colombo')}
           titleAlignment="center"
           background="white"
         >
@@ -279,15 +281,14 @@ const Contact = () => {
                   allowFullScreen 
                   loading="lazy" 
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Our location"
+                  title={t('Our location')}
                 ></iframe>
               </div>
             </div>
             
             <div className="mt-8 text-center">
               <p className="text-gray-600 mb-4">
-                <strong>Directions:</strong> Our institute is located near Liberty Plaza, a 5-minute walk from Colpetty Junction. 
-                Parking is available on-site, and we're accessible via multiple bus routes.
+                <strong>{t('Directions:')}</strong> {t('Our institute is located near Liberty Plaza, a 5-minute walk from Colpetty Junction. Parking is available on-site, and we\'re accessible via multiple bus routes.')}
               </p>
               <a 
                 href="https://goo.gl/maps/123" 
@@ -295,7 +296,7 @@ const Contact = () => {
                 rel="noopener noreferrer" 
                 className="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-md font-medium transition duration-300"
               >
-                Get Directions <MapPin size={18} className="ml-2" />
+                {t('Get Directions')} <MapPin size={18} className="ml-2" />
               </a>
             </div>
           </div>
@@ -304,22 +305,22 @@ const Contact = () => {
         {/* Social Media Section */}
         <ContentSection 
           id="social-media" 
-          title="Connect With Us" 
-          subtitle="Follow us on social media for the latest updates and digital safety tips"
+          title={t('Connect With Us')}
+          subtitle={t('Follow us on social media for the latest updates and digital safety tips')}
           titleAlignment="center"
-          background="gray-50"
+          background="white"
         >
           <div className="max-w-3xl mx-auto text-center scroll-animate">
             <p className="text-gray-600 mb-8">
-              Stay updated with the latest digital safety information, upcoming courses, and free resources by following us on social media.
+              {t('Stay updated with the latest digital safety information, upcoming courses, and free resources by following us on social media.')}
             </p>
             
             <div className="flex flex-wrap justify-center gap-8 mb-12">
               {[
-                { icon: <Facebook size={32} />, name: "Facebook", url: "#", color: "blue" },
-                { icon: <Linkedin size={32} />, name: "LinkedIn", url: "#", color: "blue" },
-                { icon: <Youtube size={32} />, name: "YouTube", url: "#", color: "red" },
-                { icon: <Instagram size={32} />, name: "Instagram", url: "#", color: "pink" }
+                { icon: <Facebook size={32} />, name: t('Facebook'), url: "#", color: "blue" },
+                { icon: <Linkedin size={32} />, name: t('LinkedIn'), url: "#", color: "blue" },
+                { icon: <Youtube size={32} />, name: t('YouTube'), url: "#", color: "red" },
+                { icon: <Instagram size={32} />, name: t('Instagram'), url: "#", color: "pink" }
               ].map((social, index) => (
                 <a 
                   key={index}
@@ -335,22 +336,22 @@ const Contact = () => {
             </div>
             
             <div className="glass-card p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Join Our Newsletter</h3>
+              <h3 className="text-xl font-semibold mb-4">{t('Join Our Newsletter')}</h3>
               <p className="text-gray-600 mb-6">
-                Subscribe to receive digital safety tips, course updates, and free resources directly to your inbox.
+                {t('Subscribe to receive digital safety tips, course updates, and free resources directly to your inbox.')}
               </p>
               
               <form className="flex flex-col sm:flex-row gap-4">
                 <Input 
                   type="email" 
-                  placeholder="Your email address"
+                  placeholder={t('Your email address')}
                   className="flex-grow"
                 />
                 <button 
                   type="submit" 
                   className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-300 whitespace-nowrap"
                 >
-                  Subscribe
+                  {t('Subscribe')}
                 </button>
               </form>
             </div>

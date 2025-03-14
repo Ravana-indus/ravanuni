@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { Menu, X, Search, Globe } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from '@/lib/translation';
+import logoImage from '@/img/Rift-UNI.png';
 
 // Create a language context for the application
 const LanguageContext = React.createContext({
@@ -79,9 +80,9 @@ const Navbar = () => {
       <div className="bg-institutional text-white py-1 fixed top-0 left-0 right-0 z-50">
         <div className="container-content">
           <div className="flex justify-end items-center text-sm">
-            <a href="/user-portal" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">User Portal Login</a>
+            <a href="/user-portal" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">{t('User Portal Login')}</a>
             <span className="text-institutional-300">|</span>
-            <a href="/lms-login" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">LMS Login</a>
+            <a href="/lms-login" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">{t('LMS Login')}</a>
           </div>
         </div>
       </div>
@@ -101,7 +102,11 @@ const Navbar = () => {
             <div className="flex items-center gap-12">
               <Link to="/" className="flex items-center">
                 <div className={cn("font-semibold text-2xl tracking-tight", isScrolled && isNotHome ? "text-black" : isNotHome ? "text-white" : "text-institutional", "hover:text-institutional-100")}>
-                  RavanUNI
+                  <img 
+                    src={logoImage} 
+                    alt={t('RavanUNI Logo')}
+                    className="h-10 w-auto"
+                  />
                 </div>
               </Link>
               
@@ -133,7 +138,7 @@ const Navbar = () => {
               <div className="relative">
                 <button 
                   className={cn("p-2 transition-colors duration-300", isNotHome ? "text-white hover:text-institutional-100" : "text-gray-600 hover:text-institutional")}
-                  aria-label="Language selection"
+                  aria-label={t('Language selection')}
                   onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
                 >
                   <Globe size={20} />
@@ -160,7 +165,7 @@ const Navbar = () => {
               <button 
                 className="md:hidden p-2 text-gray-700"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Toggle menu"
+                aria-label={t('Toggle menu')}
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>

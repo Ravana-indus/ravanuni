@@ -22,6 +22,31 @@ export const commonTranslations = {
     si: "ඉක්මන් සබැඳි",
     ta: "விரைவு இணைப்புகள்"
   },
+  "Empowering Sri Lankans with practical technology skills for the digital age.": {
+    en: "Empowering Sri Lankans with practical technology skills for the digital age.",
+    si: "ඩිජිටල් යුගය සඳහා ප්‍රායෝගික තාක්ෂණික කුසලතා සමඟ ශ්‍රී ලාංකිකයන් සවිබල ගැන්වීම.",
+    ta: "டிஜிட்டல் யுகத்திற்கான நடைமுறை தொழில்நுட்ப திறன்களுடன் இலங்கையர்களை மேம்படுத்துதல்."
+  },
+  "Ravana Industries Pvt Ltd": {
+    en: "Ravana Industries Pvt Ltd",
+    si: "රාවණ ඉන්ඩස්ට්‍රීස් පුද්. සමාගම",
+    ta: "ராவணா இண்டஸ்ட்ரீஸ் பிரைவேட் லிமிடெட்"
+  },
+  "No 10, 30/1/1 Pamankada Ln, Colombo 00600, Sri Lanka": {
+    en: "No 10, 30/1/1 Pamankada Ln, Colombo 00600, Sri Lanka",
+    si: "අංක 10, 30/1/1 පමංකඩ පටුමග, කොළඹ 00600, ශ්‍රී ලංකාව",
+    ta: "எண் 10, 30/1/1 பமங்கடா லேன், கொழும்பு 00600, இலங்கை"
+  },
+  "Ravana Industries Inc.": {
+    en: "Ravana Industries Inc.",
+    si: "රාවණ ඉන්ඩස්ට්‍රීස් සමාගම",
+    ta: "ராவணா இண்டஸ்ட்ரீஸ் இன்க்."
+  },
+  "Office 27, 145 1/2 Church Street, Unit 5, Toronto, Ontario, M5B 1Y4, Canada": {
+    en: "Office 27, 145 1/2 Church Street, Unit 5, Toronto, Ontario, M5B 1Y4, Canada",
+    si: "කාර්යාල 27, 145 1/2 චර්ච් වීදිය, ඒකක 5, ටොරොන්ටෝ, ඔන්ටාරියෝ, M5B 1Y4, කැනඩාව",
+    ta: "அலுவலகம் 27, 145 1/2 சர்ச் தெரு, யூனிட் 5, டொரன்டோ, ஒன்டாரியோ, M5B 1Y4, கனடா"
+  },
   "Services": {
     en: "Services",
     si: "සේවාවන්",
@@ -71,6 +96,11 @@ export const commonTranslations = {
     en: "All Rights Reserved",
     si: "සියලුම හිමිකම් ඇවිරිණි",
     ta: "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை"
+  },
+  "Ravana Industries Group. All rights reserved.": {
+    en: "Ravana Industries Group. All rights reserved.",
+    si: "රාවණ ඉන්ඩස්ට්‍රීස් සමූහය. සියලුම හිමිකම් ඇවිරිණි.",
+    ta: "ராவணா இண்டஸ்ட்ரீஸ் குழுமம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
   },
 
   // Generic Buttons

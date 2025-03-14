@@ -44,5 +44,20 @@ export const navTranslations = {
     en: "LMS Login",
     si: "LMS පිවිසුම",
     ta: "LMS உள்நுழைவு"
+  },
+  "RavanUNI Logo": {
+    en: "RavanUNI Logo",
+    si: "රාවණUNI ලාංඡනය",
+    ta: "ராவணUNI லோகோ"
+  },
+  "Language selection": {
+    en: "Language selection",
+    si: "භාෂා තේරීම",
+    ta: "மொழி தேர்வு"
+  },
+  "Toggle menu": {
+    en: "Toggle menu",
+    si: "මෙනුව ටොගල් කරන්න",
+    ta: "மெனுவை மாற்றவும்"
   }
 }; 

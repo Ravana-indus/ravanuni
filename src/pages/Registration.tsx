@@ -4,11 +4,40 @@ import Footer from '@/components/layout/Footer';
 import ContentSection from '@/components/ui/ContentSection';
 import { CalendarDays, Users, Check, CreditCard, Building, Circle, HelpCircle, Info, Clock, Phone, Mail } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import CountrySelector from '@/components/CountrySelector';
+import { useGeoLocation } from '@/hooks/useGeoLocation';
+import { getPricingByCountry, formatPrice, PricingOption } from '@/utils/countryPricing';
 
 const Registration = () => {
   const [courseType, setCourseType] = useState<string>('');
   const [withCompanion, setWithCompanion] = useState<boolean>(false);
+  
+  // Add country detection
+  const { country: detectedCountry, loading: locationLoading, error: locationError } = useGeoLocation();
+  const [selectedCountry, setSelectedCountry] = useState<string>('default');
+  const [pricingInfo, setPricingInfo] = useState<PricingOption>(getPricingByCountry('default'));
 
+  // Set country from geolocation when available
+  useEffect(() => {
+    if (detectedCountry) {
+      setSelectedCountry(detectedCountry);
+      setPricingInfo(getPricingByCountry(detectedCountry));
+    }
+  }, [detectedCountry]);
+
+  // Update pricing when country changes
+  useEffect(() => {
+    setPricingInfo(getPricingByCountry(selectedCountry));
+    
+    // If the selected country doesn't support in-person courses,
+    // force online course type
+    const pricing = getPricingByCountry(selectedCountry);
+    if (!pricing.hasInPerson && courseType === 'in-person') {
+      setCourseType('online');
+    }
+  }, [selectedCountry]);
+
+  // Original animation code
   useEffect(() => {
     // Add a base class to all elements that should animate
     document.querySelectorAll('.scroll-animate').forEach((elem) => {
@@ -48,6 +77,11 @@ const Registration = () => {
     };
   }, []);
 
+  // Handler for country change
+  const handleCountryChange = (countryCode: string) => {
+    setSelectedCountry(countryCode);
+  };
+
   return (
     <div className="relative min-h-screen">
       <Navbar />
@@ -77,66 +111,91 @@ const Registration = () => {
           titleAlignment="center"
           background="white"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div 
-              className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${courseType === 'in-person' ? 'ring-2 ring-blue-500' : ''}`}
-              onClick={() => setCourseType('in-person')}
-            >
-              {courseType === 'in-person' && (
-                <div className="absolute top-4 right-4 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                  <Check className="text-white w-4 h-4" />
-                </div>
-              )}
-              
-              <div className="flex items-center mb-6">
-                <div className="bg-blue-100 p-3 rounded-full mr-4">
-                  <Users className="h-6 w-6 text-blue-600" />
-                </div>
-                <h3 className="text-2xl font-semibold">In-Person Format</h3>
+          {/* Add Location & Currency option as a small tab */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between bg-blue-50 p-4 rounded-lg border border-blue-100 shadow-sm">
+              <div className="mb-3 md:mb-0">
+                <h3 className="text-sm font-medium text-blue-800">Your Location & Currency</h3>
+                <p className="text-xs text-blue-600">
+                  {locationLoading ? 
+                    'Detecting your location...' : 
+                    locationError ? 
+                    'Please select your country' : 
+                    `Prices shown in ${pricingInfo.currencySymbol} based on your location`}
+                </p>
               </div>
-              
-              <p className="text-blue-600 font-medium mb-6">Within 5km from your home</p>
-              
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <CalendarDays className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium">Schedule</p>
-                    <p className="text-gray-600">Saturdays/Sundays, 9:00 AM - 1:00 PM</p>
-                    <p className="text-gray-600 text-sm">(3 sessions, 12 hours total)</p>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <Users className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium">Group Size</p>
-                    <p className="text-gray-600">Maximum 15 participants</p>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <CreditCard className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium">Price</p>
-                    <p className="text-gray-600">Rs. 15,000 per participant</p>
-                  </div>
-                </li>
-              </ul>
-              
-              <div className="space-y-2">
-                <p className="font-medium">Upcoming Sessions:</p>
-                <div className="border border-gray-200 rounded-md p-3">
-                  <p>July 6, 13, 20, 2025</p>
-                  <p className="text-blue-600 font-medium">12 spots remaining</p>
-                </div>
-                <div className="border border-gray-200 rounded-md p-3">
-                  <p>August 3, 10, 17, 2025</p>
-                  <p className="text-blue-600 font-medium">15 spots remaining</p>
-                </div>
-              </div>
+              <CountrySelector 
+                selectedCountry={selectedCountry} 
+                onChange={handleCountryChange}
+                compact={true}
+              />
             </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {pricingInfo.hasInPerson && (
+              <div 
+                className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${courseType === 'in-person' ? 'ring-2 ring-blue-500' : ''}`}
+                onClick={() => setCourseType('in-person')}
+              >
+                {courseType === 'in-person' && (
+                  <div className="absolute top-4 right-4 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                    <Check className="text-white w-4 h-4" />
+                  </div>
+                )}
+                
+                <div className="flex items-center mb-6">
+                  <div className="bg-blue-100 p-3 rounded-full mr-4">
+                    <Users className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-2xl font-semibold">In-Person Format</h3>
+                </div>
+                
+                <p className="text-blue-600 font-medium mb-6">Within 5km from your home</p>
+                
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start">
+                    <CalendarDays className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium">Schedule</p>
+                      <p className="text-gray-600">Saturdays/Sundays, 9:00 AM - 1:00 PM</p>
+                      <p className="text-gray-600 text-sm">(3 sessions, 12 hours total)</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <Users className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium">Group Size</p>
+                      <p className="text-gray-600">Maximum 15 participants</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <CreditCard className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium">Price</p>
+                      <p className="text-gray-600">
+                        {formatPrice(pricingInfo.inPersonDiscountedPrice || '', pricingInfo.currencySymbol)} <span className="line-through">{formatPrice(pricingInfo.inPersonNormalPrice || '', pricingInfo.currencySymbol)}</span> per participant
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+                
+                <div className="space-y-2">
+                  <p className="font-medium">Upcoming Sessions:</p>
+                  <div className="border border-gray-200 rounded-md p-3">
+                    <p>July 6, 13, 20, 2025</p>
+                    <p className="text-blue-600 font-medium">12 spots remaining</p>
+                  </div>
+                  <div className="border border-gray-200 rounded-md p-3">
+                    <p>August 3, 10, 17, 2025</p>
+                    <p className="text-blue-600 font-medium">15 spots remaining</p>
+                  </div>
+                </div>
+              </div>
+            )}
             
             <div 
-              className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${courseType === 'online' ? 'ring-2 ring-indigo-500' : ''}`}
+              className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${courseType === 'online' ? 'ring-2 ring-indigo-500' : ''} ${!pricingInfo.hasInPerson ? 'md:col-span-2 mx-auto max-w-xl' : ''}`}
               style={{ transitionDelay: '200ms' }}
               onClick={() => setCourseType('online')}
             >
@@ -175,7 +234,9 @@ const Registration = () => {
                   <CreditCard className="text-indigo-600 mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium">Price</p>
-                    <p className="text-gray-600">Rs. 12,000 per participant</p>
+                    <p className="text-gray-600">
+                      {formatPrice(pricingInfo.discountedPrice, pricingInfo.currencySymbol)} <span className="line-through">{formatPrice(pricingInfo.normalPrice, pricingInfo.currencySymbol)}</span> per participant
+                    </p>
                   </div>
                 </li>
               </ul>
@@ -183,11 +244,11 @@ const Registration = () => {
               <div className="space-y-2">
                 <p className="font-medium">Upcoming Sessions:</p>
                 <div className="border border-gray-200 rounded-md p-3">
-                  <p>July 1-5, 2025 (Sri Lanka time)</p>
+                  <p>July 1-5, 2025</p>
                   <p className="text-indigo-600 font-medium">15 spots remaining</p>
                 </div>
                 <div className="border border-gray-200 rounded-md p-3">
-                  <p>July 15-19, 2025 (Europe time)</p>
+                  <p>July 15-19, 2025</p>
                   <p className="text-indigo-600 font-medium">18 spots remaining</p>
                 </div>
               </div>
@@ -267,20 +328,22 @@ const Registration = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Course Type</label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label className="flex items-center p-4 border rounded-md cursor-pointer hover:bg-gray-50">
-                      <input 
-                        type="radio" 
-                        name="courseType" 
-                        value="in-person" 
-                        className="mr-3" 
-                        checked={courseType === 'in-person'}
-                        onChange={() => setCourseType('in-person')}
-                        required
-                      />
-                      <span>In-Person Course</span>
-                    </label>
+                    {pricingInfo.hasInPerson && (
+                      <label className="flex items-center p-4 border rounded-md cursor-pointer hover:bg-gray-50">
+                        <input 
+                          type="radio" 
+                          name="courseType" 
+                          value="in-person" 
+                          className="mr-3" 
+                          checked={courseType === 'in-person'}
+                          onChange={() => setCourseType('in-person')}
+                          required
+                        />
+                        <span>In-Person Course</span>
+                      </label>
+                    )}
                     
-                    <label className="flex items-center p-4 border rounded-md cursor-pointer hover:bg-gray-50">
+                    <label className={`flex items-center p-4 border rounded-md cursor-pointer hover:bg-gray-50 ${!pricingInfo.hasInPerson ? 'md:col-span-2' : ''}`}>
                       <input 
                         type="radio" 
                         name="courseType" 
@@ -325,8 +388,8 @@ const Registration = () => {
                       </>
                     ) : courseType === 'online' ? (
                       <>
-                        <option value="july-online-sl">July 1-5, 2025 (Sri Lanka time)</option>
-                        <option value="july-online-eu">July 15-19, 2025 (Europe time)</option>
+                        <option value="july-online-sl">July 1-5, 2025</option>
+                        <option value="july-online-eu">July 15-19, 2025</option>
                       </>
                     ) : (
                       <option value="select-course-type">Please select a course type first</option>
@@ -589,7 +652,7 @@ const Registration = () => {
                 {
                   icon: <Mail size={24} />,
                   title: "Email Help",
-                  description: "future@uni.ravan.lk",
+                  description: "info@riftuni.com",
                 },
                 {
                   icon: <MessageSquare size={24} />,

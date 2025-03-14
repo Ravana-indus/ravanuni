@@ -9,6 +9,7 @@ import { privacyTranslations } from './privacy';
 import { termsTranslations } from './terms';
 import { dashboardTranslations } from './dashboard';
 import { commonTranslations } from './common';
+import { footerTranslations } from './footer';
 
 // Define language type
 export type Language = 'en' | 'si' | 'ta';
@@ -25,7 +26,8 @@ export const translations = {
   ...privacyTranslations,
   ...termsTranslations,
   ...dashboardTranslations,
-  ...commonTranslations
+  ...commonTranslations,
+  ...footerTranslations
 };
 
 /**

@@ -1,255 +1,507 @@
 export const resourcesTranslations = {
-  // Hero section
-  "Digital Resources": {
-    en: "Digital Resources",
-    si: "ඩිජිටල් සම්පත්",
-    ta: "டிஜிட்டல் வளங்கள்"
+  "Free Digital Safety Resources": {
+    en: "Free Digital Safety Resources",
+    si: "නොමිලේ ඩිජිටල් ආරක්ෂණ සම්පත්",
+    ta: "இலவச டிஜிட்டல் பாதுகாப்பு வளங்கள்"
   },
-  "Tools & information to stay safe in the digital world": {
-    en: "Tools & information to stay safe in the digital world",
-    si: "ඩිජිටල් ලෝකයේ ආරක්ෂිතව සිටීමට මෙවලම් සහ තොරතුරු",
-    ta: "டிஜிட்டல் உலகில் பாதுகாப்பாக இருக்க கருவிகள் & தகவல்கள்"
+  "Practical tools for staying safe online": {
+    en: "Practical tools for staying safe online",
+    si: "මාර්ගගතව ආරක්ෂිතව සිටීමට ප්‍රායෝගික මෙවලම්",
+    ta: "இணையத்தில் பாதுகாப்பாக இருக்க நடைமுறை கருவிகள்"
   },
-
-  // Free Guides
-  "Free Safety Guides": {
-    en: "Free Safety Guides",
-    si: "නොමිලේ ආරක්ෂක මාර්ගෝපදේශ",
-    ta: "இலவச பாதுகாப்பு வழிகாட்டிகள்"
+  "Browse our collection of free resources designed specifically for Sri Lankan adults. Use these materials to protect yourself online and share important security information with family and friends.": {
+    en: "Browse our collection of free resources designed specifically for Sri Lankan adults. Use these materials to protect yourself online and share important security information with family and friends.",
+    si: "ශ්‍රී ලාංකික වැඩිහිටියන් සඳහා විශේෂයෙන් නිර්මාණය කර ඇති අපගේ නොමිලේ සම්පත් එකතුව පිරික්සන්න. මාර්ගගතව ඔබව ආරක්ෂා කර ගැනීමට සහ පවුලේ අය සහ මිතුරන් සමඟ වැදගත් ආරක්ෂක තොරතුරු බෙදා ගැනීමට මෙම ද්‍රව්‍ය භාවිතා කරන්න.",
+    ta: "இலங்கை பெரியவர்களுக்காக சிறப்பாக வடிவமைக்கப்பட்ட எங்கள் இலவச ஆதாரங்களின் தொகுப்பை உலாவுக. ஆன்லைனில் உங்களைப் பாதுகாத்துக் கொள்ளவும், குடும்பத்தினர் மற்றும் நண்பர்களுடன் முக்கியமான பாதுகாப்புத் தகவலைப் பகிர்ந்து கொள்ளவும் இந்த பொருட்களைப் பயன்படுத்தவும்."
   },
-  "Downloadable guides for quick reference": {
-    en: "Downloadable guides for quick reference", 
-    si: "ඉක්මන් යොමුව සඳහා බාගත හැකි මාර්ගෝපදේශ",
-    ta: "விரைவான குறிப்புக்காக பதிவிறக்கம் செய்யக்கூடிய வழிகாட்டிகள்"
+  "Current Scam Warnings": {
+    en: "Current Scam Warnings",
+    si: "වත්මන් වංචා අනතුරු ඇඟවීම්",
+    ta: "தற்போதைய மோசடி எச்சரிக்கைகள்"
   },
-  "Password Security Guide": {
-    en: "Password Security Guide",
-    si: "මුරපද ආරක්ෂාව පිළිබඳ මාර්ගෝපදේශය",
-    ta: "கடவுச்சொல் பாதுகாப்பு வழிகாட்டி"
+  "Stay informed about active scams currently targeting Sri Lankans": {
+    en: "Stay informed about active scams currently targeting Sri Lankans",
+    si: "ශ්‍රී ලාංකිකයන් ඉලක්ක කරගත් වත්මන් සක්‍රීය වංචා පිළිබඳව දැනුවත් වන්න",
+    ta: "இலங்கையர்களை குறிவைக்கும் தற்போதைய மோசடிகள் குறித்து தொடர்ந்து தெரிந்து கொள்ளுங்கள்"
   },
-  "Learn how to create strong passwords and keep your accounts secure": {
-    en: "Learn how to create strong passwords and keep your accounts secure",
-    si: "ශක්තිමත් මුරපද සෑදීමට සහ ඔබේ ගිණුම් ආරක්ෂිතව තබා ගැනීමට ඉගෙන ගන්න",
-    ta: "வலுவான கடவுச்சொற்களை உருவாக்கி உங்கள் கணக்குகளை பாதுகாப்பாக வைத்திருக்க கற்றுக்கொள்ளுங்கள்"
+  "Digital scam warning": {
+    en: "Digital scam warning",
+    si: "ඩිජිටල් වංචා අනතුරු ඇඟවීම",
+    ta: "டிஜிட்டல் மோசடி எச்சரிக்கை"
   },
-  "Spotting Online Scams": {
-    en: "Spotting Online Scams",
-    si: "මාර්ගගත වංචා හඳුනා ගැනීම",
-    ta: "ஆன்லைன் மோசடிகளை அடையாளம் காணுதல்"
+  "Staying informed about current threats is your first line of defense.": {
+    en: "Staying informed about current threats is your first line of defense.",
+    si: "වත්මන් තර්ජන පිළිබඳව දැනුවත්ව සිටීම ඔබේ පළමු ආරක්ෂක පියවරයි.",
+    ta: "தற்போதைய அச்சுறுத்தல்கள் குறித்து தொடர்ந்து தெரிந்து கொள்வது உங்கள் முதல் பாதுகாப்பு வரி."
   },
-  "How to identify common scams and protect yourself from fraud": {
-    en: "How to identify common scams and protect yourself from fraud",
-    si: "සාමාන්‍ය වංචා හඳුනා ගන්නේ කෙසේද සහ වංචාවලින් ඔබව ආරක්ෂා කර ගන්නේ කෙසේද",
-    ta: "பொதுவான மோசடிகளை அடையாளம் கண்டு மோசடியிலிருந்து உங்களைப் பாதுகாத்துக்கொள்வது எப்படி"
+  "Banking Verification Fraud": {
+    en: "Banking Verification Fraud",
+    si: "බැංකු සත්‍යාපන වංචාව",
+    ta: "வங்கி சரிபார்ப்பு மோசடி"
+  },
+  "Calls claiming to be from your bank requesting OTP or verification codes": {
+    en: "Calls claiming to be from your bank requesting OTP or verification codes",
+    si: "ඔබේ බැංකුවෙන් යැයි කියමින් OTP හෝ සත්‍යාපන කේත ඉල්ලමින් කරන ඇමතුම්",
+    ta: "உங்கள் வங்கியில் இருந்து OTP அல்லது சரிபார்ப்புக் குறியீடுகளைக் கோருவதாகக் கூறும் அழைப்புகள்"
+  },
+  "Urgency, threats about account closure, requests for verification codes": {
+    en: "Urgency, threats about account closure, requests for verification codes",
+    si: "ඉක්මන් බව, ගිණුම වසා දැමීම පිළිබඳ තර්ජන, සත්‍යාපන කේත සඳහා ඉල්ලීම්",
+    ta: "அவசரம், கணக்கு மூடப்படும் அச்சுறுத்தல்கள், சரிபார்ப்புக் குறியீடுகளுக்கான கோரிக்கைகள்"
+  },
+  "Never share OTPs, call your bank directly using official numbers": {
+    en: "Never share OTPs, call your bank directly using official numbers",
+    si: "OTPs කිසිවිටෙකත් බෙදා නොගන්න, නිල අංක භාවිතා කර ඔබගේ බැංකුවට සෘජුවම අමතන්න",
+    ta: "OTPs ஐ ஒருபோதும் பகிர வேண்டாம், அதிகாரப்பூர்வ எண்களைப் பயன்படுத்தி உங்கள் வங்கியை நேரடியாக அழைக்கவும்"
+  },
+  "Utility Payment Scams": {
+    en: "Utility Payment Scams",
+    si: "උපයෝගිතා ගෙවීම් වංචා",
+    ta: "பயன்பாட்டு கட்டண மோசடிகள்"
+  },
+  "Messages about urgent electricity or water bill payments": {
+    en: "Messages about urgent electricity or water bill payments",
+    si: "විදුලි හෝ ජල බිල්පත් ගෙවීම් පිළිබඳ හදිසි පණිවිඩ",
+    ta: "அவசர மின்சாரம் அல்லது தண்ணீர் கட்டண பில்கள் பற்றிய செய்திகள்"
+  },
+  "Unusual payment methods, threatening immediate disconnection": {
+    en: "Unusual payment methods, threatening immediate disconnection",
+    si: "අසාමාන්‍ය ගෙවීම් ක්‍රම, ක්ෂණික විසන්ධි කිරීම් වලට තර්ජනය කිරීම",
+    ta: "அசாதாரண கட்டண முறைகள், உடனடி துண்டிப்புக்கு அச்சுறுத்தல்"
+  },
+  "Verify bills through official company websites or offices": {
+    en: "Verify bills through official company websites or offices",
+    si: "නිල සමාගම් වෙබ් අඩවි හෝ කාර්යාල හරහා බිල්පත් සත්‍යාපනය කරන්න",
+    ta: "அதிகாரப்பூர்வ நிறுவன இணையதளங்கள் அல்லது அலுவலகங்கள் மூலம் பில்களைச் சரிபார்க்கவும்"
+  },
+  "Government Impersonation": {
+    en: "Government Impersonation",
+    si: "රජයේ මුවාවෙන් පෙනී සිටීම",
+    ta: "அரசாங்க ஆள்மாறாட்டம்"
+  },
+  "Callers pretending to be from government departments demanding payment": {
+    en: "Callers pretending to be from government departments demanding payment",
+    si: "රජයේ දෙපාර්තමේන්තු වලින් යැයි පවසමින් ගෙවීම් ඉල්ලා සිටින ඇමතුම්කරුවන්",
+    ta: "அரசாங்கத் துறைகளில் இருந்து பணம் கேட்டு அழைப்பதாக பாசாங்கு செய்யும் அழைப்பாளர்கள்"
+  },
+  "Threats of arrest, requests for immediate payment": {
+    en: "Threats of arrest, requests for immediate payment",
+    si: "අත්අඩංගුවට ගැනීමේ තර්ජන, ක්ෂණික ගෙවීම් සඳහා ඉල්ලීම්",
+    ta: "கைது செய்வதற்கான அச்சுறுத்தல்கள், உடனடி கட்டணம் செலுத்துவதற்கான கோரிக்கைகள்"
+  },
+  "Verify with official government offices, never pay over the phone": {
+    en: "Verify with official government offices, never pay over the phone",
+    si: "නිල රජයේ කාර්යාල සමඟ සත්‍යාපනය කරන්න, කිසිවිටෙකත් දුරකථනයෙන් ගෙවන්න එපා",
+    ta: "அதிகாரப்பூர்வ அரசாங்க அலுவலகங்களுடன் சரிபார்க்கவும், தொலைபேசியில் பணம் செலுத்த வேண்டாம்"
+  },
+  "WhatsApp Account Hijacking": {
+    en: "WhatsApp Account Hijacking",
+    si: "වට්ස්ඇප් ගිණුම් පැහැර ගැනීම",
+    ta: "வாட்ஸ்அப் கணக்கு கடத்தல்"
+  },
+  "Scammers taking over WhatsApp accounts through verification codes": {
+    en: "Scammers taking over WhatsApp accounts through verification codes",
+    si: "සත්‍යාපන කේත හරහා වට්ස්ඇප් ගිණුම්වල පාලනය ලබා ගන්නා වංචාකරුවන්",
+    ta: "சரிபார்ப்புக் குறியீடுகள் மூலம் வாட்ஸ்அப் கணக்குகளைக் கைப்பற்றும் மோசடி செய்பவர்கள்"
+  },
+  "Contacts asking for verification codes sent to your phone": {
+    en: "Contacts asking for verification codes sent to your phone",
+    si: "ඔබගේ දුරකථනයට එවන ලද සත්‍යාපන කේත ඉල්ලා සිටින සම්බන්ධතා",
+    ta: "உங்கள் தொலைபேசிக்கு அனுப்பப்பட்ட சரிபார்ப்புக் குறியீடுகளைக் கேட்கும் தொடர்புகள்"
+  },
+  "Never share verification codes, enable two-factor authentication": {
+    en: "Never share verification codes, enable two-factor authentication",
+    si: "කිසිවිටෙකත් සත්‍යාපන කේත බෙදා නොගන්න, දෙයාකාර සත්‍යාපනය සක්‍රීය කරන්න",
+    ta: "சரிபார்ப்புக் குறியீடுகளை ஒருபோதும் பகிர வேண்டாம், இரண்டு காரணி அங்கீகாரத்தை இயக்கவும்"
+  },
+  "What it is:": {
+    en: "What it is:",
+    si: "එය කුමක්ද:",
+    ta: "அது என்ன:"
+  },
+  "Warning signs:": {
+    en: "Warning signs:",
+    si: "අනතුරු ඇඟවීමේ සංඥා:",
+    ta: "எச்சரிக்கை அறிகுறிகள்:"
+  },
+  "Protection steps:": {
+    en: "Protection steps:",
+    si: "ආරක්ෂණ පියවර:",
+    ta: "பாதுகாப்பு நடவடிக்கைகள்:"
+  },
+  "Quick Reference Guides": {
+    en: "Quick Reference Guides",
+    si: "ඉක්මන් යොමු මාර්ගෝපදේශ",
+    ta: "விரைவு குறிப்பு வழிகாட்டிகள்"
+  },
+  "Download, print, and share these practical security guides": {
+    en: "Download, print, and share these practical security guides",
+    si: "මෙම ප්‍රායෝගික ආරක්ෂක මාර්ගෝපදේශ බාගන්න, මුද්‍රණය කරන්න, සහ බෙදාගන්න",
+    ta: "இந்த நடைமுறை பாதுகாப்பு வழிகாட்டிகளைப் பதிவிறக்கம் செய்து, அச்சிட்டு, பகிரவும்"
+  },
+  "Security guides": {
+    en: "Security guides",
+    si: "ආරක්ෂක මාර්ගෝපදේශ",
+    ta: "பாதுகாப்பு வழிகாட்டிகள்"
+  },
+  "Our downloadable guides make it easy to reference important security information anytime.": {
+    en: "Our downloadable guides make it easy to reference important security information anytime.",
+    si: "අපගේ බාගත හැකි මාර්ගෝපදේශ ඕනෑම වේලාවක වැදගත් ආරක්ෂක තොරතුරු යොමු කිරීම පහසු කරයි.",
+    ta: "எங்கள் பதிவிறக்கக்கூடிய வழிகாட்டிகள் முக்கியமான பாதுகாப்பு தகவல்களை எந்த நேரத்திலும் குறிப்பிடுவதை எளிதாக்குகின்றன."
+  },
+  "Digital Safety Essentials": {
+    en: "Digital Safety Essentials",
+    si: "ඩිජිටල් ආරක්ෂණ අත්‍යවශ්‍ය දෑ",
+    ta: "டிஜிட்டல் பாதுகாப்பு அடிப்படைகள்"
+  },
+  "Basic practices everyone should follow": {
+    en: "Basic practices everyone should follow",
+    si: "සෑම කෙනෙකුම අනුගමනය කළ යුතු මූලික පුරුදු",
+    ta: "அனைவரும் பின்பற்ற வேண்டிய அடிப்படை நடைமுறைகள்"
+  },
+  "Printable PDF guide": {
+    en: "Printable PDF guide",
+    si: "මුද්‍රණය කළ හැකි PDF මාර්ගෝපදේශය",
+    ta: "அச்சிடக்கூடிய PDF வழிகாட்டி"
+  },
+  "Scam Detection Checklist": {
+    en: "Scam Detection Checklist",
+    si: "වංචා හඳුනාගැනීමේ පිරික්සුම් ලැයිස්තුව",
+    ta: "மோசடி கண்டறிதல் சரிபார்ப்பு பட்டியல்"
+  },
+  "Easy-to-use reference for spotting suspicious communications": {
+    en: "Easy-to-use reference for spotting suspicious communications",
+    si: "සැක සහිත සන්නිවේදනයන් හඳුනා ගැනීම සඳහා පහසුවෙන් භාවිතා කළ හැකි යොමුව",
+    ta: "சந்தேகத்திற்கிடமான தகவல்தொடர்புகளைக் கண்டறிவதற்கான எளிதான குறிப்பு"
+  },
+  "Wallet-sized PDF card": {
+    en: "Wallet-sized PDF card",
+    si: "පසුම්බි ප්‍රමාණයේ PDF කාඩ්පත",
+    ta: "Wallet அளவிலான PDF அட்டை"
+  },
+  "Strong Password Guide": {
+    en: "Strong Password Guide",
+    si: "ශක්තිමත් මුරපද මාර්ගෝපදේශය",
+    ta: "வலுவான கடவுச்சொல் வழிகாட்டி"
+  },
+  "Simple methods for creating and managing secure passwords": {
+    en: "Simple methods for creating and managing secure passwords",
+    si: "ආරක්ෂිත මුරපද සෑදීම සහ කළමනාකරණය කිරීම සඳහා සරල ක්‍රම",
+    ta: "பாதுகாப்பான கடவுச்சொற்களை உருவாக்குவதற்கும் நிர்வகிப்பதற்கும் எளிய முறைகள்"
+  },
+  "Illustrated PDF guide": {
+    en: "Illustrated PDF guide",
+    si: "පින්තූර සහිත PDF මාර්ගෝපදේශය",
+    ta: "விளக்கப்பட்ட PDF வழிகாட்டி"
+  },
+  "Phone Security Setup": {
+    en: "Phone Security Setup",
+    si: "දුරකථන ආරක්ෂණ සැකසුම",
+    ta: "தொலைபேசி பாதுகாப்பு அமைப்பு"
+  },
+  "Step-by-step instructions for securing your mobile device": {
+    en: "Step-by-step instructions for securing your mobile device",
+    si: "ඔබගේ ජංගම උපාංගය සුරක්ෂිත කිරීම සඳහා පියවරෙන් පියවර උපදෙස්",
+    ta: "உங்கள் மொபைல் சாதனத்தைப் பாதுகாத்தல்"
+  },
+  "PDF with screenshots": {
+    en: "PDF with screenshots",
+    si: "තිරපිටපත් සහිත PDF",
+    ta: "ஸ்கிரீன்ஷாட்களுடன் PDF"
+  },
+  "Banking Safety Guide": {
+    en: "Banking Safety Guide",
+    si: "බැංකු ආරක්ෂණ මාර්ගෝපදේශය",
+    ta: "வங்கி பாதுகாப்பு வழிகாட்டி"
+  },
+  "Protecting your financial information online": {
+    en: "Protecting your financial information online",
+    si: "ඔබගේ මූල්‍ය තොරතුරු මාර්ගගතව ආරක්ෂා කිරීම",
+    ta: "உங்கள் நிதி தகவலை ஆன்லைனில் பாதுகாத்தல்"
+  },
+  "Detailed PDF guide": {
+    en: "Detailed PDF guide",
+    si: "සවිස්තරාත්මක PDF මාර්ගෝපදේශය",
+    ta: "விரிவான PDF வழிகாட்டி"
+  },
+  "Family Safety Discussion Guide": {
+    en: "Family Safety Discussion Guide",
+    si: "පවුලේ ආරක්ෂණ සාකච්ඡා මාර්ගෝපදේශය",
+    ta: "குடும்ப பாதுகாப்பு கலந்துரையாடல் வழிகாட்டி"
+  },
+  "How to talk about digital safety with family members": {
+    en: "How to talk about digital safety with family members",
+    si: "පවුලේ සාමාජිකයන් සමඟ ඩිජිටල් ආරක්ෂාව ගැන කතා කරන්නේ කෙසේද",
+    ta: "குடும்ப உறுப்பினர்களுடன் டிஜிட்டல் பாதுகாப்பு பற்றி எப்படி பேசுவது"
+  },
+  "Conversation guide PDF": {
+    en: "Conversation guide PDF",
+    si: "සංවාද මාර්ගෝපදේශ PDF",
+    ta: "உரையாடல் வழிகாட்டி PDF"
+  },
+  "Download PDF": {
+    en: "Download PDF",
+    si: "PDF බාගන්න",
+    ta: "PDF பதிவிறக்கம்"
+  },
+  "Watch and Learn": {
+    en: "Watch and Learn",
+    si: "නරඹා ඉගෙන ගන්න",
+    ta: "பார்த்து கற்றுக்கொள்ளுங்கள்"
+  },
+  "Short, clear video explanations of key digital safety topics": {
+    en: "Short, clear video explanations of key digital safety topics",
+    si: "ප්‍රධාන ඩිජිටල් ආරක්ෂණ මාතෘකා පිළිබඳ කෙටි, පැහැදිලි වීඩියෝ පැහැදිලි කිරීම්",
+    ta: "முக்கிய டிஜிட்டல் பாதுகாப்பு தலைப்புகள் பற்றிய குறுகிய, தெளிவான வீடியோ விளக்கங்கள்"
+  },
+  "Video tutorials": {
+    en: "Video tutorials",
+    si: "වීඩියෝ නිබන්ධන",
+    ta: "வீடியோ பயிற்சி"
+  },
+  "Our video tutorials make complex topics easy to understand through clear visual demonstrations.": {
+    en: "Our video tutorials make complex topics easy to understand through clear visual demonstrations.",
+    si: "අපගේ වීඩියෝ නිබන්ධන පැහැදිලි දෘශ්‍ය නිරූපණයන් හරහා සංකීර්ණ මාතෘකා තේරුම් ගැනීමට පහසු කරයි.",
+    ta: "எங்கள் வீடியோ பயிற்சிகள் தெளிவான காட்சி விளக்கங்கள் மூலம் சிக்கலான தலைப்புகளைப் புரிந்துகொள்வதை எளிதாக்குகின்றன."
+  },
+  "Spotting Scam Messages": {
+    en: "Spotting Scam Messages",
+    si: "වංචා පණිවිඩ හඳුනා ගැනීම",
+    ta: "மோசடி செய்திகளை கண்டறிதல்"
+  },
+  "How to identify suspicious SMS and WhatsApp communications": {
+    en: "How to identify suspicious SMS and WhatsApp communications",
+    si: "සැක සහිත SMS සහ වට්ස්ඇප් සන්නිවේදනයන් හඳුනා ගන්නේ කෙසේද",
+    ta: "சந்தேகத்திற்கிடமான SMS மற்றும் வாட்ஸ்அப் தகவல்தொடர்புகளை எவ்வாறு அடையாளம் காண்பது"
+  },
+  "4 minutes": {
+    en: "4 minutes",
+    si: "විනාඩි 4",
+    ta: "4 நிமிடங்கள்"
+  },
+  "Securing Your Smartphone": {
+    en: "Securing Your Smartphone",
+    si: "ඔබගේ ස්මාර්ට් ජංගම දුරකථනය සුරක්ෂිත කිරීම",
+    ta: "உங்கள் ஸ்மார்ட்போனைப் பாதுகாத்தல்"
+  },
+  "Essential security settings everyone should enable": {
+    en: "Essential security settings everyone should enable",
+    si: "සෑම කෙනෙකුම සක්‍රීය කළ යුතු අත්‍යවශ්‍ය ආරක්ෂක සැකසුම්",
+    ta: "அனைவரும் இயக்க வேண்டிய அத்தியாவசிய பாதுகாப்பு அமைப்புகள்"
+  },
+  "6 minutes": {
+    en: "6 minutes",
+    si: "විනාඩි 6",
+    ta: "6 நிமிடங்கள்"
+  },
+  "Banking Safely Online": {
+    en: "Banking Safely Online",
+    si: "මාර්ගගතව ආරක්ෂිතව බැංකුකරණය",
+    ta: "ஆன்லைனில் பாதுகாப்பாக வங்கி"
+  },
+  "Protecting your accounts and transactions": {
+    en: "Protecting your accounts and transactions",
+    si: "ඔබගේ ගිණුම් සහ ගනුදෙනු ආරක්ෂා කිරීම",
+    ta: "உங்கள் கணக்குகள் மற்றும் பரிவர்த்தனைகளைப் பாதுகாத்தல்"
+  },
+  "5 minutes": {
+    en: "5 minutes",
+    si: "විනාඩි 5",
+    ta: "5 நிமிடங்கள்"
+  },
+  "Password Security Made Simple": {
+    en: "Password Security Made Simple",
+    si: "මුරපද ආරක්ෂාව සරල කර ඇත",
+    ta: "கடவுச்சொல் பாதுகாப்பு எளிமையாக்கப்பட்டது"
+  },
+  "Creating strong, memorable passwords without confusion": {
+    en: "Creating strong, memorable passwords without confusion",
+    si: "ව්‍යාකූලත්වයකින් තොරව ශක්තිමත්, මතක තබා ගත හැකි මුරපද සෑදීම",
+    ta: "குழப்பம் இல்லாமல் வலுவான, மறக்கமுடியாத கடவுச்சொற்களை உருவாக்குதல்"
+  },
+  "3 minutes": {
+    en: "3 minutes",
+    si: "විනාඩි 3",
+    ta: "3 நிமிடங்கள்"
   },
   "Social Media Privacy": {
     en: "Social Media Privacy",
     si: "සමාජ මාධ්‍ය පෞද්ගලිකත්වය",
     ta: "சமூக ஊடக தனியுரிமை"
   },
-  "Tips for managing your privacy settings across platforms": {
-    en: "Tips for managing your privacy settings across platforms",
-    si: "සියලුම වේදිකා හරහා ඔබේ පෞද්ගලිකත්ව සැකසුම් කළමනාකරණය කිරීම සඳහා ඉඟි",
-    ta: "தளங்கள் முழுவதும் உங்கள் தனியுரிமை அமைப்புகளை நிர்வகிப்பதற்கான குறிப்புகள்"
+  "Controlling who sees your personal information": {
+    en: "Controlling who sees your personal information",
+    si: "ඔබගේ පුද්ගලික තොරතුරු කවුරුන් දකිනවාද යන්න පාලනය කිරීම",
+    ta: "உங்கள் தனிப்பட்ட தகவலை யார் பார்க்கிறார்கள் என்பதைக் கட்டுப்படுத்துதல்"
   },
-  "Safe Online Shopping": {
-    en: "Safe Online Shopping",
-    si: "ආරක්ෂිත මාර්ගගත සාප්පු සවාරි",
-    ta: "பாதுகாப்பான ஆன்லைன் ஷாப்பிங்"
+  "7 minutes": {
+    en: "7 minutes",
+    si: "විනාඩි 7",
+    ta: "7 நிமிடங்கள்"
   },
-  "Ensuring secure transactions and protecting your financial information": {
-    en: "Ensuring secure transactions and protecting your financial information",
-    si: "ආරක්ෂිත ගනුදෙනු සහතික කිරීම සහ ඔබේ මූල්‍ය තොරතුරු ආරක්ෂා කිරීම",
-    ta: "பாதுகாப்பான பரிவர்த்தனைகளை உறுதிசெய்து உங்கள் நிதித் தகவல்களைப் பாதுகாத்தல்"
+  "View All Videos": {
+    en: "View All Videos",
+    si: "සියලුම වීඩියෝ බලන්න",
+    ta: "எல்லா வீடியோக்களையும் பாருங்கள்"
   },
-  "Digital Wellbeing": {
-    en: "Digital Wellbeing",
-    si: "ඩිජිටල් යහපැවැත්ම",
-    ta: "டிஜிட்டல் நல்வாழ்வு"
+  "Trusted Information Sources": {
+    en: "Trusted Information Sources",
+    si: "විශ්වාසදායක තොරතුරු මූලාශ්‍ර",
+    ta: "நம்பகமான தகவல் ஆதாரங்கள்"
   },
-  "Maintaining a healthy relationship with technology": {
-    en: "Maintaining a healthy relationship with technology",
-    si: "තාක්ෂණය සමඟ සෞඛ්‍ය සම්පන්න සම්බන්ධතාවයක් පවත්වා ගැනීම",
-    ta: "தொழில்நுட்பத்துடன் ஆரோக்கியமான உறவைப் பேணுதல்"
+  "Links to official security resources in Sri Lanka": {
+    en: "Links to official security resources in Sri Lanka",
+    si: "ශ්‍රී ලංකාවේ නිල ආරක්ෂක සම්පත් වෙත සබැඳි",
+    ta: "இலங்கையில் அதிகாரப்பூர்வ பாதுகாப்பு ஆதாரங்களுக்கான இணைப்புகள்"
   },
-  "Download PDF": {
-    en: "Download PDF",
-    si: "PDF බාගත කරන්න",
-    ta: "PDF பதிவிறக்கம்"
+  "Official resources": {
+    en: "Official resources",
+    si: "නිල සම්පත්",
+    ta: "அதிகாரப்பூர்வ ஆதாரங்கள்"
   },
-
-  // Video Tutorials
-  "Video Tutorials": {
-    en: "Video Tutorials",
-    si: "වීඩියෝ නිබන්ධන",
-    ta: "வீடியோ பயிற்சிகள்"
+  "Official government and institutional resources provide reliable information on digital safety.": {
+    en: "Official government and institutional resources provide reliable information on digital safety.",
+    si: "නිල රජයේ සහ ආයතනික සම්පත් ඩිජිටල් ආරක්ෂාව පිළිබඳ විශ්වාසදායක තොරතුරු සපයයි.",
+    ta: "அதிகாரப்பூர்வ அரசாங்கம் மற்றும் நிறுவன ஆதாரங்கள் டிஜிட்டல் பாதுகாப்பு குறித்த நம்பகமான தகவல்களை வழங்குகின்றன."
   },
-  "Step-by-step visual guides": {
-    en: "Step-by-step visual guides",
-    si: "පියවරෙන් පියවර දෘශ්‍ය මාර්ගෝපදේශ",
-    ta: "படிப்படியான காட்சி வழிகாட்டிகள்"
+  "Sri Lanka CERT": {
+    en: "Sri Lanka CERT",
+    si: "ශ්‍රී ලංකා CERT",
+    ta: "இலங்கை CERT"
   },
-  "Email Safety Basics": {
-    en: "Email Safety Basics",
-    si: "විද්‍යුත් තැපැල් ආරක්ෂාව මූලික කරුණු",
-    ta: "மின்னஞ்சல் பாதுகாப்பு அடிப்படைகள்"
+  "Official Computer Emergency Readiness Team providing security guidance and alerts": {
+    en: "Official Computer Emergency Readiness Team providing security guidance and alerts",
+    si: "ආරක්ෂක මග පෙන්වීම් සහ අනතුරු ඇඟවීම් සපයන නිල පරිගණක හදිසි ප්‍රතිචාර කණ්ඩායම",
+    ta: "பாதுகாப்பு வழிகாட்டுதல் மற்றும் விழிப்பூட்டல்களை வழங்கும் அதிகாரப்பூர்வ கணினி அவசர தயார்நிலைக் குழு"
   },
-  "Device Security": {
-    en: "Device Security",
-    si: "උපාංග ආරක්ෂාව",
-    ta: "சாதன பாதுகாப்பு"
+  "Central Bank Security Advisories": {
+    en: "Central Bank Security Advisories",
+    si: "මහ බැංකු ආරක්ෂක උපදේශන",
+    ta: "மத்திய வங்கி பாதுகாப்பு ஆலோசனைகள்"
   },
-  "Internet Banking Safety": {
-    en: "Internet Banking Safety",
-    si: "අන්තර්ජාල බැංකුකරණ ආරක්ෂාව",
-    ta: "இணைய வங்கி பாதுகாப்பு"
+  "Banking security guidance and alerts from Sri Lanka's Central Bank": {
+    en: "Banking security guidance and alerts from Sri Lanka's Central Bank",
+    si: "ශ්‍රී ලංකා මහ බැංකුවෙන් බැංකු ආරක්ෂණ මග පෙන්වීම් සහ අනතුරු ඇඟවීම්",
+    ta: "இலங்கை மத்திய வங்கியின் வங்கி பாதுகாப்பு வழிகாட்டுதல் மற்றும் விழிப்பூட்டல்கள்"
   },
-  "Using Public Wi-Fi Safely": {
-    en: "Using Public Wi-Fi Safely",
-    si: "පොදු Wi-Fi ආරක්ෂිතව භාවිතා කිරීම",
-    ta: "பொது Wi-Fi ஐ பாதுகாப்பாகப் பயன்படுத்துதல்"
+  "Telecommunications Commission": {
+    en: "Telecommunications Commission",
+    si: "විදුලි සංදේශ කොමිෂන් සභාව",
+    ta: "தொலைத்தொடர்பு ஆணைக்குழு"
   },
-  "Duration": {
-    en: "Duration",
-    si: "කාල සීමාව",
-    ta: "கால அளவு"
+  "Communication safety information and telecommunications regulations": {
+    en: "Communication safety information and telecommunications regulations",
+    si: "සන්නිවේදන ආරක්ෂණ තොරතුරු සහ විදුලි සංදේශ රෙගුලාසි",
+    ta: "தகவல்தொடர்பு பாதுகாப்பு தகவல் மற்றும் தொலைத்தொடர்பு விதிமுறைகள்"
   },
-  "min": {
-    en: "min",
-    si: "මිනි",
-    ta: "நிமி"
+  "Cybercrime Police Division": {
+    en: "Cybercrime Police Division",
+    si: "සයිබර් අපරාධ පොලිස් කොට්ඨාසය",
+    ta: "சைபர் கிரைம் பொலிஸ் பிரிவு"
   },
-  "Watch Now": {
-    en: "Watch Now",
-    si: "දැන් නරඹන්න",
-    ta: "இப்போது பார்க்கவும்"
+  "Official reporting procedures and cybercrime awareness resources": {
+    en: "Official reporting procedures and cybercrime awareness resources",
+    si: "නිල වාර්තා කිරීමේ ක්‍රියා පටිපාටි සහ සයිබර් අපරාධ දැනුවත් කිරීමේ සම්පත්",
+    ta: "அதிகாரப்பூர்வ அறிக்கை நடைமுறைகள் மற்றும் சைபர் கிரைம் விழிப்புணர்வு ஆதாரங்கள்"
   },
-
-  // Recommended Tools
-  "Recommended Tools": {
-    en: "Recommended Tools",
-    si: "නිර්දේශිත මෙවලම්",
-    ta: "பரிந்துரைக்கப்பட்ட கருவிகள்"
+  "Visit Official Website": {
+    en: "Visit Official Website",
+    si: "නිල වෙබ් අඩවියට පිවිසෙන්න",
+    ta: "அதிகாரப்பூர்வ வலைத்தளத்தைப் பார்வையிடவும்"
   },
-  "Trustworthy software to enhance your digital safety": {
-    en: "Trustworthy software to enhance your digital safety",
-    si: "ඔබේ ඩිජිටල් ආරක්ෂාව වැඩි දියුණු කිරීම සඳහා විශ්වාසනීය මෘදුකාංග",
-    ta: "உங்கள் டிஜிட்டல் பாதுகாப்பை மேம்படுத்த நம்பகமான மென்பொருள்"
+  "Digital Safety Articles": {
+    en: "Digital Safety Articles",
+    si: "ඩිජිටල් ආරක්ෂණ ලිපි",
+    ta: "டிஜிட்டல் பாதுகாப்பு கட்டுரைகள்"
   },
-  "Password Managers": {
-    en: "Password Managers",
-    si: "මුරපද කළමනාකරුවන්",
-    ta: "கடவுச்சொல் மேலாளர்கள்"
+  "Practical advice and current information about digital safety in Sri Lanka": {
+    en: "Practical advice and current information about digital safety in Sri Lanka",
+    si: "ශ්‍රී ලංකාවේ ඩිජිටල් ආරක්ෂාව පිළිබඳ ප්‍රායෝගික උපදෙස් සහ වත්මන් තොරතුරු",
+    ta: "இலங்கையில் டிஜிட்டல் பாதுகாப்பு பற்றிய நடைமுறை ஆலோசனை மற்றும் தற்போதைய தகவல்கள்"
   },
-  "Store and generate secure passwords": {
-    en: "Store and generate secure passwords",
-    si: "ආරක්ෂිත මුරපද ගබඩා කර ජනනය කරන්න",
-    ta: "பாதுகாப்பான கடவுச்சொற்களை சேமித்து உருவாக்கவும்"
+  "Digital safety articles": {
+    en: "Digital safety articles",
+    si: "ඩිජිටල් ආරක්ෂණ ලිපි",
+    ta: "டிஜிட்டல் பாதுகாப்பு கட்டுரைகள்"
   },
-  "Antivirus Software": {
-    en: "Antivirus Software",
-    si: "ප්‍රතිවයිරස මෘදුකාංග",
-    ta: "ஆன்டிவைரஸ் மென்பொருள்"
+  "Our articles provide in-depth information on important digital safety topics.": {
+    en: "Our articles provide in-depth information on important digital safety topics.",
+    si: "අපගේ ලිපි වැදගත් ඩිජිටල් ආරක්ෂණ මාතෘකා පිළිබඳ ගැඹුරු තොරතුරු සපයයි.",
+    ta: "எங்கள் கட்டுரைகள் முக்கியமான டிஜிட்டல் பாதுகாப்பு தலைப்புகள் பற்றிய ஆழமான தகவல்களை வழங்குகின்றன."
   },
-  "Protect your devices from malware": {
-    en: "Protect your devices from malware",
-    si: "ඔබේ උපාංග දුෂිත මෘදුකාංගවලින් ආරක්ෂා කරන්න",
-    ta: "உங்கள் சாதனங்களை தீம்பொருளிலிருந்து பாதுகாக்கவும்"
+  "Helping Older Family Members Recognize Scams": {
+    en: "Helping Older Family Members Recognize Scams",
+    si: "වැඩිහිටි පවුලේ සාමාජිකයින්ට වංචා හඳුනා ගැනීමට උදව් කිරීම",
+    ta: "வயதான குடும்ப உறுப்பினர்கள் மோசடிகளை அடையாளம் காண உதவுதல்"
   },
-  "VPN Services": {
-    en: "VPN Services",
-    si: "VPN සේවා",
-    ta: "VPN சேவைகள்"
+  "Effective approaches for safety conversations with relatives": {
+    en: "Effective approaches for safety conversations with relatives",
+    si: "ඥාතීන් සමඟ ආරක්ෂාව පිළිබඳ සංවාද සඳහා ඵලදායී ප්‍රවේශයන්",
+    ta: "உறவினர்களுடன் பாதுகாப்பு உரையாடல்களுக்கான பயனுள்ள அணுகுமுறைகள்"
   },
-  "Secure your internet connection": {
-    en: "Secure your internet connection",
-    si: "ඔබේ අන්තර්ජාල සම්බන්ධතාව ආරක්ෂා කරන්න",
-    ta: "உங்கள் இணைய இணைப்பைப் பாதுகாக்கவும்"
+  "Voice Clone Scams: The New Threat": {
+    en: "Voice Clone Scams: The New Threat",
+    si: "හඬ ක්ලෝන වංචා: නව තර්ජනය",
+    ta: "குரல் குளோன் மோசடிகள்: புதிய அச்சுறுத்தல்"
   },
-  "Two-Factor Authentication Apps": {
-    en: "Two-Factor Authentication Apps",
-    si: "ද්වි-සාධක සත්‍යාපන යෙදුම්",
-    ta: "இரண்டு-காரணி அங்கீகார பயன்பாடுகள்"
+  "How AI voice impersonation works and how to protect yourself": {
+    en: "How AI voice impersonation works and how to protect yourself",
+    si: "AI හඬ මාරු කිරීම ක්‍රියා කරන ආකාරය සහ ඔබව ආරක්ෂා කර ගන්නේ කෙසේද",
+    ta: "AI குரல் ஆள்மாறாட்டம் எவ்வாறு செயல்படுகிறது மற்றும் உங்களைப் பாதுகாத்துக் கொள்வது எப்படி"
   },
-  "Add an extra layer of security to your accounts": {
-    en: "Add an extra layer of security to your accounts",
-    si: "ඔබේ ගිණුම් වලට අමතර ආරක්ෂක ස්ථරයක් එක් කරන්න",
-    ta: "உங்கள் கணக்குகளுக்கு கூடுதல் பாதுகாப்பு அடுக்கைச் சேர்க்கவும்"
+  "5 Security Settings to Change Today": {
+    en: "5 Security Settings to Change Today",
+    si: "අදම වෙනස් කළ යුතු ආරක්ෂක සැකසුම් 5ක්",
+    ta: "இன்று மாற்ற வேண்டிய 5 பாதுகாப்பு அமைப்புகள்"
   },
-  "Learn More": {
-    en: "Learn More",
-    si: "තව දැනගන්න",
-    ta: "மேலும் அறிக"
+  "Quick changes that dramatically improve your online safety": {
+    en: "Quick changes that dramatically improve your online safety",
+    si: "ඔබගේ මාර්ගගත ආරක්ෂාව නාටකාකාර ලෙස වැඩිදියුණු කරන ඉක්මන් වෙනස්කම්",
+    ta: "உங்கள் ஆன்லைன் பாதுகாப்பை வியத்தகு முறையில் மேம்படுத்தும் விரைவான மாற்றங்கள்"
   },
-
-  // Self-Assessment
-  "Digital Safety Self-Assessment": {
-    en: "Digital Safety Self-Assessment",
-    si: "ඩිජිටල් ආරක්ෂාව ස්වයං තක්සේරුව",
-    ta: "டிஜிட்டல் பாதுகாப்பு சுய மதிப்பீடு"
+  "Two-Factor Authentication Explained Simply": {
+    en: "Two-Factor Authentication Explained Simply",
+    si: "දෙයාකාර සත්‍යාපනය සරලව පැහැදිලි කර ඇත",
+    ta: "இரண்டு காரணி அங்கீகாரம் எளிமையாக விளக்கப்பட்டது"
   },
-  "Evaluate your current digital safety practices": {
-    en: "Evaluate your current digital safety practices",
-    si: "ඔබේ වත්මන් ඩිජිටල් ආරක්ෂක පුරුදු ඇගයීමට ලක් කරන්න",
-    ta: "உங்களின் தற்போதைய டிஜிட்டல் பாதுகாப்பு நடைமுறைகளை மதிப்பிடுங்கள்"
+  "Understanding this important security feature in plain language": {
+    en: "Understanding this important security feature in plain language",
+    si: "මෙම වැදගත් ආරක්ෂක අංගය සරල භාෂාවෙන් අවබෝධ කර ගැනීම",
+    ta: "இந்த முக்கியமான பாதுகாப்பு அம்சத்தை எளிய மொழியில் புரிந்துகொள்வது"
   },
-  "Take a quick 5-minute assessment to identify areas where you can improve your digital safety habits. Upon completion, you'll receive personalized recommendations.": {
-    en: "Take a quick 5-minute assessment to identify areas where you can improve your digital safety habits. Upon completion, you'll receive personalized recommendations.",
-    si: "ඔබේ ඩිජිටල් ආරක්ෂක පුරුදු වැඩි දියුණු කළ හැකි ක්ෂේත්‍ර හඳුනා ගැනීම සඳහා ඉක්මන් මිනිත්තු 5ක තක්සේරුවක් ගන්න. සම්පූර්ණ කිරීමෙන් පසු, ඔබට පුද්ගලීකරණය කරන ලද නිර්දේශ ලැබෙනු ඇත.",
-    ta: "உங்கள் டிஜிட்டல் பாதுகாப்பு பழக்கங்களை மேம்படுத்தக்கூடிய பகுதிகளை அடையாளம் காண விரைவான 5-நிமிட மதிப்பீட்டை எடுங்கள். முடித்ததும், தனிப்பயனாக்கப்பட்ட பரிந்துரைகளைப் பெறுவீர்கள்."
+  "Read Article": {
+    en: "Read Article",
+    si: "ලිපිය කියවන්න",
+    ta: "கட்டுரையைப் படியுங்கள்"
   },
-  "Start Assessment": {
-    en: "Start Assessment",
-    si: "තක්සේරුව ආරම්භ කරන්න",
-    ta: "மதிப்பீட்டைத் தொடங்கவும்"
+  "View All Articles": {
+    en: "View All Articles",
+    si: "සියලුම ලිපි බලන්න",
+    ta: "எல்லா கட்டுரைகளையும் பாருங்கள்"
   },
-
-  // Community Forum
-  "Community Help Forum": {
-    en: "Community Help Forum",
-    si: "ප්‍රජා උපකාර සංසදය",
-    ta: "சமூக உதவி மன்றம்"
+  "Need More Comprehensive Help?": {
+    en: "Need More Comprehensive Help?",
+    si: "වඩාත් පුළුල් සහායක් අවශ්‍යද?",
+    ta: "மேலும் விரிவான உதவி தேவையா?"
   },
-  "Connect with others and get support": {
-    en: "Connect with others and get support",
-    si: "අන් අය සමඟ සම්බන්ධ වී සහාය ලබා ගන්න",
-    ta: "மற்றவர்களுடன் இணைந்து ஆதரவைப் பெறுங்கள்"
+  "Our structured course provides hands-on guidance": {
+    en: "Our structured course provides hands-on guidance",
+    si: "අපගේ ව්‍යුහගත පාඨමාලාව ප්‍රායෝගික මග පෙන්වීමක් සපයයි",
+    ta: "எங்கள் கட்டமைக்கப்பட்ட பாடநெறி கைகளால் வழிகாட்டுதலை வழங்குகிறது"
   },
-  "Join our online community where you can ask questions, share experiences, and learn from others. Our forum is moderated by digital safety experts who provide guidance and ensure a supportive environment.": {
-    en: "Join our online community where you can ask questions, share experiences, and learn from others. Our forum is moderated by digital safety experts who provide guidance and ensure a supportive environment.",
-    si: "ඔබට ප්‍රශ්න ඇසීමට, අත්දැකීම් බෙදා ගැනීමට සහ අන් අයගෙන් ඉගෙන ගැනීමට හැකි අපගේ මාර්ගගත ප්‍රජාවට සම්බන්ධ වන්න. අපගේ සංසදය මෙහෙයවනු ලබන්නේ මාර්ගෝපදේශ සපයන සහ සහායක පරිසරයක් සහතික කරන ඩිජිටල් ආරක්ෂක විශේෂඥයින් විසිනි.",
-    ta: "கேள்விகளைக் கேட்கவும், அனுபவங்களைப் பகிரவும், மற்றவர்களிடமிருந்து கற்றுக்கொள்ளவும் எங்கள் ஆன்லைன் சமூகத்தில் இணையுங்கள். எங்கள் மன்றம் வழிகாட்டுதலை வழங்கி ஆதரவான சூழலை உறுதி செய்யும் டிஜிட்டல் பாதுகாப்பு நிபுணர்களால் நிர்வகிக்கப்படுகிறது."
+  "Digital Safety & AI Awareness Course": {
+    en: "Digital Safety & AI Awareness Course",
+    si: "ඩිජිටල් ආරක්ෂාව සහ AI දැනුවත් කිරීමේ පාඨමාලාව",
+    ta: "டிஜிட்டல் பாதுகாப்பு மற்றும் AI விழிப்புணர்வு பாடநெறி"
   },
-  "Visit Forum": {
-    en: "Visit Forum",
-    si: "සංසදය වෙත පිවිසෙන්න",
-    ta: "மன்றத்தைப் பார்வையிடவும்"
+  "While these resources are helpful, our comprehensive course provides personalized guidance, hands-on practice, and in-depth learning to build your confidence with technology. Join our next session to get the full benefit of our expert instruction.": {
+    en: "While these resources are helpful, our comprehensive course provides personalized guidance, hands-on practice, and in-depth learning to build your confidence with technology. Join our next session to get the full benefit of our expert instruction.",
+    si: "මෙම සම්පත් ප්‍රයෝජනවත් වන අතර, අපගේ පුළුල් පාඨමාලාව තාක්ෂණය පිළිබඳව ඔබේ විශ්වාසය ගොඩනැගීම සඳහා පුද්ගලාරෝපිත මග පෙන්වීම, ප්‍රායෝගික පුහුණුව සහ ගැඹුරු ඉගෙනීම සපයයි. අපගේ විශේෂඥ උපදෙස්වල පූර්ණ ප්‍රතිලාභ ලබා ගැනීමට අපගේ අදிர்வில் සම්බන්ධ වන්න.",
+    ta: "இந்த ஆதாரங்கள் பயனுள்ளதாக இருக்கும்போது, ​​எங்கள் விரிவான பாடநெறி தனிப்பயனாக்கப்பட்ட வழிகாட்டுதல், கைகளால் பயிற்சி மற்றும் தொழில்நுட்பத்தில் உங்கள் நம்பிக்கையை வளர்ப்பதற்கான ஆழமான கற்றல் ஆகியவற்றை வழங்குகிறது. எங்கள் நிபுணர் அறிவுறுத்தலின் முழுப் பலனையும் பெற எங்கள் அடுத்த அமர்வில் சேருங்கள்."
   },
-
-  // Helpline
-  "Digital Safety Helpline": {
-    en: "Digital Safety Helpline",
-    si: "ඩිජිටල් ආරක්ෂක උපකාර අංකය",
-    ta: "டிஜிட்டல் பாதுகாப்பு உதவி எண்"
+  "Explore Course Options": {
+    en: "Explore Course Options",
+    si: "පාඨමාලා විකල්ප ගවේෂණය කරන්න",
+    ta: "பாடநெறி விருப்பங்களை ஆராயுங்கள்"
   },
-  "Get personalized help when you need it": {
-    en: "Get personalized help when you need it",
-    si: "ඔබට අවශ්‍ය විට පුද්ගලීකරණය කරන ලද සහාය ලබා ගන්න",
-    ta: "உங்களுக்குத் தேவைப்படும்போது தனிப்பயனாக்கப்பட்ட உதவியைப் பெறுங்கள்"
-  },
-  "Our helpline is available Monday through Friday, 9am to 5pm. Trained digital safety specialists are ready to assist with urgent issues or questions that require immediate attention.": {
-    en: "Our helpline is available Monday through Friday, 9am to 5pm. Trained digital safety specialists are ready to assist with urgent issues or questions that require immediate attention.",
-    si: "අපගේ උපකාර අංකය සඳුදා සිට සිකුරාදා දක්වා පෙ.ව. 9 සිට ප.ව. 5 දක්වා ලබා ගත හැකිය. පුහුණු ඩිජිටල් ආරක්ෂක විශේෂඥයින් හදිසි ගැටලු හෝ වහාම අවධානය අවශ්‍ය ප්‍රශ්න සඳහා සහාය වීමට සූදානම්ව සිටිති.",
-    ta: "எங்கள் உதவி எண் திங்கள் முதல் வெள்ளி வரை, காலை 9 மணி முதல் மாலை 5 மணி வரை கிடைக்கிறது. பயிற்சி பெற்ற டிஜிட்டல் பாதுகாப்பு நிபுணர்கள் அவசர சிக்கல்கள் அல்லது உடனடி கவனம் தேவைப்படும் கேள்விகளுக்கு உதவத் தயாராக உள்ளனர்."
-  },
-  "Call": {
-    en: "Call",
-    si: "අමතන්න",
-    ta: "அழைக்கவும்"
-  },
-  "Email for Support": {
-    en: "Email for Support",
-    si: "සහාය සඳහා විද්‍යුත් තැපෑල",
-    ta: "ஆதரவுக்கு மின்னஞ்சல்"
-  }
 }; 

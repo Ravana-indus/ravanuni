@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from '@/lib/translation';
 
 interface FeaturedItemProps {
   title: string;
@@ -10,6 +11,8 @@ interface FeaturedItemProps {
 }
 
 const FeaturedItem = ({ title, description, imageUrl, link, delay = 0 }: FeaturedItemProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div 
       className="glass-card overflow-hidden h-full flex flex-col group animate-fade-up"
@@ -31,7 +34,7 @@ const FeaturedItem = ({ title, description, imageUrl, link, delay = 0 }: Feature
           href={link} 
           className="text-institutional font-medium inline-flex items-center transition-all duration-300 group-hover:translate-x-1"
         >
-          Learn more <ArrowRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform duration-300" />
+          {t("Learn more")} <ArrowRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform duration-300" />
         </a>
       </div>
     </div>
