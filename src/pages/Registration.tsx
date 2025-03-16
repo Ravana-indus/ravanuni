@@ -7,10 +7,39 @@ import { Input } from '@/components/ui/input';
 import CountrySelector from '@/components/CountrySelector';
 import { useGeoLocation } from '@/hooks/useGeoLocation';
 import { getPricingByCountry, formatPrice, PricingOption } from '@/utils/countryPricing';
+import { LeadData } from '@/services/api';
+import { useToast } from '@/hooks/use-toast';
+import { useLeadRegistration } from '@/hooks/useApi';
 
 const Registration = () => {
   const [courseType, setCourseType] = useState<string>('');
   const [withCompanion, setWithCompanion] = useState<boolean>(false);
+  const { toast } = useToast();
+  
+  // Use the lead registration hook
+  const { 
+    submitRegistration, 
+    isSubmitting, 
+    error: submissionError, 
+    success,
+    leadId 
+  } = useLeadRegistration();
+  
+  // Form data state
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    age: '',
+    language: '',
+    timeZone: '',
+    session: '',
+    referralSource: '',
+    specialRequirements: '',
+    companionName: '',
+    agreedToTerms: false
+  });
   
   // Add country detection
   const { country: detectedCountry, loading: locationLoading, error: locationError } = useGeoLocation();
@@ -36,6 +65,47 @@ const Registration = () => {
       setCourseType('online');
     }
   }, [selectedCountry]);
+
+  // Show toast when submission is successful or has an error
+  useEffect(() => {
+    if (success && leadId) {
+      toast({
+        title: "Registration Successful",
+        description: "Thank you for registering. We will contact you shortly.",
+        variant: "default",
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        age: '',
+        language: '',
+        timeZone: '',
+        session: '',
+        referralSource: '',
+        specialRequirements: '',
+        companionName: '',
+        agreedToTerms: false
+      });
+      
+      setCourseType('');
+      setWithCompanion(false);
+      
+      // Redirect to thank you page
+      window.location.href = `/thank-you?lead=${leadId}`;
+    }
+    
+    if (submissionError) {
+      toast({
+        title: "Registration Failed",
+        description: submissionError || "There was an error submitting your registration. Please try again.",
+        variant: "destructive",
+      });
+    }
+  }, [success, submissionError, leadId, toast]);
 
   // Original animation code
   useEffect(() => {
@@ -80,6 +150,68 @@ const Registration = () => {
   // Handler for country change
   const handleCountryChange = (countryCode: string) => {
     setSelectedCountry(countryCode);
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    
+    if (type === 'checkbox') {
+      const { checked } = e.target as HTMLInputElement;
+      setFormData({
+        ...formData,
+        [name]: checked
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.agreedToTerms) {
+      toast({
+        title: "Terms and Conditions",
+        description: "You must agree to the terms and conditions to proceed.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (!courseType) {
+      toast({
+        title: "Course Selection Required",
+        description: "Please select either Online or In-Person course format.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Prepare lead data based on form inputs
+    const leadData: LeadData = {
+      lead_name: `${formData.firstName} ${formData.lastName}`,
+      company_name: "Individual",
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email_id: formData.email,
+      mobile_no: formData.phone,
+      course_interest: courseType === 'in-person' ? 'in-person-digital-safety' : 'Digital Safety & AI Awareness',
+      preferred_language: formData.language,
+      preferred_time_zone: formData.timeZone,
+      age: formData.age,
+      special_requirements: formData.specialRequirements,
+      companion_registration: withCompanion ? 1 : 0,
+      companion_name: withCompanion ? formData.companionName : '',
+      referral_source: formData.referralSource
+    };
+    
+    // Submit the lead registration using the hook
+    await submitRegistration(leadData);
   };
 
   return (
@@ -267,15 +399,29 @@ const Registration = () => {
         >
           <div className="max-w-3xl">
             <div className="glass-card p-8 rounded-lg shadow-elegant scroll-animate">
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <Input 
-                    type="text" 
-                    placeholder="Your full name"
-                    className="w-full"
-                    required
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <Input 
+                      type="text" 
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      placeholder="First name"
+                      className="w-full"
+                      required
+                    />
+                    <Input 
+                      type="text" 
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      placeholder="Last name"
+                      className="w-full"
+                      required
+                    />
+                  </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -283,6 +429,9 @@ const Registration = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
                     <Input 
                       type="number" 
+                      name="age"
+                      value={formData.age}
+                      onChange={handleInputChange}
                       placeholder="Your age"
                       className="w-full"
                       required
@@ -292,13 +441,16 @@ const Registration = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Language</label>
                     <select 
+                      name="language"
+                      value={formData.language}
+                      onChange={handleInputChange}
                       className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                       required
                     >
                       <option value="">Select a language</option>
-                      <option value="english">English</option>
-                      <option value="sinhala">Sinhala</option>
-                      <option value="tamil">Tamil</option>
+                      <option value="English">English</option>
+                      <option value="Sinhala">Sinhala</option>
+                      <option value="Tamil">Tamil</option>
                     </select>
                   </div>
                 </div>
@@ -308,6 +460,9 @@ const Registration = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                     <Input 
                       type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder="your.email@example.com"
                       className="w-full"
                       required
@@ -318,6 +473,9 @@ const Registration = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                     <Input 
                       type="tel" 
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
                       placeholder="+94 7X XXX XXXX"
                       className="w-full"
                       required
@@ -362,11 +520,14 @@ const Registration = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
                     <select 
+                      name="timeZone"
+                      value={formData.timeZone}
+                      onChange={handleInputChange}
                       className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                       required
                     >
                       <option value="">Select a time zone</option>
-                      <option value="sri-lanka">Sri Lanka</option>
+                      <option value="Sri Lanka">Sri Lanka</option>
                       <option value="europe">Europe</option>
                       <option value="north-america">North America</option>
                       <option value="other">Other</option>
@@ -377,6 +538,9 @@ const Registration = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Session Dates</label>
                   <select 
+                    name="session"
+                    value={formData.session}
+                    onChange={handleInputChange}
                     className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                     required
                   >
@@ -400,6 +564,9 @@ const Registration = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">How did you hear about us?</label>
                   <select 
+                    name="referralSource"
+                    value={formData.referralSource}
+                    onChange={handleInputChange}
                     className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                     required
                   >
@@ -415,19 +582,22 @@ const Registration = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Special Needs</label>
                   <textarea 
+                    name="specialRequirements"
+                    value={formData.specialRequirements}
+                    onChange={handleInputChange}
                     placeholder="Please let us know if you have any accessibility requirements or other special needs"
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm resize-none"
                     rows={3}
                   ></textarea>
                 </div>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 border border-gray-200 rounded-lg mb-4">
                   <label className="flex items-start">
                     <input 
                       type="checkbox" 
-                      className="mt-1 mr-3" 
                       checked={withCompanion} 
                       onChange={() => setWithCompanion(!withCompanion)}
+                      className="mt-1 mr-3" 
                     />
                     <div>
                       <p className="font-medium">I'm registering with a family member (10% discount)</p>
@@ -440,9 +610,12 @@ const Registration = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Companion Name</label>
                       <Input 
                         type="text" 
+                        name="companionName"
+                        value={formData.companionName}
+                        onChange={handleInputChange}
                         placeholder="Full name of your companion"
                         className="w-full"
-                        required
+                        required={withCompanion}
                       />
                     </div>
                   )}
@@ -450,7 +623,14 @@ const Registration = () => {
                 
                 <div className="p-4 border border-gray-200 rounded-lg">
                   <label className="flex items-start">
-                    <input type="checkbox" className="mt-1 mr-3" required />
+                    <input 
+                      type="checkbox" 
+                      name="agreedToTerms"
+                      checked={formData.agreedToTerms}
+                      onChange={handleInputChange}
+                      className="mt-1 mr-3" 
+                      required 
+                    />
                     <div>
                       <p>I agree to the <a href="/privacy-policy-terms" className="text-blue-600 hover:underline">terms and conditions</a></p>
                       <p className="text-gray-500 text-sm">By checking this box, you agree to our Privacy Policy and Terms of Service.</p>
@@ -461,8 +641,9 @@ const Registration = () => {
                 <button 
                   type="submit" 
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-300 flex justify-center items-center"
+                  disabled={isSubmitting}
                 >
-                  Complete Registration
+                  {isSubmitting ? 'Processing...' : 'Complete Registration'}
                 </button>
               </form>
             </div>

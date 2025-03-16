@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
 import Registration from "./pages/Registration";
+import ThankYou from "./pages/ThankYou";
 import PrivacyPolicyTerms from "./pages/PrivacyPolicyTerms";
 import { LanguageProvider } from "./components/layout/Navbar";
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/resources" element={<Resources />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/registration" element={<Registration />} />
+            <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyTerms />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
