@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build && cp _redirects _headers dist/",
     "build:dev": "vite build --mode development",
+    "build:cloudflare": "npm install && npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:cf": "node preview.js"
@@ -64,6 +65,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@cloudflare/kv-asset-handler": "0.4.0",
     "@eslint/js": "^9.9.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.5.5",
