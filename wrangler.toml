@@ -2,15 +2,8 @@
 name = "ravana-iof"
 compatibility_date = "2023-10-30"
 
+# The main entry point for the worker
+main = ".cloudflare/workers-site/index.js"
+
 # This is the key property needed for Pages
-pages_build_output_dir = "dist"
-
-[site]
-bucket = "./dist"
-
-[build]
-command = "npm run build:cloudflare"
-output_directory = "dist"
-
-[build.upload]
-format = "directory" 
+pages_build_output_dir = "dist" 
