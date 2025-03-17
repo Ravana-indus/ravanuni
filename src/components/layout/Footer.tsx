@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container-content">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
           <div className="md:col-span-1">
-            <img src="/public/Rift full footer.png" alt="Rift Logo" className="mb-6" />
+            <img src="/Rift full footer.png" alt="Rift Logo" className="mb-6" />
             <p className="text-gray-600 mb-6 max-w-xs">
               {t('Empowering Sri Lankans with practical technology skills for the digital age.')}
             </p>
