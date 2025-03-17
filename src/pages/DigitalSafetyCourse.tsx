@@ -139,7 +139,7 @@ const DigitalSafetyCourse = () => {
                   <span>Business professionals needing to protect sensitive information</span>
                 </li>
               </ul>
-              <a href="#register" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition duration-300 inline-flex items-center">
+              <a href="/registration" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition duration-300 inline-flex items-center">
                 Register for Next Course <MoveRight size={18} className="ml-2" />
               </a>
             </div>
@@ -300,7 +300,7 @@ const DigitalSafetyCourse = () => {
                 </li>
               </ul>
               <div className="text-center mt-6">
-                <a href="#register" className="bg-institutional hover:bg-institutional-dark text-white px-6 py-3 rounded-md font-medium transition duration-300 inline-flex items-center">
+                <a href="/registration" className="bg-institutional hover:bg-institutional-dark text-white px-6 py-3 rounded-md font-medium transition duration-300 inline-flex items-center">
                   Choose In-Person Learning
                 </a>
               </div>
@@ -341,7 +341,7 @@ const DigitalSafetyCourse = () => {
                 </li>
               </ul>
               <div className="text-center mt-6">
-                <a href="#register" className="bg-institutional hover:bg-institutional-dark text-white px-6 py-3 rounded-md font-medium transition duration-300 inline-flex items-center">
+                <a href="/registration" className="bg-institutional hover:bg-institutional-dark text-white px-6 py-3 rounded-md font-medium transition duration-300 inline-flex items-center">
                   Choose Online Learning
                 </a>
               </div>
@@ -555,7 +555,7 @@ const DigitalSafetyCourse = () => {
                 </div>
                 <p className="text-gray-600 mb-2"><Calendar size={16} className="inline mr-2" /> {item.dates}</p>
                 <p className="text-gray-600 mb-6"><Users size={16} className="inline mr-2" /> {item.spots}</p>
-                <a href="/register" className="button-institutional-outline w-full text-center block">
+                <a href="/registration" className="button-institutional-outline w-full text-center block">
                   Reserve Your Spot
                 </a>
               </div>

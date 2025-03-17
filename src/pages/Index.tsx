@@ -210,7 +210,7 @@ const Index = () => {
                 </div>
                 <p className="text-gray-600 mb-2"><Calendar size={16} className="inline mr-2" /> {item.dates}</p>
                 <p className="text-gray-600 mb-6"><Users size={16} className="inline mr-2" /> {item.spots}</p>
-                <a href="/register" className="button-institutional-outline w-full text-center block">
+                <a href="/registration" className="button-institutional-outline w-full text-center block">
                   {t("Reserve Your Spot")}
                 </a>
               </div>
@@ -218,7 +218,7 @@ const Index = () => {
           </div>
           
           <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '300ms' }}>
-            <a href="/register" className="button-institutional inline-flex">
+            <a href="/registration" className="button-institutional inline-flex">
               {t("Secure Your Spot")} <MoveRight size={18} className="ml-2" />
             </a>
           </div>

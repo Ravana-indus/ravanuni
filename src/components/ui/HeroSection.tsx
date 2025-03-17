@@ -61,7 +61,7 @@ const HeroSection = () => {
             </p>
             
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.8s' }}>
-              <a href="/course" className="button-institutional">
+              <a href="#course-formats" className="button-institutional">
                 {t("View Course Details")} <ArrowRight size={16} className="ml-2" />
               </a>
               <a href="/register" className="button-institutional-outline">

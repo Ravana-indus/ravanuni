@@ -81,7 +81,7 @@ const Contact = () => {
               {
                 icon: <Phone size={24} />,
                 title: t('Phone'),
-                info: "+94 11 258 1181 (Sri Lanka) | +1 437 830 2199 (Canada)",
+                info: "+94 11 258 1181",
                 action: {
                   text: t('Call Us'),
                   link: "tel:+94112581181"
@@ -110,7 +110,7 @@ const Contact = () => {
               {
                 icon: <MapPin size={24} />,
                 title: t('Address'),
-                info: t('123 Colombo Road, Colombo 04, Sri Lanka'),
+                info: t('No 10, 30/1/1 Pamankada Ln, Colombo 00600, Sri Lanka'),
                 action: {
                   text: t('Get Directions'),
                   link: "https://g.co/kgs/mV83cgz"
