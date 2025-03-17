@@ -80,7 +80,7 @@ const Navbar = () => {
       <div className="bg-institutional text-white py-1 fixed top-0 left-0 right-0 z-50">
         <div className="container-content">
           <div className="flex justify-end items-center text-sm">
-            <a href="/user-portal" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">{t('User Portal Login')}</a>
+            <a href="https://portal.riftuni.com/" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">{t('User Portal Login')}</a>
             <span className="text-institutional-300">|</span>
             <a href="https://portal.riftuni.com/lms/courses" className="px-3 py-1 text-white hover:text-institutional-100 transition-colors duration-300">{t('LMS Login')}</a>
           </div>
