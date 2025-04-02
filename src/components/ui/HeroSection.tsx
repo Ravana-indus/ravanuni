@@ -64,7 +64,7 @@ const HeroSection = () => {
               <a href="#course-formats" className="button-institutional">
                 {t("View Course Details")} <ArrowRight size={16} className="ml-2" />
               </a>
-              <a href="/register" className="button-institutional-outline">
+              <a href="/registration" className="button-institutional-outline">
                 {t("Register Now")}
               </a>
             </div>

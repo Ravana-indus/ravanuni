@@ -30,12 +30,14 @@ const FeaturedItem = ({ title, description, imageUrl, link, delay = 0 }: Feature
       <div className="p-6 flex flex-col flex-grow">
         <h3 className="text-xl font-semibold mb-2 text-gray-900">{title}</h3>
         <p className="text-gray-600 mb-4 flex-grow">{description}</p>
-        <a 
-          href={link} 
-          className="text-institutional font-medium inline-flex items-center transition-all duration-300 group-hover:translate-x-1"
-        >
-          {t("Learn more")} <ArrowRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform duration-300" />
-        </a>
+        {link && (
+          <a 
+            href={link} 
+            className="text-institutional font-medium inline-flex items-center transition-all duration-300 group-hover:translate-x-1"
+          >
+            {t("Learn more")} <ArrowRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform duration-300" />
+          </a>
+        )}
       </div>
     </div>
   );

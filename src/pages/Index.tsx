@@ -243,47 +243,43 @@ const Index = () => {
                   imageUrl: "https://images.unsplash.com/photo-1563309480-5aca14189417?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for German Language Courses
                   title: t("German Language Courses with AI"),
                   description: t("Get access to Germany's free higher education with full confidence."),
-                  link: "/german-courses"
+                  link: ""
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1517849325426-6eac321919a0?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for IELTS Coaching
                   title: t("IELTS Coaching with AI"),
                   description: t("Prepare for your IELTS exam with tailored AI support and resources."),
-                  link: "/ielts-coaching"
+                  link: ""
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1612117150828-78a83cd63ef2?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI for Kids
                   title: t("AI for Kids"),
                   description: t("Engaging AI courses designed to introduce children to technology."),
-                  link: "/ai-for-kids"
+                  link: ""
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1525338078858-d762b5e32f2c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI for Adults
                   title: t("AI for Adults"),
                   description: t("Learn how to leverage AI tools for personal growth."),
-                  link: "/ai-for-adults"
+                  link: ""
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1652565437094-ce12e77dcf0e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for AI at Work
                   title: t("AI at Work"),
                   description: t("Discover how AI can enhance productivity and efficiency in the workplace."),
-                  link: "/ai-at-work"
+                  link: ""
                 },
                 {
                   imageUrl: "https://images.unsplash.com/photo-1600437493529-cbab154790be?q=80&w=3734&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Placeholder for Coding for Kids and Teens
                   title: t("Coding for Kids and Teens"),
                   description: t("Fun and interactive coding courses designed for young learners."),
-                  link: "/coding-for-kids-and-teens"
+                  link: ""
                 }
               ]}
             />
           </div>
           
-          <div className="mt-12 text-center scroll-animate" style={{ transitionDelay: '200ms' }}>
-            <a href="/courses" className="button-institutional inline-flex">
-              {t("View All Courses")} <MoveRight size={18} className="ml-2" />
-            </a>
-          </div>
+         
         </ContentSection>
       </main>
       
