@@ -315,11 +315,11 @@ const Registration = () => {
                 <div className="space-y-2">
                   <p className="font-medium">Upcoming Sessions:</p>
                   <div className="border border-gray-200 rounded-md p-3">
-                    <p>July 6, 13, 20, 2025</p>
+                    <p>April 20, 27, May 4, 2025</p>
                     <p className="text-blue-600 font-medium">12 spots remaining</p>
                   </div>
                   <div className="border border-gray-200 rounded-md p-3">
-                    <p>August 3, 10, 17, 2025</p>
+                    <p>May 11, 18, 25, 2025</p>
                     <p className="text-blue-600 font-medium">15 spots remaining</p>
                   </div>
                 </div>
@@ -376,11 +376,11 @@ const Registration = () => {
               <div className="space-y-2">
                 <p className="font-medium">Upcoming Sessions:</p>
                 <div className="border border-gray-200 rounded-md p-3">
-                  <p>July 1-5, 2025</p>
+                  <p>April 20-24, 2025</p>
                   <p className="text-indigo-600 font-medium">15 spots remaining</p>
                 </div>
                 <div className="border border-gray-200 rounded-md p-3">
-                  <p>July 15-19, 2025</p>
+                  <p>April 27-May 1, 2025</p>
                   <p className="text-indigo-600 font-medium">18 spots remaining</p>
                 </div>
               </div>
@@ -547,13 +547,13 @@ const Registration = () => {
                     <option value="">Select session dates</option>
                     {courseType === 'in-person' ? (
                       <>
-                        <option value="july-in-person">July 6, 13, 20, 2025</option>
-                        <option value="august-in-person">August 3, 10, 17, 2025</option>
+                        <option value="april-in-person">April 20, 27, May 4, 2025</option>
+                        <option value="may-in-person">May 11, 18, 25, 2025</option>
                       </>
                     ) : courseType === 'online' ? (
                       <>
-                        <option value="july-online-sl">July 1-5, 2025</option>
-                        <option value="july-online-eu">July 15-19, 2025</option>
+                        <option value="april-online">April 20-24, 2025</option>
+                        <option value="april-may-online">April 27-May 1, 2025</option>
                       </>
                     ) : (
                       <option value="select-course-type">Please select a course type first</option>
