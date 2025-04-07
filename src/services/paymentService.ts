@@ -528,46 +528,45 @@ export const initiatePayhereCheckout = async (paymentData: Omit<PaymentData, 'ha
       return mockPayhereCheckout(paymentData);
     }
     
-    // For production, use the real Payhere checkout
+    // Method 1: Use direct URL navigation with query parameters (handles CSP restrictions)
     // Generate hash
     const hash = await generatePayhereHash({
       ...paymentData,
       merchant_secret: undefined,
     });
     
-    // Use Payhere's checkout URL
-    const checkoutUrl = PAYHERE_ACTIVE_URL; // Use the active URL (sandbox for now)
+    // Build query parameters for the URL
+    const params = new URLSearchParams();
     
-    // Create form for POST submission
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = checkoutUrl;
-    
-    // Add all fields to the form
-    const formData = {
+    // Add all parameters to the URL
+    Object.entries({
       ...paymentData,
       hash,
-    };
-    
-    Object.entries(formData).forEach(([key, value]) => {
+    }).forEach(([key, value]) => {
       if (value !== undefined) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = value.toString();
-        form.appendChild(input);
+        params.append(key, value.toString());
       }
     });
     
-    // Add form to body and submit
-    document.body.appendChild(form);
-    console.log('Submitting form with data:', formData);
-    form.submit();
+    // Create the checkout URL with parameters
+    const checkoutUrl = `${PAYHERE_ACTIVE_URL}?${params.toString()}`;
+    console.log('Redirecting to Payhere checkout URL');
     
-    // Remove form after submission
-    setTimeout(() => {
-      document.body.removeChild(form);
-    }, 100);
+    try {
+      // Try method 1: Direct redirect
+      window.location.href = checkoutUrl;
+    } catch (redirectError) {
+      console.error('Direct redirect failed, trying alternate method:', redirectError);
+      
+      // Method 2: Open in a new window/tab
+      const paymentWindow = window.open(checkoutUrl, '_blank');
+      
+      if (!paymentWindow) {
+        // Popup blocked or failed to open
+        alert('Payment window was blocked. Please allow popups for this site to proceed with payment.');
+        throw new Error('Payment window was blocked by browser');
+      }
+    }
   } catch (error) {
     console.error('Error initiating Payhere checkout:', error);
     throw error;
