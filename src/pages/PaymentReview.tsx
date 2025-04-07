@@ -388,13 +388,20 @@ const PaymentReview = () => {
                       If you encounter any issues with the payment gateway:
                     </p>
                     <ul className="list-disc list-inside space-y-1 ml-2">
-                      <li>Ensure your browser is not blocking popups</li>
-                      <li>Try using a different browser</li>
+                      <li>Ensure your browser is not blocking popups for this site</li>
+                      <li>If you see a "Popup Blocked" notification, please click it and select "Always allow popups"</li>
+                      <li>Some browsers require you to click directly on a button to open payment windows</li>
+                      <li>Try using a different browser if issues persist</li>
                       <li>You can also complete your payment via bank transfer</li>
                     </ul>
                     <p className="mt-2">
                       Your registration information is saved, and our team can assist you if needed.
                     </p>
+                    <div className="mt-3 p-2 bg-yellow-50 border border-yellow-100 rounded-md">
+                      <p className="text-yellow-700 font-medium text-xs">
+                        Note: If you see "Content Security Policy" errors in your browser console, please try refreshing the page or using a different browser.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

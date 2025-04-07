@@ -528,45 +528,9 @@ export const initiatePayhereCheckout = async (paymentData: Omit<PaymentData, 'ha
       return mockPayhereCheckout(paymentData);
     }
     
-    // Method 1: Use direct URL navigation with query parameters (handles CSP restrictions)
-    // Generate hash
-    const hash = await generatePayhereHash({
-      ...paymentData,
-      merchant_secret: undefined,
-    });
-    
-    // Build query parameters for the URL
-    const params = new URLSearchParams();
-    
-    // Add all parameters to the URL
-    Object.entries({
-      ...paymentData,
-      hash,
-    }).forEach(([key, value]) => {
-      if (value !== undefined) {
-        params.append(key, value.toString());
-      }
-    });
-    
-    // Create the checkout URL with parameters
-    const checkoutUrl = `${PAYHERE_ACTIVE_URL}?${params.toString()}`;
-    console.log('Redirecting to Payhere checkout URL');
-    
-    try {
-      // Try method 1: Direct redirect
-      window.location.href = checkoutUrl;
-    } catch (redirectError) {
-      console.error('Direct redirect failed, trying alternate method:', redirectError);
-      
-      // Method 2: Open in a new window/tab
-      const paymentWindow = window.open(checkoutUrl, '_blank');
-      
-      if (!paymentWindow) {
-        // Popup blocked or failed to open
-        alert('Payment window was blocked. Please allow popups for this site to proceed with payment.');
-        throw new Error('Payment window was blocked by browser');
-      }
-    }
+    // For production or sandbox, use the openTestCheckout method which opens in a new window
+    // This avoids CSP issues with form submissions
+    return openTestCheckout(paymentData);
   } catch (error) {
     console.error('Error initiating Payhere checkout:', error);
     throw error;
@@ -574,47 +538,31 @@ export const initiatePayhereCheckout = async (paymentData: Omit<PaymentData, 'ha
 };
 
 /**
- * Opens Payhere checkout in a new window - for testing only
- * @param paymentData Payment data for testing
+ * Opens Payhere checkout in a new window - works with CSP restrictions
+ * @param paymentData Payment data for checkout
  */
 export const openTestCheckout = async (paymentData: Omit<PaymentData, 'hash' | 'merchant_secret'>): Promise<void> => {
   try {
-    console.log('Opening Payhere checkout for order:', paymentData.order_id);
+    console.log('Opening Payhere checkout in new window for order:', paymentData.order_id);
     
-    // Generate hash
-    const hash = await generatePayhereHash({
-      ...paymentData,
-      merchant_secret: undefined,
-    });
+    // Get the direct payment URL
+    const url = await createDirectPaymentUrl(paymentData);
     
-    // Construct URL with parameters
-    const params = new URLSearchParams({
-      merchant_id: PAYHERE_MERCHANT_ID,
-      return_url: paymentData.return_url,
-      cancel_url: paymentData.cancel_url,
-      notify_url: paymentData.notify_url,
-      order_id: paymentData.order_id,
-      items: paymentData.items,
-      currency: paymentData.currency,
-      amount: paymentData.amount.toString(),
-      first_name: paymentData.first_name,
-      last_name: paymentData.last_name,
-      email: paymentData.email,
-      phone: paymentData.phone,
-      hash: hash
-    });
+    console.log('Opening Payhere checkout with URL:', url);
     
-    // Add custom parameters if present
-    if (paymentData.custom_1) params.append('custom_1', paymentData.custom_1);
-    if (paymentData.custom_2) params.append('custom_2', paymentData.custom_2);
-    if (paymentData.custom_3) params.append('custom_3', paymentData.custom_3);
+    // Open in new window with specific features to improve compatibility
+    const checkoutWindow = window.open(
+      url, 
+      'payhere_checkout',
+      'width=800,height=600,location=yes,resizable=yes,scrollbars=yes,status=yes'
+    );
     
-    // Use the active URL (sandbox for now)
-    const url = `${PAYHERE_ACTIVE_URL}?${params.toString()}`;
-    
-    // Open in new window
-    window.open(url, '_blank');
-    console.log('Payhere checkout window opened');
+    if (!checkoutWindow) {
+      console.error('Failed to open checkout window. Popup might be blocked by the browser.');
+      alert('Please allow popups for this website to complete your payment.');
+    } else {
+      console.log('Payhere checkout window opened successfully');
+    }
   } catch (error) {
     console.error('Error opening Payhere checkout:', error);
     throw error;
@@ -706,6 +654,55 @@ export const createZeroPaymentEntry = async (
   );
 };
 
+/**
+ * Creates a direct payment URL for Payhere that can be used in a new window or iframe
+ * This avoids CSP issues with form submissions
+ * @param paymentData Payment data
+ * @returns The full URL for Payhere checkout
+ */
+export const createDirectPaymentUrl = async (
+  paymentData: Omit<PaymentData, 'hash' | 'merchant_secret'>
+): Promise<string> => {
+  // Generate hash
+  const hash = await generatePayhereHash({
+    ...paymentData,
+    merchant_secret: undefined,
+  });
+  
+  // Create query parameters
+  const params = new URLSearchParams();
+  
+  // Add all required parameters
+  params.append('merchant_id', PAYHERE_MERCHANT_ID);
+  params.append('return_url', paymentData.return_url);
+  params.append('cancel_url', paymentData.cancel_url);
+  params.append('notify_url', paymentData.notify_url);
+  params.append('order_id', paymentData.order_id);
+  params.append('items', paymentData.items);
+  params.append('currency', paymentData.currency);
+  params.append('amount', paymentData.amount.toString());
+  
+  // Add customer info
+  if (paymentData.first_name) params.append('first_name', paymentData.first_name);
+  if (paymentData.last_name) params.append('last_name', paymentData.last_name);
+  if (paymentData.email) params.append('email', paymentData.email);
+  if (paymentData.phone) params.append('phone', paymentData.phone);
+  if (paymentData.address) params.append('address', paymentData.address);
+  if (paymentData.city) params.append('city', paymentData.city);
+  if (paymentData.country) params.append('country', paymentData.country);
+  
+  // Add custom fields
+  if (paymentData.custom_1) params.append('custom_1', paymentData.custom_1);
+  if (paymentData.custom_2) params.append('custom_2', paymentData.custom_2);
+  if (paymentData.custom_3) params.append('custom_3', paymentData.custom_3);
+  
+  // Add hash
+  params.append('hash', hash);
+  
+  // Return the full URL
+  return `${PAYHERE_ACTIVE_URL}?${params.toString()}`;
+};
+
 export default {
   createCustomer,
   generatePayhereHash,
@@ -714,5 +711,6 @@ export default {
   openTestCheckout,
   createSalesOrder,
   createSuccessPaymentEntry,
-  createZeroPaymentEntry
+  createZeroPaymentEntry,
+  createDirectPaymentUrl
 }; 
