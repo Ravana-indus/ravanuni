@@ -11,19 +11,33 @@ import {
 // Interface for Lead data
 export interface LeadData {
   lead_name: string;
-  company_name: string;
+  company_name: string; // Keep for now, default to "Individual"
   first_name: string;
   last_name: string;
   email_id: string;
   mobile_no: string;
-  course_interest: string;
+  // course_interest: string; // This might be determined differently now
   preferred_language: string;
-  preferred_time_zone: string;
+  preferred_time_zone?: 'United Kingdom' | 'India' | 'European Union' | 'Sri Lanka' | 'Canada'; // Update type to specific allowed values
   age: string;
   special_requirements?: string;
-  companion_registration: number;
-  companion_name?: string;
   referral_source: string;
+
+  // New fields
+  custom_preferred_mode?: 'Online' | 'In-Person'; // Replaces courseType logic
+  custom_preferred_type?: 'Weekdays Intensive' | 'Weekend Intensive' | 'Weekdays Extensive' | 'Weekend Extensive'; // Replaces session logic?
+  custom_payment_method?: 'Bank Transfer' | 'CC/DC - Payhere' | 'CC/DC - Stripe';
+  custom_registering_with_a_family_member?: 0 | 1; // Replaces companion_registration? Using 0/1 as before.
+  custom_family_member_name?: string; // Replaces companion_name
+  custom_promo_code?: string;
+  custom_amount?: number;
+  custom_currency?: 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR';
+  
+  // Fields potentially replaced by new ones - comment out or remove later if confirmed
+  // companion_registration: number;
+  // companion_name?: string;
+  // preferred_time_zone: string; // Re-evaluate need
+  course_interest: string; // Needs mapping logic based on new fields
 }
 
 /**

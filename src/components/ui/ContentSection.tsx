@@ -9,7 +9,7 @@ interface ContentSectionProps {
   children: React.ReactNode;
   className?: string;
   fullWidth?: boolean;
-  background?: 'white';
+  background?: 'white' | 'gray-50' | 'gray-100';
   titleAlignment?: 'left' | 'center';
   titleSize?: 'default' | 'large';
   imageUrl?: string;
@@ -41,6 +41,8 @@ const ContentSection = ({
 }: ContentSectionProps) => {
   const backgroundClasses = {
     'white': 'bg-white',
+    'gray-50': 'bg-gray-50',
+    'gray-100': 'bg-gray-100',
   };
   
   const hasImage = Boolean(imageUrl);

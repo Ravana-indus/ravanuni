@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentSection from '@/components/ui/ContentSection';
-import { CalendarDays, Users, Check, CreditCard, Building, Circle, HelpCircle, Info, Clock, Phone, Mail } from 'lucide-react';
+import { CalendarDays, Users, Check, CreditCard, Building, Circle, HelpCircle, Info, Clock, Phone, Mail, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import CountrySelector from '@/components/CountrySelector';
 import { useGeoLocation } from '@/hooks/useGeoLocation';
-import { getPricingByCountry, formatPrice, PricingOption } from '@/utils/countryPricing';
+import { getPricingByCountry, formatPrice, PricingOption, calculateFinalPrice, verifyPromoCode } from '@/utils/countryPricing';
 import { LeadData } from '@/services/api';
 import { useToast } from '@/hooks/use-toast';
 import { useLeadRegistration } from '@/hooks/useApi';
+import { usePaymentProcess } from '@/hooks/usePaymentProcess';
 
 const Registration = () => {
-  const [courseType, setCourseType] = useState<string>('');
-  const [withCompanion, setWithCompanion] = useState<boolean>(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
   
   // Use the lead registration hook
   const { 
@@ -25,6 +27,13 @@ const Registration = () => {
     leadId 
   } = useLeadRegistration();
   
+  // Use the payment process hook
+  const {
+    processPayherePayment,
+    isProcessing: isProcessingPayment,
+    error: paymentError
+  } = usePaymentProcess();
+  
   // Form data state
   const [formData, setFormData] = useState({
     firstName: '',
@@ -34,17 +43,33 @@ const Registration = () => {
     age: '',
     language: '',
     timeZone: '',
-    session: '',
     referralSource: '',
     specialRequirements: '',
-    companionName: '',
-    agreedToTerms: false
+    agreedToTerms: false,
+    custom_preferred_mode: '' as 'Online' | 'In-Person' | '',
+    custom_preferred_type: '' as 'Weekdays Intensive' | 'Weekend Intensive' | 'Weekdays Extensive' | 'Weekend Extensive' | '',
+    custom_payment_method: '' as 'Bank Transfer' | 'CC/DC - Payhere' | 'CC/DC - Stripe' | '',
+    custom_registering_with_a_family_member: false,
+    custom_family_member_name: '',
+    custom_promo_code: '',
   });
   
   // Add country detection
   const { country: detectedCountry, loading: locationLoading, error: locationError } = useGeoLocation();
   const [selectedCountry, setSelectedCountry] = useState<string>('default');
   const [pricingInfo, setPricingInfo] = useState<PricingOption>(getPricingByCountry('default'));
+  
+  // Add state for calculated price
+  const [calculatedPrice, setCalculatedPrice] = useState<{
+    amount: number;
+    currency: string;
+    formattedPrice: string;
+    discounts: { family: boolean; promoCode: boolean };
+  } | null>(null);
+  
+  // Add state for promo code verification
+  const [isVerifyingPromoCode, setIsVerifyingPromoCode] = useState<boolean>(false);
+  const [isPromoCodeValid, setIsPromoCodeValid] = useState<boolean | null>(null);
 
   // Set country from geolocation when available
   useEffect(() => {
@@ -59,19 +84,102 @@ const Registration = () => {
     setPricingInfo(getPricingByCountry(selectedCountry));
     
     // If the selected country doesn't support in-person courses,
-    // force online course type
+    // force online course type using the new state field
     const pricing = getPricingByCountry(selectedCountry);
-    if (!pricing.hasInPerson && courseType === 'in-person') {
-      setCourseType('online');
+    if (!pricing.hasInPerson && formData.custom_preferred_mode === 'In-Person') {
+      setFormData(prev => ({ ...prev, custom_preferred_mode: 'Online' }));
     }
-  }, [selectedCountry]);
+    // Dependency array needs formData.custom_preferred_mode now
+  }, [selectedCountry, formData.custom_preferred_mode]);
+
+  // Verify promo code when it changes
+  useEffect(() => {
+    const verifyCode = async () => {
+      if (!formData.custom_promo_code || formData.custom_promo_code.trim() === '') {
+        setIsPromoCodeValid(null);
+        return;
+      }
+      
+      setIsVerifyingPromoCode(true);
+      try {
+        const isValid = await verifyPromoCode(formData.custom_promo_code);
+        setIsPromoCodeValid(isValid);
+      } catch (error) {
+        console.error('Error verifying promo code:', error);
+        setIsPromoCodeValid(false);
+      } finally {
+        setIsVerifyingPromoCode(false);
+      }
+    };
+    
+    // Add a debounce to avoid too many API calls while typing
+    const timeoutId = setTimeout(() => {
+      verifyCode();
+    }, 500);
+    
+    return () => clearTimeout(timeoutId);
+  }, [formData.custom_promo_code]);
+
+  // Calculate price when relevant form fields change
+  useEffect(() => {
+    if (
+      selectedCountry && 
+      formData.custom_preferred_mode && 
+      formData.custom_preferred_type
+    ) {
+      const result = calculateFinalPrice(
+        selectedCountry === 'default' ? 'US' : selectedCountry,
+        formData.custom_preferred_mode,
+        formData.custom_preferred_type,
+        formData.custom_registering_with_a_family_member,
+        formData.custom_promo_code,
+        isPromoCodeValid === true // Only pass true if promo code is verified
+      );
+      
+      setCalculatedPrice(result);
+    } else {
+      setCalculatedPrice(null);
+    }
+  }, [
+    selectedCountry, 
+    formData.custom_preferred_mode, 
+    formData.custom_preferred_type, 
+    formData.custom_registering_with_a_family_member,
+    formData.custom_promo_code,
+    isPromoCodeValid
+  ]);
 
   // Show toast when submission is successful or has an error
   useEffect(() => {
     if (success && leadId) {
+      // Prepare lead data for navigation
+      const leadData: LeadData = {
+        lead_name: `${formData.firstName} ${formData.lastName}`,
+        company_name: "Individual",
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email_id: formData.email,
+        mobile_no: formData.phone,
+        course_interest: 'Digital Safety & AI Awareness',
+        preferred_language: formData.language,
+        preferred_time_zone: formData.timeZone as 'United Kingdom' | 'India' | 'European Union' | 'Sri Lanka' | 'Canada' | undefined,
+        age: formData.age,
+        special_requirements: formData.specialRequirements,
+        referral_source: formData.referralSource,
+        custom_preferred_mode: formData.custom_preferred_mode || undefined,
+        custom_preferred_type: formData.custom_preferred_type || undefined,
+        custom_payment_method: formData.custom_payment_method || undefined,
+        custom_registering_with_a_family_member: formData.custom_registering_with_a_family_member ? 1 : 0,
+        custom_family_member_name: formData.custom_registering_with_a_family_member ? formData.custom_family_member_name : undefined,
+        custom_promo_code: formData.custom_promo_code || undefined,
+        custom_amount: calculatedPrice?.amount,
+        custom_currency: calculatedPrice?.currency as 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR' | undefined,
+      };
+      
+      // Show success message
       toast({
         title: "Registration Successful",
-        description: "Thank you for registering. We will contact you shortly.",
+        description: "Please review your information before proceeding to payment.",
         variant: "default",
       });
       
@@ -84,18 +192,24 @@ const Registration = () => {
         age: '',
         language: '',
         timeZone: '',
-        session: '',
         referralSource: '',
         specialRequirements: '',
-        companionName: '',
-        agreedToTerms: false
+        agreedToTerms: false,
+        custom_preferred_mode: '',
+        custom_preferred_type: '',
+        custom_payment_method: '',
+        custom_registering_with_a_family_member: false,
+        custom_family_member_name: '',
+        custom_promo_code: '',
       });
       
-      setCourseType('');
-      setWithCompanion(false);
-      
-      // Redirect to thank you page
-      window.location.href = `/thank-you?lead=${leadId}`;
+      // Navigate to the payment review page with lead data
+      navigate('/payment-review', {
+        state: {
+          leadData,
+          leadId
+        }
+      });
     }
     
     if (submissionError) {
@@ -105,7 +219,21 @@ const Registration = () => {
         variant: "destructive",
       });
     }
-  }, [success, submissionError, leadId, toast]);
+  }, [success, submissionError, leadId, toast, formData, calculatedPrice, navigate]);
+
+  // Check for retry parameter in URL
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const retryLeadId = queryParams.get('retry');
+    
+    if (retryLeadId) {
+      toast({
+        title: "Previous Registration Found",
+        description: "Please review your information and try a different payment method if needed.",
+        variant: "default",
+      });
+    }
+  }, [location, toast]);
 
   // Original animation code
   useEffect(() => {
@@ -162,6 +290,12 @@ const Registration = () => {
         ...formData,
         [name]: checked
       });
+    } else if (name === 'custom_registering_with_a_family_member') { // Handle the boolean checkbox specifically
+      const { checked } = e.target as HTMLInputElement;
+      setFormData({
+        ...formData,
+        [name]: checked
+      });
     } else {
       setFormData({
         ...formData,
@@ -183,16 +317,37 @@ const Registration = () => {
       return;
     }
     
-    if (!courseType) {
+    // Check if custom_preferred_mode is selected
+    if (!formData.custom_preferred_mode) {
       toast({
-        title: "Course Selection Required",
-        description: "Please select either Online or In-Person course format.",
+        title: "Course Mode Required",
+        description: "Please select either Online or In-Person course mode.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check if custom_preferred_type is selected
+    if (!formData.custom_preferred_type) {
+      toast({
+        title: "Course Speed Required",
+        description: "Please select your preferred course speed (e.g., Weekdays Intensive).",
         variant: "destructive",
       });
       return;
     }
     
-    // Prepare lead data based on form inputs
+    // Check if custom_payment_method is selected
+    if (!formData.custom_payment_method) {
+      toast({
+        title: "Payment Method Required",
+        description: "Please select your preferred payment method.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Prepare lead data based on form inputs - using new fields
     const leadData: LeadData = {
       lead_name: `${formData.firstName} ${formData.lastName}`,
       company_name: "Individual",
@@ -200,14 +355,20 @@ const Registration = () => {
       last_name: formData.lastName,
       email_id: formData.email,
       mobile_no: formData.phone,
-      course_interest: courseType === 'in-person' ? 'in-person-digital-safety' : 'Digital Safety & AI Awareness',
+      course_interest: 'Digital Safety & AI Awareness',
       preferred_language: formData.language,
-      preferred_time_zone: formData.timeZone,
+      preferred_time_zone: formData.timeZone as 'United Kingdom' | 'India' | 'European Union' | 'Sri Lanka' | 'Canada' | undefined,
       age: formData.age,
       special_requirements: formData.specialRequirements,
-      companion_registration: withCompanion ? 1 : 0,
-      companion_name: withCompanion ? formData.companionName : '',
-      referral_source: formData.referralSource
+      referral_source: formData.referralSource,
+      custom_preferred_mode: formData.custom_preferred_mode || undefined,
+      custom_preferred_type: formData.custom_preferred_type || undefined,
+      custom_payment_method: formData.custom_payment_method || undefined,
+      custom_registering_with_a_family_member: formData.custom_registering_with_a_family_member ? 1 : 0,
+      custom_family_member_name: formData.custom_registering_with_a_family_member ? formData.custom_family_member_name : undefined,
+      custom_promo_code: formData.custom_promo_code || undefined,
+      custom_amount: calculatedPrice?.amount,
+      custom_currency: calculatedPrice?.currency as 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR' | undefined,
     };
     
     // Submit the lead registration using the hook
@@ -267,10 +428,10 @@ const Registration = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {pricingInfo.hasInPerson && (
               <div 
-                className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${courseType === 'in-person' ? 'ring-2 ring-blue-500' : ''}`}
-                onClick={() => setCourseType('in-person')}
+                className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${formData.custom_preferred_mode === 'In-Person' ? 'ring-2 ring-blue-500' : ''}`}
+                onClick={() => setFormData(prev => ({ ...prev, custom_preferred_mode: 'In-Person' }))}
               >
-                {courseType === 'in-person' && (
+                {formData.custom_preferred_mode === 'In-Person' && (
                   <div className="absolute top-4 right-4 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                     <Check className="text-white w-4 h-4" />
                   </div>
@@ -305,9 +466,27 @@ const Registration = () => {
                     <CreditCard className="text-blue-600 mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <p className="font-medium">Price</p>
-                      <p className="text-gray-600">
-                        {formatPrice(pricingInfo.inPersonDiscountedPrice || '', pricingInfo.currencySymbol)} <span className="line-through">{formatPrice(pricingInfo.inPersonNormalPrice || '', pricingInfo.currencySymbol)}</span> per participant
-                      </p>
+                      {calculatedPrice && formData.custom_preferred_mode === 'In-Person' ? (
+                        <div>
+                          <p className="text-gray-600">
+                            <span className="line-through">{pricingInfo.currencySymbol} {pricingInfo.inPersonNormalPrice}</span>{' '}
+                            <span className="font-semibold">{calculatedPrice.formattedPrice}</span> per participant
+                          </p>
+                          {formData.custom_registering_with_a_family_member && (
+                            <p className="text-green-600 text-sm">Family discount applied</p>
+                          )}
+                          {calculatedPrice.discounts.promoCode && (
+                            <p className="text-green-600 text-sm">Promo code discount applied</p>
+                          )}
+                        </div>
+                      ) : pricingInfo.hasInPerson ? (
+                        <p className="text-gray-600">
+                          <span className="line-through">{pricingInfo.currencySymbol} {pricingInfo.inPersonNormalPrice}</span>{' '}
+                          <span className="font-semibold">{pricingInfo.currencySymbol} {pricingInfo.inPersonDiscountedPrice}</span> per participant
+                        </p>
+                      ) : (
+                        <p className="text-gray-600">Not available in your region</p>
+                      )}
                     </div>
                   </li>
                 </ul>
@@ -327,11 +506,11 @@ const Registration = () => {
             )}
             
             <div 
-              className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${courseType === 'online' ? 'ring-2 ring-indigo-500' : ''} ${!pricingInfo.hasInPerson ? 'md:col-span-2 mx-auto max-w-xl' : ''}`}
+              className={`glass-card p-8 rounded-lg shadow-elegant scroll-animate relative overflow-hidden ${formData.custom_preferred_mode === 'Online' ? 'ring-2 ring-indigo-500' : ''} ${!pricingInfo.hasInPerson ? 'md:col-span-2 mx-auto max-w-xl' : ''}`}
               style={{ transitionDelay: '200ms' }}
-              onClick={() => setCourseType('online')}
+              onClick={() => setFormData(prev => ({ ...prev, custom_preferred_mode: 'Online' }))}
             >
-              {courseType === 'online' && (
+              {formData.custom_preferred_mode === 'Online' && (
                 <div className="absolute top-4 right-4 w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center">
                   <Check className="text-white w-4 h-4" />
                 </div>
@@ -339,7 +518,22 @@ const Registration = () => {
               
               <div className="flex items-center mb-6">
                 <div className="bg-indigo-100 p-3 rounded-full mr-4">
-                  <Laptop className="h-6 w-6 text-indigo-600" />
+                  <svg
+                    className="h-6 w-6 text-indigo-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
                 </div>
                 <h3 className="text-2xl font-semibold">Online Format</h3>
               </div>
@@ -366,9 +560,25 @@ const Registration = () => {
                   <CreditCard className="text-indigo-600 mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium">Price</p>
-                    <p className="text-gray-600">
-                      {formatPrice(pricingInfo.discountedPrice, pricingInfo.currencySymbol)} <span className="line-through">{formatPrice(pricingInfo.normalPrice, pricingInfo.currencySymbol)}</span> per participant
-                    </p>
+                    {calculatedPrice && formData.custom_preferred_mode === 'Online' ? (
+                      <div>
+                        <p className="text-gray-600">
+                          <span className="line-through">{pricingInfo.currencySymbol} {pricingInfo.normalPrice}</span>{' '}
+                          <span className="font-semibold">{calculatedPrice.formattedPrice}</span> per participant
+                        </p>
+                        {formData.custom_registering_with_a_family_member && (
+                          <p className="text-green-600 text-sm">Family discount applied</p>
+                        )}
+                        {calculatedPrice.discounts.promoCode && (
+                          <p className="text-green-600 text-sm">Promo code discount applied</p>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-gray-600">
+                        <span className="line-through">{pricingInfo.currencySymbol} {pricingInfo.normalPrice}</span>{' '}
+                        <span className="font-semibold">{pricingInfo.currencySymbol} {pricingInfo.discountedPrice}</span> per participant
+                      </p>
+                    )}
                   </div>
                 </li>
               </ul>
@@ -483,40 +693,7 @@ const Registration = () => {
                   </div>
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Course Type</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {pricingInfo.hasInPerson && (
-                      <label className="flex items-center p-4 border rounded-md cursor-pointer hover:bg-gray-50">
-                        <input 
-                          type="radio" 
-                          name="courseType" 
-                          value="in-person" 
-                          className="mr-3" 
-                          checked={courseType === 'in-person'}
-                          onChange={() => setCourseType('in-person')}
-                          required
-                        />
-                        <span>In-Person Course</span>
-                      </label>
-                    )}
-                    
-                    <label className={`flex items-center p-4 border rounded-md cursor-pointer hover:bg-gray-50 ${!pricingInfo.hasInPerson ? 'md:col-span-2' : ''}`}>
-                      <input 
-                        type="radio" 
-                        name="courseType" 
-                        value="online" 
-                        className="mr-3" 
-                        checked={courseType === 'online'}
-                        onChange={() => setCourseType('online')}
-                        required
-                      />
-                      <span>Online Course</span>
-                    </label>
-                  </div>
-                </div>
-                
-                {courseType === 'online' && (
+                {formData.custom_preferred_mode === 'Online' && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
                     <select 
@@ -527,36 +704,47 @@ const Registration = () => {
                       required
                     >
                       <option value="">Select a time zone</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="India">India</option>
+                      <option value="European Union">European Union</option>
                       <option value="Sri Lanka">Sri Lanka</option>
-                      <option value="europe">Europe</option>
-                      <option value="north-america">North America</option>
-                      <option value="other">Other</option>
+                      <option value="Canada">Canada</option>
                     </select>
                   </div>
                 )}
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Session Dates</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Course Speed</label>
                   <select 
-                    name="session"
-                    value={formData.session}
+                    name="custom_preferred_type"
+                    value={formData.custom_preferred_type}
                     onChange={handleInputChange}
                     className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
                     required
                   >
-                    <option value="">Select session dates</option>
-                    {courseType === 'in-person' ? (
-                      <>
-                        <option value="april-in-person">April 20, 27, May 4, 2025</option>
-                        <option value="may-in-person">May 11, 18, 25, 2025</option>
-                      </>
-                    ) : courseType === 'online' ? (
-                      <>
-                        <option value="april-online">April 20-24, 2025</option>
-                        <option value="april-may-online">April 27-May 1, 2025</option>
-                      </>
+                    <option value="">Select your preferred course speed</option>
+                    <option value="Weekdays Intensive">Weekdays Intensive</option>
+                    <option value="Weekend Intensive">Weekend Intensive</option>
+                    <option value="Weekdays Extensive">Weekdays Extensive</option>
+                    <option value="Weekend Extensive">Weekend Extensive</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                  <select 
+                    name="custom_payment_method"
+                    value={formData.custom_payment_method}
+                    onChange={handleInputChange}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    required
+                  >
+                    <option value="">Select payment method</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    {selectedCountry === 'LK' ? (
+                      <option value="CC/DC - Payhere">Credit/Debit Card (Payhere)</option>
                     ) : (
-                      <option value="select-course-type">Please select a course type first</option>
+                      <option value="CC/DC - Stripe">Credit/Debit Card (Stripe)</option>
                     )}
                   </select>
                 </div>
@@ -595,8 +783,8 @@ const Registration = () => {
                   <label className="flex items-start">
                     <input 
                       type="checkbox" 
-                      checked={withCompanion} 
-                      onChange={() => setWithCompanion(!withCompanion)}
+                      checked={formData.custom_registering_with_a_family_member} 
+                      onChange={() => setFormData(prev => ({ ...prev, custom_registering_with_a_family_member: !prev.custom_registering_with_a_family_member }))}
                       className="mt-1 mr-3" 
                     />
                     <div>
@@ -605,17 +793,17 @@ const Registration = () => {
                     </div>
                   </label>
                   
-                  {withCompanion && (
+                  {formData.custom_registering_with_a_family_member && (
                     <div className="mt-4">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Companion Name</label>
                       <Input 
                         type="text" 
-                        name="companionName"
-                        value={formData.companionName}
+                        name="custom_family_member_name"
+                        value={formData.custom_family_member_name}
                         onChange={handleInputChange}
                         placeholder="Full name of your companion"
                         className="w-full"
-                        required={withCompanion}
+                        required={formData.custom_registering_with_a_family_member}
                       />
                     </div>
                   )}
@@ -638,6 +826,38 @@ const Registration = () => {
                   </label>
                 </div>
                 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Promo Code (Optional)</label>
+                  <div className="relative">
+                    <Input 
+                      type="text" 
+                      name="custom_promo_code"
+                      value={formData.custom_promo_code}
+                      onChange={handleInputChange}
+                      placeholder="Enter promo code if you have one"
+                      className={`w-full ${isPromoCodeValid === true ? 'border-green-500' : isPromoCodeValid === false ? 'border-red-500' : ''}`}
+                    />
+                    {isVerifyingPromoCode && (
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
+                      </div>
+                    )}
+                    {!isVerifyingPromoCode && isPromoCodeValid === true && (
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <Check className="h-4 w-4 text-green-500" />
+                      </div>
+                    )}
+                    {!isVerifyingPromoCode && isPromoCodeValid === false && formData.custom_promo_code && (
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <span className="text-red-500 text-xs">Invalid code</span>
+                      </div>
+                    )}
+                  </div>
+                  {isPromoCodeValid && (
+                    <p className="text-green-600 text-xs mt-1">15% discount will be applied!</p>
+                  )}
+                </div>
+                
                 <button 
                   type="submit" 
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-300 flex justify-center items-center"
@@ -650,108 +870,64 @@ const Registration = () => {
           </div>
         </ContentSection>
         
-        {/* Payment Information */}
+        {/* Payment Information - Temporarily remove complex content */}
         <ContentSection 
           id="payment-info" 
-          title="Payment Options" 
-          subtitle="Flexible payment methods to suit your needs"
+          title="Payment Information" 
+          subtitle="Details will be provided after registration"
           titleAlignment="left"
           background="white"
-          imageAlt="Payment options"
-          imageCaption="We offer multiple payment methods for your convenience."
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="scroll-animate">
-              <h3 className="text-2xl font-semibold mb-6">Payment Methods</h3>
-              
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                    <CreditCard className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Credit/Debit Card</h4>
-                    <p className="text-gray-600">Secure online payment via Visa, Mastercard, or American Express.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                    <Building className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Bank Transfer</h4>
-                    <p className="text-gray-600">Direct bank transfer to our account (details provided after registration).</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                    <Smartphone className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Mobile Payment</h4>
-                    <p className="text-gray-600">Pay via eZ Cash or mCash directly from your mobile account.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                <div className="flex items-start">
-                  <Info className="h-5 w-5 text-amber-500 mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium mb-1">Business Billing</h4>
-                    <p className="text-gray-600">If your company is sponsoring your participation, please indicate this in the form and we'll arrange for business billing.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="scroll-animate" style={{ transitionDelay: '200ms' }}>
-              <h3 className="text-2xl font-semibold mb-6">Payment Policies</h3>
-              
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
-                    <Check className="h-5 w-5 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Full Payment</h4>
-                    <p className="text-gray-600">Pay the entire amount now to confirm your place in the course.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
-                    <SplitSquareVertical className="h-5 w-5 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Split Payment</h4>
-                    <p className="text-gray-600">Pay 50% deposit now to reserve your spot, and the remaining 50% on the first day of class.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
-                    <Users className="h-5 w-5 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Family Discount</h4>
-                    <p className="text-gray-600">Receive a 10% discount when registering with a family member.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
-                    <Clock className="h-5 w-5 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-1">Cancellation Policy</h4>
-                    <p className="text-gray-600">Full refund if cancellation is 7+ days before course start. 50% refund for cancellations 3-7 days before start. No refunds for cancellations less than 3 days before start.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="max-w-3xl scroll-animate">
+             <p className="text-gray-600 mb-4">
+               After submitting your registration, you will receive an email with detailed payment instructions based on your selected method ({formData.custom_payment_method || 'Not Selected'}). 
+             </p>
+             
+             {/* Add price summary */}
+             {calculatedPrice && (
+               <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
+                 <h3 className="text-lg font-semibold mb-2">Price Summary</h3>
+                 <div className="space-y-2">
+                   <div className="flex justify-between">
+                     <span>Base price ({formData.custom_preferred_mode} - {formData.custom_preferred_type}):</span>
+                     <span>{calculatedPrice.formattedPrice}</span>
+                   </div>
+                   
+                   {calculatedPrice.discounts.family && (
+                     <div className="flex justify-between text-green-600">
+                       <span>Family discount (10%):</span>
+                       <span>Applied</span>
+                     </div>
+                   )}
+                   
+                   {calculatedPrice.discounts.promoCode && (
+                     <div className="flex justify-between text-green-600">
+                       <span>Promo code discount (15%):</span>
+                       <span>Applied</span>
+                     </div>
+                   )}
+                   
+                   <div className="flex justify-between font-bold pt-2 border-t border-gray-200">
+                     <span>Total:</span>
+                     <span>{calculatedPrice.formattedPrice}</span>
+                   </div>
+                 </div>
+               </div>
+             )}
+             
+             <p className="text-gray-600">
+               For Credit/Debit Card payments, you will receive a secure payment link. For Bank Transfers, account details will be provided. 
+               Please ensure you complete the payment to confirm your spot.
+             </p>
+             {/* Keep Payment Policies? Or simplify? */}
+             <div className="mt-8">
+               <h3 className="text-xl font-semibold mb-4">Payment Policies Summary</h3>
+               <ul className="list-disc list-inside text-gray-600 space-y-2">
+                 <li>Full payment or a 50% deposit may be required to confirm your spot (details in confirmation email).</li>
+                 <li>A 10% discount is available when registering with a family member (applied during payment).</li>
+                 <li>Cancellation Policy: Full refund (minus processing fees) if 7+ days before start; 50% refund 3-7 days before; No refund &lt; 3 days before.</li>
+               </ul>
+             </div>
           </div>
         </ContentSection>
         
@@ -868,25 +1044,6 @@ const Registration = () => {
 
 export default Registration;
 
-function Laptop(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16" />
-    </svg>
-  )
-}
-
 function MessageSquare(props) {
   return (
     <svg
@@ -922,27 +1079,6 @@ function Smartphone(props) {
     >
       <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
       <path d="M12 18h.01" />
-    </svg>
-  )
-}
-
-function SplitSquareVertical(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 8V5c0-1 1-2 2-2h10c1 0 2 1 2 2v3" />
-      <path d="M19 16v3c0 1-1 2-2 2H7c-1 0-2-1-2-2v-3" />
-      <line x1="4" x2="20" y1="12" y2="12" />
     </svg>
   )
 } 
