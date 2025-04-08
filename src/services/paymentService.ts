@@ -170,7 +170,7 @@ export const generatePayhereHash = async (paymentData: PaymentData): Promise<str
       apiUrl = 'http://localhost:8080/api/payment/generate-hash';
       console.log('Using development API server for hash generation');
     } else if (hostname.includes('riftuni.com')) {
-      // Use the riftuni.com API endpoint
+      // Use the correct API endpoint for riftuni.com
       apiUrl = `${baseUrl}/api/payment/generate-hash`;
       console.log('Using riftuni.com API endpoint for hash generation');
     } else {
