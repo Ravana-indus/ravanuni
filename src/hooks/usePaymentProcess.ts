@@ -16,21 +16,7 @@ import {
 } from '@/services/paymentService';
 import { LeadData } from '@/services/api';
 import { API_BASE_URL, getApiHeaders } from '@/utils/apiConfig';
-
-/**
- * Clean customer name to ensure it is valid for Frappe API
- * Removes special characters and trims whitespace
- */
-const cleanCustomerName = (name: string): string => {
-  if (!name) return "Individual";
-  
-  // Remove any special characters that might cause issues
-  const cleaned = name.replace(/[^\w\s]/gi, '')
-    .trim()
-    .replace(/\s+/g, ' ');
-    
-  return cleaned || "Individual";
-};
+import { cleanCustomerName } from '@/utils/customerUtils';
 
 export const usePaymentProcess = () => {
   const [isProcessing, setIsProcessing] = useState(false);

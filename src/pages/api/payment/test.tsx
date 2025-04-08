@@ -1,6 +1,7 @@
 import { createSuccessPaymentEntry } from '@/services/paymentService';
 import { createSalesOrder } from '@/services/salesOrderService';
 import { API_BASE_URL, getApiHeaders } from '@/utils/apiConfig';
+import { cleanCustomerName } from '@/utils/customerUtils';
 import crypto from 'crypto';
 
 // Get Payhere merchant secret from environment variables with fallback for development
@@ -40,7 +41,13 @@ export default async function handler(req, res) {
 
     // Extract test parameters from request body, or use defaults
     const lead_id = req.body.lead_id || 'TEST-LEAD-123';
-    const customer_name = req.body.customer_name || 'John Doe';
+    const customer_name_raw = req.body.customer_name || 'John Doe';
+    // Clean the customer name to prevent any issues with numbers or special characters
+    const customer_name = cleanCustomerName(customer_name_raw);
+    
+    console.log('Original customer name:', customer_name_raw);
+    console.log('Cleaned customer name:', customer_name);
+    
     const amount = parseFloat(req.body.amount) || 100;
     const currency = req.body.currency || 'LKR';
     // Create a unique payment reference with timestamp
@@ -95,8 +102,11 @@ export default async function handler(req, res) {
       const salesOrderData = await salesOrderResponse.json();
       
       if (salesOrderResponse.ok && salesOrderData && salesOrderData.data && salesOrderData.data.customer) {
-        exactCustomerName = salesOrderData.data.customer;
-        console.log('Retrieved exact customer name from sales order:', exactCustomerName);
+        const rawCustomerName = salesOrderData.data.customer;
+        // Clean the customer name again to ensure no numbers or special characters
+        exactCustomerName = cleanCustomerName(rawCustomerName);
+        console.log('Retrieved exact customer name from sales order:', rawCustomerName);
+        console.log('Cleaned exact customer name:', exactCustomerName);
       } else {
         console.warn('Could not retrieve exact customer name from sales order, using original:', exactCustomerName);
       }
