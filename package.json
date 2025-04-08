@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build && cp _redirects _headers _routes.json .cloudflare-cache-control dist/ && cp -r functions dist/",
     "build:dev": "vite build --mode development",
-    "build:cloudflare": "npm ci --no-audit --ignore-scripts=false && npm run build",
+    "build:cloudflare": "npm ci --no-audit --no-frozen-lockfile --ignore-scripts=false && npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:cf": "node preview.js",
