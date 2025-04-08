@@ -7,6 +7,16 @@ import { Check, ArrowRight, AlertCircle, CreditCard, Building, ShieldCheck, Bug 
 import { LeadData } from '@/services/api';
 import { usePaymentProcess } from '@/hooks/usePaymentProcess';
 import { useToast } from '@/hooks/use-toast';
+import { PAYHERE_SANDBOX_URL, PAYHERE_ACTIVE_URL } from '@/services/paymentService';
+
+// Add a preload hint for the PayHere SDK
+const preloadPayHereSDK = () => {
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'script';
+  link.href = 'https://www.payhere.lk/lib/payhere.js';
+  document.head.appendChild(link);
+};
 
 const PaymentReview = () => {
   const location = useLocation();
@@ -23,6 +33,11 @@ const PaymentReview = () => {
     isProcessing,
     error
   } = usePaymentProcess();
+  
+  // Preload the PayHere SDK when the component mounts
+  useEffect(() => {
+    preloadPayHereSDK();
+  }, []);
   
   useEffect(() => {
     // Check for lead ID and sales order ID in URL query params
@@ -143,6 +158,10 @@ const PaymentReview = () => {
             <p className="text-gray-600 text-sm">
               You will be redirected to Payhere's secure payment gateway to complete your payment.
               After payment, you'll be returned to our site.
+            </p>
+            <p className="text-gray-600 text-sm mt-1">
+              <ShieldCheck className="h-4 w-4 inline mr-1 text-green-600" />
+              Secured by PayHere JavaScript SDK for enhanced security and user experience.
             </p>
             {salesOrderId && (
               <p className="text-green-600 text-sm mt-2">

@@ -524,76 +524,93 @@ export const initiatePayhereCheckout = async (paymentData: Omit<PaymentData, 'ha
     // Generate the hash for this specific payment
     const hash = await generatePayhereHash(paymentData as PaymentData);
     
-    // Create the form for submission
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = PAYHERE_ACTIVE_URL;
-    form.target = '_self'; // Submit in the same window
-    form.enctype = 'application/x-www-form-urlencoded';
-    form.acceptCharset = 'UTF-8';
+    // Check if PayHere SDK is loaded
+    if (typeof (window as any).payhere === 'undefined') {
+      // Load the PayHere SDK if not already loaded
+      console.log('Loading PayHere JavaScript SDK...');
+      await loadPayHereSDK();
+    }
     
-    // Add all payment data as hidden fields
-    Object.entries(paymentData).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = String(value);
-        form.appendChild(input);
-      }
-    });
+    const payhere = (window as any).payhere;
     
-    // Add the hash
-    const hashInput = document.createElement('input');
-    hashInput.type = 'hidden';
-    hashInput.name = 'hash';
-    hashInput.value = hash;
-    form.appendChild(hashInput);
+    // Configure SDK - sandbox or live
+    payhere.onCompleted = function onComplete(orderId: string) {
+      console.log("Payment completed. OrderID:" + orderId);
+      window.location.href = paymentData.return_url;
+    };
+
+    payhere.onDismissed = function onDismissed() {
+      console.log("Payment dismissed");
+      window.location.href = paymentData.cancel_url;
+    };
+
+    payhere.onError = function onError(error: any) {
+      console.error("Payment error:", error);
+      window.location.href = `${paymentData.cancel_url}&error=${encodeURIComponent(error)}`;
+    };
+
+    // Payment Object
+    const payment = {
+      sandbox: PAYHERE_ACTIVE_URL === PAYHERE_SANDBOX_URL, // Set to true for sandbox mode
+      merchant_id: paymentData.merchant_id,
+      return_url: paymentData.return_url,
+      cancel_url: paymentData.cancel_url,
+      notify_url: paymentData.notify_url,
+      order_id: paymentData.order_id,
+      items: paymentData.items,
+      amount: paymentData.amount.toString(),
+      currency: paymentData.currency,
+      hash: hash,
+      first_name: paymentData.first_name,
+      last_name: paymentData.last_name,
+      email: paymentData.email,
+      phone: paymentData.phone,
+      address: paymentData.address || '',
+      city: paymentData.city || '',
+      country: paymentData.country || 'Sri Lanka',
+      custom_1: paymentData.custom_1 || '',
+      custom_2: paymentData.custom_2 || '',
+      custom_3: paymentData.custom_3 || '',
+    };
     
-    // Log the checkout data for debugging (exclude the hash)
-    console.log('Submitting PayHere form with data:', {
-      ...paymentData,
+    console.log('Initiating PayHere checkout with SDK:', {
+      ...payment,
       hash: '[HASH VALUE HIDDEN]'
     });
     
-    // Set proper Content-Security-Policy headers for the new window (for PayHere iframe)
-    // This is a recommended approach for secure payment processing
-    if (!isDevelopment) {
-      try {
-        // Add a CSP meta tag to the form that will be allowed in the PayHere checkout page
-        // This helps ensure that the payment page can load all required resources
-        const metaCSP = document.createElement('meta');
-        metaCSP.httpEquiv = 'Content-Security-Policy';
-        metaCSP.content = "default-src 'self' https://*.payhere.lk; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.payhere.lk; style-src 'self' 'unsafe-inline'; frame-src https://*.payhere.lk; connect-src 'self' https://*.payhere.lk";
-        
-        // Add it to the form
-        const head = document.createElement('head');
-        head.appendChild(metaCSP);
-        form.appendChild(head);
-      } catch (cspError) {
-        console.warn('Could not add CSP meta tag to form, continuing anyway:', cspError);
-      }
-    }
+    // Start payment process
+    payhere.startPayment(payment);
     
-    // Append to body and submit
-    document.body.appendChild(form);
-    
-    // Submit the form programmatically
-    console.log('Submitting form to PayHere');
-    setTimeout(() => {
-      form.submit();
-      
-      // Remove the form from the DOM after submission
-      setTimeout(() => {
-        if (document.body.contains(form)) {
-          document.body.removeChild(form);
-        }
-      }, 1000);
-    }, 100);
   } catch (error) {
     console.error('Error initiating PayHere checkout:', error);
     throw error;
   }
+};
+
+/**
+ * Load the PayHere SDK
+ */
+const loadPayHereSDK = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (typeof (window as any).payhere !== 'undefined') {
+      resolve(); // SDK already loaded
+      return;
+    }
+    
+    const script = document.createElement('script');
+    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    script.async = true;
+    script.onload = () => {
+      console.log('PayHere SDK loaded successfully');
+      resolve();
+    };
+    script.onerror = (error) => {
+      console.error('Failed to load PayHere SDK:', error);
+      reject(new Error('Failed to load PayHere SDK'));
+    };
+    
+    document.body.appendChild(script);
+  });
 };
 
 /**
@@ -610,34 +627,62 @@ export const openTestCheckout = async (paymentData: Omit<PaymentData, 'hash' | '
       merchant_secret: undefined,
     });
     
-    // Construct URL with parameters
-    const params = new URLSearchParams({
+    // Check if PayHere SDK is loaded
+    if (typeof (window as any).payhere === 'undefined') {
+      // Load the PayHere SDK if not already loaded
+      console.log('Loading PayHere JavaScript SDK...');
+      await loadPayHereSDK();
+    }
+    
+    const payhere = (window as any).payhere;
+    
+    // Configure callbacks
+    payhere.onCompleted = function onComplete(orderId: string) {
+      console.log("Test payment completed. OrderID:" + orderId);
+      window.location.href = paymentData.return_url;
+    };
+
+    payhere.onDismissed = function onDismissed() {
+      console.log("Test payment dismissed");
+      window.location.href = paymentData.cancel_url;
+    };
+
+    payhere.onError = function onError(error: any) {
+      console.error("Test payment error:", error);
+      window.location.href = `${paymentData.cancel_url}&error=${encodeURIComponent(error)}`;
+    };
+    
+    // Payment Object
+    const payment = {
+      sandbox: PAYHERE_ACTIVE_URL === PAYHERE_SANDBOX_URL,
       merchant_id: PAYHERE_MERCHANT_ID,
       return_url: paymentData.return_url,
       cancel_url: paymentData.cancel_url,
       notify_url: paymentData.notify_url,
       order_id: paymentData.order_id,
       items: paymentData.items,
-      currency: paymentData.currency,
       amount: paymentData.amount.toString(),
+      currency: paymentData.currency,
+      hash: hash,
       first_name: paymentData.first_name,
       last_name: paymentData.last_name,
       email: paymentData.email,
       phone: paymentData.phone,
-      hash: hash
+      address: paymentData.address || '',
+      city: paymentData.city || '',
+      country: paymentData.country || 'Sri Lanka',
+      custom_1: paymentData.custom_1 || '',
+      custom_2: paymentData.custom_2 || '',
+      custom_3: paymentData.custom_3 || ''
+    };
+    
+    console.log('Starting test PayHere checkout with SDK:', {
+      ...payment,
+      hash: '[HASH VALUE HIDDEN]'
     });
     
-    // Add custom parameters if present
-    if (paymentData.custom_1) params.append('custom_1', paymentData.custom_1);
-    if (paymentData.custom_2) params.append('custom_2', paymentData.custom_2);
-    if (paymentData.custom_3) params.append('custom_3', paymentData.custom_3);
-    
-    // Use the active URL (sandbox for now)
-    const url = `${PAYHERE_ACTIVE_URL}?${params.toString()}`;
-    
-    // Open in new window
-    window.open(url, '_blank');
-    console.log('Payhere checkout window opened');
+    // Start payment process
+    payhere.startPayment(payment);
   } catch (error) {
     console.error('Error opening Payhere checkout:', error);
     throw error;
