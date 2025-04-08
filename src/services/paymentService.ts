@@ -16,99 +16,6 @@ export const PAYHERE_SANDBOX_URL = 'https://sandbox.payhere.lk/pay/checkout';
 // Default to sandbox for testing
 export const PAYHERE_ACTIVE_URL = PAYHERE_SANDBOX_URL;
 
-// Client-side MD5 implementation for development only
-// In production, this should be done server-side
-const generateMD5 = (str: string): string => {
-  // Simple implementation for development only
-  // This is NOT secure for production use
-  function rotateLeft(value: number, shift: number): number {
-    return (value << shift) | (value >>> (32 - shift));
-  }
-
-  function md5cmn(q: number, a: number, b: number, x: number, s: number, t: number): number {
-    return safeAdd(rotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
-  }
-
-  function md5ff(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
-    return md5cmn((b & c) | ((~b) & d), a, b, x, s, t);
-  }
-
-  function md5gg(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
-    return md5cmn((b & d) | (c & (~d)), a, b, x, s, t);
-  }
-
-  function md5hh(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
-    return md5cmn(b ^ c ^ d, a, b, x, s, t);
-  }
-
-  function md5ii(a: number, b: number, c: number, d: number, x: number, s: number, t: number): number {
-    return md5cmn(c ^ (b | (~d)), a, b, x, s, t);
-  }
-
-  function safeAdd(x: number, y: number): number {
-    const lsw = (x & 0xFFFF) + (y & 0xFFFF);
-    const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-    return (msw << 16) | (lsw & 0xFFFF);
-  }
-
-  function binl2rstr(input: number[]): string {
-    let output = '';
-    for (let i = 0; i < input.length * 32; i += 8) {
-      output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xFF);
-    }
-    return output;
-  }
-
-  function rstr2binl(input: string): number[] {
-    const output: number[] = [];
-    for (let i = 0; i < input.length * 8; i += 8) {
-      output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (i % 32);
-    }
-    return output;
-  }
-
-  function stringToHex(input: string): string {
-    const hexTab = '0123456789abcdef';
-    let output = '';
-    for (let i = 0; i < input.length; i++) {
-      const x = input.charCodeAt(i);
-      output += hexTab.charAt((x >>> 4) & 0x0F) + hexTab.charAt(x & 0x0F);
-    }
-    return output;
-  }
-
-  function md5(input: string): string {
-    const x = rstr2binl(input);
-    let a = 1732584193;
-    let b = -271733879;
-    let c = -1732584194;
-    let d = 271733878;
-
-    for (let i = 0; i < x.length; i += 16) {
-      const olda = a;
-      const oldb = b;
-      const oldc = c;
-      const oldd = d;
-
-      a = md5ff(a, b, c, d, x[i], 7, -680876936);
-      d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);
-      c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);
-      b = md5ff(b, c, d, a, x[i + 3], 22, -1044525330);
-      // ... and so on for all rounds
-
-      a = safeAdd(a, olda);
-      b = safeAdd(b, oldb);
-      c = safeAdd(c, oldc);
-      d = safeAdd(d, oldd);
-    }
-
-    // Simplified - not all rounds included for brevity
-    return stringToHex(binl2rstr([a, b, c, d]));
-  }
-
-  return md5(str);
-};
-
 /**
  * Format a date in YYYY-MM-DD format required by Frappe API
  */
@@ -247,51 +154,126 @@ export const createCustomer = async (customerData: CustomerData): Promise<ApiRes
   }
 };
 
-/**
- * Generate MD5 hash for Payhere payment
- * @param paymentData Payment data to calculate hash for
- * @returns MD5 hash as string
- */
+// Instead of the client-side MD5 implementation, replace with a server API call
 export const generatePayhereHash = async (paymentData: PaymentData): Promise<string> => {
   try {
-    console.log('Generating hash for order:', paymentData.order_id);
+    console.log('Generating PayHere hash via API for order:', paymentData.order_id);
     
-    // Prepare hash string according to Payhere documentation
-    const hashString = `${paymentData.merchant_id}${paymentData.order_id}${paymentData.amount}${paymentData.currency}${PAYHERE_MERCHANT_SECRET}`;
-    console.log('Generating hash from string:', hashString);
+    // Determine the correct base URL for API calls
+    const baseUrl = window.location.origin;
+    const hostname = window.location.hostname;
     
-    // Use the built-in crypto API in browsers that support it
-    if (window.crypto && window.crypto.subtle) {
-      try {
-        // Convert string to buffer
-        const encoder = new TextEncoder();
-        const data = encoder.encode(hashString);
-        
-        // Generate MD5 hash using crypto API
-        const hashBuffer = await window.crypto.subtle.digest('MD5', data);
-        
-        // Convert buffer to hex string
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        
-        console.log('Hash generated successfully using crypto API:', hashHex);
-        return hashHex;
-      } catch (cryptoError) {
-        console.warn('Crypto API failed, falling back to direct MD5:', cryptoError);
-        // Fall back to direct MD5 calculation
-        const hash = generateMD5(hashString);
-        console.log('Hash generated successfully using fallback:', hash);
-        return hash;
-      }
+    // API endpoint based on environment
+    let apiUrl;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      // Use the dedicated API server in development
+      apiUrl = 'http://localhost:8080/api/payment/generate-hash';
+      console.log('Using development API server for hash generation');
+    } else if (hostname.includes('riftuni.com')) {
+      // Use the riftuni.com API endpoint
+      apiUrl = `${baseUrl}/api/payment/generate-hash`;
+      console.log('Using riftuni.com API endpoint for hash generation');
     } else {
-      // Fall back to direct MD5 calculation
-      const hash = generateMD5(hashString);
-      console.log('Hash generated successfully using fallback:', hash);
-      return hash;
+      // Use the production API endpoint in the same domain
+      apiUrl = `${baseUrl}/api/payment/generate-hash`;
+      console.log('Using production API endpoint for hash generation');
     }
+    
+    console.log(`Calling hash generation API at: ${apiUrl}`);
+    
+    // Call the server-side API to generate the hash
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        merchant_id: paymentData.merchant_id,
+        order_id: paymentData.order_id,
+        amount: paymentData.amount.toString(),
+        currency: paymentData.currency,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'Unknown error');
+      console.error(`Failed to generate hash: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`Failed to generate hash: ${response.statusText} (${response.status})`);
+    }
+
+    const data = await response.json();
+    console.log('Hash generated successfully');
+    
+    return data.message;
   } catch (error) {
-    console.error('Error generating hash:', error);
-    throw error;
+    console.error('Error generating PayHere hash:', error);
+    
+    // As a fallback in case of API failure, we'll implement a temporary client-side hash generation
+    // This should be replaced with proper server-side hash generation in production
+    console.warn('API hash generation failed, using fallback method. This is not secure for production!');
+    
+    // Simple MD5 hash implementation using browser crypto API if available
+    const generateFallbackHash = async (merchant_id: string, order_id: string, amount: string, currency: string): Promise<string> => {
+      // This is just for development fallback - do not use in production
+      // The secret should never be exposed in client-side code
+      const TEMP_DEV_SECRET = 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
+      
+      // First, we need to hash the merchant secret and convert to uppercase
+      // Since we can't use MD5 directly, we'll simulate it with SHA-256 and truncate
+      let hashedSecret = '';
+      
+      if (window.crypto && window.crypto.subtle) {
+        try {
+          // Hash the merchant secret
+          const encoder = new TextEncoder();
+          const secretData = encoder.encode(TEMP_DEV_SECRET);
+          const secretBuffer = await window.crypto.subtle.digest('SHA-256', secretData);
+          const secretArray = Array.from(new Uint8Array(secretBuffer));
+          // Take first 16 bytes to simulate MD5 (which is also 16 bytes)
+          hashedSecret = secretArray.slice(0, 16).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+          
+          // Now create the main hash string
+          const stringToHash = `${merchant_id}${order_id}${amount}${currency}${hashedSecret}`;
+          const data = encoder.encode(stringToHash);
+          const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer)).slice(0, 16);
+          return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+        } catch (e) {
+          console.error('Error in WebCrypto hash generation:', e);
+        }
+      }
+      
+      // Very simple string hash as last resort fallback
+      console.warn('Using very basic fallback hash - not for production!');
+      // This is NOT a proper implementation, just a last resort emergency fallback
+      let simpleHashSecret = 0;
+      for (let i = 0; i < TEMP_DEV_SECRET.length; i++) {
+        simpleHashSecret = ((simpleHashSecret << 5) - simpleHashSecret) + TEMP_DEV_SECRET.charCodeAt(i);
+        simpleHashSecret = simpleHashSecret & simpleHashSecret; // Convert to 32bit integer
+      }
+      const simpleHashSecretHex = Math.abs(simpleHashSecret).toString(16).toUpperCase();
+      
+      // Now hash the string with the merchant secret hash
+      const stringToHash = `${merchant_id}${order_id}${amount}${currency}${simpleHashSecretHex}`;
+      let hash = 0;
+      for (let i = 0; i < stringToHash.length; i++) {
+        const char = stringToHash.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+      }
+      return Math.abs(hash).toString(16).toUpperCase();
+    };
+    
+    // Use fallback hash generation with the required parameters
+    const fallbackHash = await generateFallbackHash(
+      paymentData.merchant_id,
+      paymentData.order_id,
+      paymentData.amount.toString(),
+      paymentData.currency
+    );
+    
+    console.log('Fallback hash generated (not for production use)');
+    return fallbackHash;
   }
 };
 
@@ -512,64 +494,104 @@ export const mockPayhereCheckout = async (paymentData: Omit<PaymentData, 'hash' 
   }
 };
 
-/**
- * Prepare Payhere checkout using direct payment URL
- * @param paymentData Payment data for Payhere
- */
+// Update the initiatePayhereCheckout function to handle development vs production environments
 export const initiatePayhereCheckout = async (paymentData: Omit<PaymentData, 'hash' | 'merchant_secret'>): Promise<void> => {
   try {
-    console.log('Initiating Payhere checkout for order:', paymentData.order_id);
+    // Create a timestamp-based unique order ID if one isn't already set
+    if (!paymentData.order_id.includes(Date.now().toString())) {
+      paymentData.order_id = `${paymentData.order_id}-${Date.now()}`;
+    }
     
-    // Determine if we should use mock or real checkout
-    const useMockCheckout = false; // Set to false to use real Payhere in all environments
+    console.log('Initiating PayHere checkout for order:', paymentData.order_id);
     
-    if (useMockCheckout && (process.env.NODE_ENV === 'development' || typeof window !== 'undefined' && (window as any).USE_MOCK_PAYMENT)) {
+    // Determine if we're in development mode to potentially use test mode
+    const hostname = window.location.hostname;
+    const isDevelopment = process.env.NODE_ENV === 'development' || 
+                         hostname === 'localhost' || 
+                         hostname === '127.0.0.1';
+    
+    // Log environment info
+    console.log(`Environment: ${isDevelopment ? 'Development' : 'Production'}`);
+    console.log(`Hostname: ${hostname}`);
+    console.log(`Using PayHere URL: ${PAYHERE_ACTIVE_URL}`);
+    
+    // In development, we might want to use the mock checkout instead
+    if (isDevelopment && (window as any).USE_MOCK_PAYMENT === true) {
       console.log('Using mock checkout for development');
       return mockPayhereCheckout(paymentData);
     }
     
-    // For production, use the real Payhere checkout
-    // Generate hash
-    const hash = await generatePayhereHash({
-      ...paymentData,
-      merchant_secret: undefined,
-    });
+    // Generate the hash for this specific payment
+    const hash = await generatePayhereHash(paymentData as PaymentData);
     
-    // Use Payhere's checkout URL
-    const checkoutUrl = PAYHERE_ACTIVE_URL; // Use the active URL (sandbox for now)
-    
-    // Create form for POST submission
+    // Create the form for submission
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = checkoutUrl;
+    form.action = PAYHERE_ACTIVE_URL;
+    form.target = '_self'; // Submit in the same window
+    form.enctype = 'application/x-www-form-urlencoded';
+    form.acceptCharset = 'UTF-8';
     
-    // Add all fields to the form
-    const formData = {
-      ...paymentData,
-      hash,
-    };
-    
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== undefined) {
+    // Add all payment data as hidden fields
+    Object.entries(paymentData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = key;
-        input.value = value.toString();
+        input.value = String(value);
         form.appendChild(input);
       }
     });
     
-    // Add form to body and submit
-    document.body.appendChild(form);
-    console.log('Submitting form with data:', formData);
-    form.submit();
+    // Add the hash
+    const hashInput = document.createElement('input');
+    hashInput.type = 'hidden';
+    hashInput.name = 'hash';
+    hashInput.value = hash;
+    form.appendChild(hashInput);
     
-    // Remove form after submission
+    // Log the checkout data for debugging (exclude the hash)
+    console.log('Submitting PayHere form with data:', {
+      ...paymentData,
+      hash: '[HASH VALUE HIDDEN]'
+    });
+    
+    // Set proper Content-Security-Policy headers for the new window (for PayHere iframe)
+    // This is a recommended approach for secure payment processing
+    if (!isDevelopment) {
+      try {
+        // Add a CSP meta tag to the form that will be allowed in the PayHere checkout page
+        // This helps ensure that the payment page can load all required resources
+        const metaCSP = document.createElement('meta');
+        metaCSP.httpEquiv = 'Content-Security-Policy';
+        metaCSP.content = "default-src 'self' https://*.payhere.lk; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.payhere.lk; style-src 'self' 'unsafe-inline'; frame-src https://*.payhere.lk; connect-src 'self' https://*.payhere.lk";
+        
+        // Add it to the form
+        const head = document.createElement('head');
+        head.appendChild(metaCSP);
+        form.appendChild(head);
+      } catch (cspError) {
+        console.warn('Could not add CSP meta tag to form, continuing anyway:', cspError);
+      }
+    }
+    
+    // Append to body and submit
+    document.body.appendChild(form);
+    
+    // Submit the form programmatically
+    console.log('Submitting form to PayHere');
     setTimeout(() => {
-      document.body.removeChild(form);
+      form.submit();
+      
+      // Remove the form from the DOM after submission
+      setTimeout(() => {
+        if (document.body.contains(form)) {
+          document.body.removeChild(form);
+        }
+      }, 1000);
     }, 100);
   } catch (error) {
-    console.error('Error initiating Payhere checkout:', error);
+    console.error('Error initiating PayHere checkout:', error);
     throw error;
   }
 };

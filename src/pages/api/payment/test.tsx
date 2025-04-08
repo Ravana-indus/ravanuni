@@ -1,11 +1,28 @@
 import { createSuccessPaymentEntry } from '@/services/paymentService';
 import { createSalesOrder } from '@/services/salesOrderService';
 import { API_BASE_URL, getApiHeaders } from '@/utils/apiConfig';
+import crypto from 'crypto';
+
+// Get Payhere merchant secret from environment variables with fallback for development
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'NjY5MTg5ODgyMjQzNjkyMzMyMTExNDA0MjYyMDM0NzA3NDg2Nzc=';
+const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '1224574';
 
 // Check for development environment safely
 const isDevelopment = typeof process !== 'undefined' && process.env 
   ? process.env.NODE_ENV === 'development' 
   : true; // Default to true in browser for testing
+
+// Generate PayHere hash securely on the server
+const generatePayhereHash = (orderId: string, amount: number, currency: string): string => {
+  // Ensure amount is properly formatted as a string with no trailing zeros
+  const formattedAmount = parseFloat(amount.toString()).toString();
+  
+  // Create the string to hash according to PayHere docs
+  const stringToHash = `${PAYHERE_MERCHANT_ID}${orderId}${formattedAmount}${currency}${PAYHERE_MERCHANT_SECRET}`;
+  
+  // Generate MD5 hash
+  return crypto.createHash('md5').update(stringToHash).digest('hex');
+};
 
 export default async function handler(req, res) {
   // Ensure this endpoint is only accessible in development
@@ -26,8 +43,11 @@ export default async function handler(req, res) {
     const customer_name = req.body.customer_name || 'John Doe';
     const amount = parseFloat(req.body.amount) || 100;
     const currency = req.body.currency || 'LKR';
+    // Create a unique payment reference with timestamp
     const payment_reference = req.body.payment_reference || `TEST-PAYMENT-${Date.now()}`;
     const item_code = req.body.item_code || 'COURSE-001';
+    // Create a unique order ID with timestamp
+    const order_id = `TEST-ORDER-${Date.now()}`;
     
     console.log('Test parameters:', {
       lead_id,
@@ -35,8 +55,13 @@ export default async function handler(req, res) {
       amount,
       currency,
       payment_reference,
-      item_code
+      item_code,
+      order_id
     });
+    
+    // Generate hash for this test payment
+    const hash = generatePayhereHash(order_id, amount, currency);
+    console.log('Generated hash for test payment (hash value not logged for security)');
 
     // Step 1: Create a sales order
     console.log('Creating test sales order...');
@@ -106,7 +131,9 @@ export default async function handler(req, res) {
       message: 'Test payment and sales order created successfully',
       salesOrderId,
       paymentId: paymentResult.paymentId,
-      customer: exactCustomerName
+      customer: exactCustomerName,
+      order_id,
+      hash_generated: true // Don't include the actual hash in the response
     });
   } catch (error) {
     console.error('Error in test payment endpoint:', error);

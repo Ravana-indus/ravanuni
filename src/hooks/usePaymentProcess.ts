@@ -50,6 +50,12 @@ export const usePaymentProcess = () => {
     setError(null);
     
     try {
+      // Detect if we're running in development environment
+      const isDevelopment = window.location.hostname === 'localhost' || 
+                            window.location.hostname === '127.0.0.1';
+      
+      console.log(`Running in ${isDevelopment ? 'development' : 'production'} environment`);
+      
       // Get the registered customer name to use as fallback
       const registeredCustomerName = leadData.lead_name || `${leadData.first_name} ${leadData.last_name}`;
       console.log('Registered customer name:', registeredCustomerName);
@@ -146,12 +152,15 @@ export const usePaymentProcess = () => {
       const successParams = salesOrderId ? `&sales_order=${salesOrderId}` : '';
       const cancelParams = salesOrderId ? `&sales_order=${salesOrderId}` : '';
       
+      // Create unique order ID with timestamp to ensure uniqueness
+      const uniqueOrderId = `${orderId}-${Date.now()}`;
+      
       const paymentData: Omit<PaymentData, 'hash' | 'merchant_secret'> = {
         merchant_id: PAYHERE_MERCHANT_ID,
         return_url: `${baseUrl}/thank-you?lead=${leadId}&payment=success${successParams}`,
         cancel_url: `${baseUrl}/thank-you?lead=${leadId}&payment=cancelled${cancelParams}`,
         notify_url: `${baseUrl}/api/payment/notify`, // Server-side notification endpoint
-        order_id: orderId,
+        order_id: uniqueOrderId,
         items: `Registration for ${courseType || 'RIFT Course'}`,
         currency: currency,
         amount: amount,
@@ -172,7 +181,13 @@ export const usePaymentProcess = () => {
         paymentData.custom_3 = salesOrderId;
       }
       
-      // 4. Initiate Payhere checkout
+      // 4. Initiate Payhere checkout - hash will be generated server-side
+      console.log('Initiating PayHere checkout with data:', {
+        orderId: uniqueOrderId,
+        amount,
+        currency,
+        customerName
+      });
       await initiatePayhereCheckout(paymentData);
       
       // The rest of the process will be handled in the return_url

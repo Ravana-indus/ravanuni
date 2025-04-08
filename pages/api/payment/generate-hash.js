@@ -1,17 +1,24 @@
 import crypto from 'crypto';
 
 // Get Payhere merchant secret from environment variables with fallback for development
-const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET 
-// Check if we're in a browser environment (this API should run server-side)
-const isBrowser = typeof window !== 'undefined';
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
 
 export default async function handler(req, res) {
-  // This endpoint should only run on the server
-  if (isBrowser) {
-    console.error('This API endpoint should only be called server-side');
-    return res.status(500).json({ message: 'This endpoint cannot be called from the browser' });
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  // Handle OPTIONS request
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
   }
-  
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -32,11 +39,14 @@ export default async function handler(req, res) {
 
     console.log('Generating hash for:', { merchant_id, order_id, amount: formattedAmount, currency });
 
-    // Create the string to hash according to PayHere docs
-    const stringToHash = `${merchant_id}${order_id}${formattedAmount}${currency}${PAYHERE_MERCHANT_SECRET}`;
+    // First create MD5 hash of the merchant_secret and convert to uppercase
+    const hashedSecret = crypto.createHash('md5').update(PAYHERE_MERCHANT_SECRET).digest('hex').toUpperCase();
     
-    // Generate MD5 hash
-    const hash = crypto.createHash('md5').update(stringToHash).digest('hex');
+    // Now create the string to hash according to PayHere docs
+    const stringToHash = `${merchant_id}${order_id}${formattedAmount}${currency}${hashedSecret}`;
+    
+    // Generate final MD5 hash and convert to uppercase
+    const hash = crypto.createHash('md5').update(stringToHash).digest('hex').toUpperCase();
     
     console.log('Hash generated successfully');
 

@@ -2,6 +2,8 @@
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer-when-downgrade
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.payhere.lk https://*.payhere.co https://*.sandbox.payhere.lk https://sandbox.payhere.lk https://www.payhere.lk; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://portal.riftuni.com https://*.payhere.lk; frame-src https://*.payhere.lk https://sandbox.payhere.lk https://www.payhere.lk; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self' https://*.payhere.lk https://sandbox.payhere.lk https://www.payhere.lk;
 
 /*.js
   Content-Type: application/javascript
@@ -10,4 +12,9 @@
   Content-Type: application/javascript
 
 /*.css
-  Content-Type: text/css 
+  Content-Type: text/css
+
+/api/*
+  Cache-Control: no-store
+  Pragma: no-cache
+  Content-Security-Policy: default-src 'self'; script-src 'none'; 
