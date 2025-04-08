@@ -5,10 +5,9 @@ import {
   ApiResponse 
 } from '@/utils/apiConfig';
 
-// Payhere configuration - Sandbox for testing
-export const PAYHERE_MERCHANT_ID = '1224574'; 
-// This should be in server-side code only, in an environment variable
-const PAYHERE_MERCHANT_SECRET = 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
+// Payhere configuration
+// Use environment variables without hardcoded defaults
+export const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || ''; 
 // Payhere API URLs
 export const PAYHERE_PRODUCTION_URL = 'https://www.payhere.lk/pay/checkout';
 export const PAYHERE_SANDBOX_URL = 'https://sandbox.payhere.lk/pay/checkout';
@@ -819,10 +818,7 @@ export const createSalesOrder = async (salesOrderData: SalesOrderData): Promise<
     
     const response = await fetch(`${API_BASE_URL}/resource/Sales Order`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'token 0d596da8ae9f32d:ce5ef45704aab11'
-      },
+      headers: getApiHeaders(),
       body: JSON.stringify(salesOrderData)
     });
 

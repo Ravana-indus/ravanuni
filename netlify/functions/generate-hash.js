@@ -1,7 +1,12 @@
 const crypto = require('crypto');
 
 // Get Payhere merchant secret from environment variables
-const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || '';
+
+// Verify environment variable is set
+if (!PAYHERE_MERCHANT_SECRET) {
+  console.error('WARNING: PAYHERE_MERCHANT_SECRET environment variable is not set.');
+}
 
 exports.handler = async function(event, context) {
   // Set CORS headers for all responses

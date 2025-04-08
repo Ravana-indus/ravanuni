@@ -23,23 +23,28 @@ export const API_BASE_URL = isBrowser
  * API Key for Frappe API
  */
 export const API_KEY = isBrowser
-  ? getWindowVar('FRAPPE_API_KEY', '0d596da8ae9f32d')
-  : (process.env.FRAPPE_API_KEY || '0d596da8ae9f32d');
+  ? getWindowVar('FRAPPE_API_KEY', '')
+  : (process.env.FRAPPE_API_KEY || '');
 
 /**
  * API Secret for Frappe API
  */
 export const API_SECRET = isBrowser
-  ? getWindowVar('FRAPPE_API_SECRET', 'ce5ef45704aab11')
-  : (process.env.FRAPPE_API_SECRET || 'ce5ef45704aab11');
+  ? getWindowVar('FRAPPE_API_SECRET', '')
+  : (process.env.FRAPPE_API_SECRET || '');
 
 /**
  * Get headers for Frappe API with authentication
  */
 export const getApiHeaders = () => {
+  // Make sure we have valid API credentials
+  if (!API_KEY || !API_SECRET) {
+    console.warn('API credentials not available. Some API calls may fail.');
+  }
+  
   return {
     'Content-Type': 'application/json',
-    'Authorization': `token ${API_KEY}:${API_SECRET}`
+    'Authorization': API_KEY && API_SECRET ? `token ${API_KEY}:${API_SECRET}` : ''
   };
 };
 

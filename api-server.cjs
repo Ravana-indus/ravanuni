@@ -6,9 +6,15 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Payhere merchant secret for development only
-const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
-const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '1224574';
+// Use environment variables without exposing secrets in code
+// Ensure these are set in your development environment
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || '';
+const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '';
+
+// Verify that environment variables are set
+if (!PAYHERE_MERCHANT_SECRET || !PAYHERE_MERCHANT_ID) {
+  console.error('WARNING: Missing Payhere environment variables. Set PAYHERE_MERCHANT_SECRET and PAYHERE_MERCHANT_ID.');
+}
 
 // Configure CORS options
 const corsOptions = {

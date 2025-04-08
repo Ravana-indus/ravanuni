@@ -1,6 +1,10 @@
 [build]
   command = "npm run build" # Adjust if using a different build command
   publish = "dist" # Adjust if your build output directory is different
+  
+  [build.environment]
+    # Configure secrets scanning to exclude dist/ and node_modules/
+    SECRETS_SCAN_OMIT_PATHS = "dist/*,node_modules/*"
 
 # Redirect API requests to Netlify Functions
 [[redirects]]
