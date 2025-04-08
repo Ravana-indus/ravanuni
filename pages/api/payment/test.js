@@ -1,11 +1,16 @@
 import crypto from 'crypto';
 
-// Get Payhere merchant secret from environment variables with fallback for development
-const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'NjY5MTg5ODgyMjQzNjkyMzMyMTExNDA0MjYyMDM0NzA3NDg2Nzc=';
-const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '1224574';
+// Get Payhere merchant secret from environment variables
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || '';
+const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '';
 
 // Check for development environment safely
 const isDevelopment = process.env.NODE_ENV === 'development';
+
+// Check if environment variables are set
+if (!PAYHERE_MERCHANT_SECRET || !PAYHERE_MERCHANT_ID) {
+  console.error('WARNING: PAYHERE_MERCHANT_SECRET or PAYHERE_MERCHANT_ID not set. API will not function correctly.');
+}
 
 // Generate PayHere hash securely on the server
 const generatePayhereHash = (orderId, amount, currency) => {

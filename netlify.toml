@@ -3,8 +3,8 @@
   publish = "dist" # Adjust if your build output directory is different
   
   [build.environment]
-    # Configure secrets scanning to exclude dist/ and node_modules/
-    SECRETS_SCAN_OMIT_PATHS = "dist/*,node_modules/*"
+    # Configure secrets scanning to exclude build output and cached files
+    SECRETS_SCAN_OMIT_PATHS = "dist/*,node_modules/*,.netlify/*,build/*,.next/*,.cache/*"
 
 # Redirect API requests to Netlify Functions
 [[redirects]]

@@ -1,7 +1,12 @@
 import crypto from 'crypto';
 
-// Get Payhere merchant secret from environment variables with fallback for development
-const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
+// Get Payhere merchant secret from environment variables
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || '';
+
+// Check if environment variable is set
+if (!PAYHERE_MERCHANT_SECRET) {
+  console.error('WARNING: PAYHERE_MERCHANT_SECRET environment variable is not set. Hash generation will not work correctly.');
+}
 
 export default async function handler(req, res) {
   // Set CORS headers

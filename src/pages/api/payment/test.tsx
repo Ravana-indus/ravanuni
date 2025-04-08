@@ -4,9 +4,14 @@ import { API_BASE_URL, getApiHeaders } from '@/utils/apiConfig';
 import { cleanCustomerName } from '@/utils/customerUtils';
 import crypto from 'crypto';
 
-// Get Payhere merchant secret from environment variables with fallback for development
-const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || 'NjY5MTg5ODgyMjQzNjkyMzMyMTExNDA0MjYyMDM0NzA3NDg2Nzc=';
-const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '1224574';
+// Get Payhere merchant secret from environment variables
+const PAYHERE_MERCHANT_SECRET = process.env.PAYHERE_MERCHANT_SECRET || '';
+const PAYHERE_MERCHANT_ID = process.env.PAYHERE_MERCHANT_ID || '';
+
+// Check if environment variables are set
+if (!PAYHERE_MERCHANT_SECRET || !PAYHERE_MERCHANT_ID) {
+  console.error('WARNING: PAYHERE_MERCHANT_SECRET or PAYHERE_MERCHANT_ID not set. API will not function correctly.');
+}
 
 // Check for development environment safely
 const isDevelopment = typeof process !== 'undefined' && process.env 

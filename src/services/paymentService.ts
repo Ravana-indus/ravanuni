@@ -211,30 +211,30 @@ export const generatePayhereHash = async (paymentData: PaymentData): Promise<str
     // This should be replaced with proper server-side hash generation in production
     console.warn('API hash generation failed, using fallback method. This is not secure for production!');
     
-    // Simple MD5 hash implementation using browser crypto API if available
+    // Simple hash implementation using browser crypto API if available
     const generateFallbackHash = async (merchant_id: string, order_id: string, amount: string, currency: string): Promise<string> => {
-      // This is just for development fallback - do not use in production
-      // The secret should never be exposed in client-side code
-      const TEMP_DEV_SECRET = 'MzUzMjIzMjI4OTEzMzI3MDM5MTEyNzIxMjk4MjUyNjU5NTgzNTIx';
+      // Use a constant placeholder instead of real secret for fallback
+      // This is not secure and should only be used in development as last resort
+      const PLACEHOLDER = 'DEVELOPMENT_FALLBACK_NOT_SECURE';
       
-      // First, we need to hash the merchant secret and convert to uppercase
+      // First, we need to create a hash
       // Since we can't use MD5 directly, we'll simulate it with SHA-256 and truncate
-      let hashedSecret = '';
+      let hashedValue = '';
       
       if (window.crypto && window.crypto.subtle) {
         try {
-          // Hash the merchant secret
+          // Hash some data to create a value (not using real secret)
           const encoder = new TextEncoder();
-          const secretData = encoder.encode(TEMP_DEV_SECRET);
-          const secretBuffer = await window.crypto.subtle.digest('SHA-256', secretData);
-          const secretArray = Array.from(new Uint8Array(secretBuffer));
+          const data = encoder.encode(PLACEHOLDER + merchant_id + order_id);
+          const buffer = await window.crypto.subtle.digest('SHA-256', data);
+          const array = Array.from(new Uint8Array(buffer));
           // Take first 16 bytes to simulate MD5 (which is also 16 bytes)
-          hashedSecret = secretArray.slice(0, 16).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+          hashedValue = array.slice(0, 16).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
           
-          // Now create the main hash string with the hashed secret (already uppercase)
-          const stringToHash = `${merchant_id}${order_id}${amount}${currency}${hashedSecret}`;
-          const data = encoder.encode(stringToHash);
-          const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+          // Now create the main hash string
+          const stringToHash = `${merchant_id}${order_id}${amount}${currency}${hashedValue}`;
+          const hashData = encoder.encode(stringToHash);
+          const hashBuffer = await window.crypto.subtle.digest('SHA-256', hashData);
           const hashArray = Array.from(new Uint8Array(hashBuffer)).slice(0, 16);
           return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
         } catch (e) {
@@ -245,22 +245,13 @@ export const generatePayhereHash = async (paymentData: PaymentData): Promise<str
       // Very simple string hash as last resort fallback
       console.warn('Using very basic fallback hash - not for production!');
       // This is NOT a proper implementation, just a last resort emergency fallback
-      let simpleHashSecret = 0;
-      for (let i = 0; i < TEMP_DEV_SECRET.length; i++) {
-        simpleHashSecret = ((simpleHashSecret << 5) - simpleHashSecret) + TEMP_DEV_SECRET.charCodeAt(i);
-        simpleHashSecret = simpleHashSecret & simpleHashSecret; // Convert to 32bit integer
+      let simpleHash = 0;
+      const fallbackString = PLACEHOLDER + merchant_id + order_id + amount + currency;
+      for (let i = 0; i < fallbackString.length; i++) {
+        simpleHash = ((simpleHash << 5) - simpleHash) + fallbackString.charCodeAt(i);
+        simpleHash = simpleHash & simpleHash; // Convert to 32bit integer
       }
-      const simpleHashSecretHex = Math.abs(simpleHashSecret).toString(16).toUpperCase();
-      
-      // Now hash the string with the merchant secret hash
-      const stringToHash = `${merchant_id}${order_id}${amount}${currency}${simpleHashSecretHex}`;
-      let hash = 0;
-      for (let i = 0; i < stringToHash.length; i++) {
-        const char = stringToHash.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
-      }
-      return Math.abs(hash).toString(16).toUpperCase();
+      return Math.abs(simpleHash).toString(16).toUpperCase();
     };
     
     // Use fallback hash generation with the required parameters
