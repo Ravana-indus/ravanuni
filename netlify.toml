@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build" # Adjust if using a different build command
+  publish = "dist" # Adjust if your build output directory is different
+
+# Redirect API requests to Netlify Functions
+[[redirects]]
+  from = "/api/payment/generate-hash"
+  to = "/.netlify/functions/generate-hash"
+  status = 200
+  force = true
+
+# This redirect is last and will catch all other requests
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
