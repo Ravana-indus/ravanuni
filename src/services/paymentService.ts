@@ -574,8 +574,8 @@ export const initiatePayhereCheckout = async (paymentData: Omit<PaymentData, 'ha
         last_name: paymentData.last_name,
         email: paymentData.email,
         phone: paymentData.phone,
-        address: paymentData.address || '',
-        city: paymentData.city || '',
+        address: paymentData.address || '123 Sample Street', // Sample address for testing
+        city: paymentData.city || 'Colombo', // Colombo as city for testing
         country: paymentData.country || 'Sri Lanka',
         custom_1: paymentData.custom_1 || '',
         custom_2: paymentData.custom_2 || '',
@@ -787,8 +787,8 @@ export const openTestCheckout = async (paymentData: Omit<PaymentData, 'hash' | '
       last_name: paymentData.last_name,
       email: paymentData.email,
       phone: paymentData.phone,
-      address: paymentData.address || '',
-      city: paymentData.city || '',
+      address: paymentData.address || '123 Sample Street', // Sample address for testing
+      city: paymentData.city || 'Colombo', // Colombo as city for testing
       country: paymentData.country || 'Sri Lanka',
       custom_1: paymentData.custom_1 || '',
       custom_2: paymentData.custom_2 || '',

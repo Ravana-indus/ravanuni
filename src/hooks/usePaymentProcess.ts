@@ -154,9 +154,9 @@ export const usePaymentProcess = () => {
         last_name: leadData.last_name || '',
         email: leadData.email_id || '',
         phone: leadData.mobile_no || '',
-        // Optional fields - might not be present in all lead data
-        address: '', // No address in lead data
-        city: '',    // No city in lead data
+        // Adding sample address and city for testing
+        address: '123 Sample Street', // Sample address for testing
+        city: 'Colombo',    // Colombo as city for testing
         country: leadData.preferred_time_zone?.toString() || 'Sri Lanka',
         custom_1: leadId, // Store lead ID as custom parameter
         custom_2: customerName, // Store customer name as custom parameter
