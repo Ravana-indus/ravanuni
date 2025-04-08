@@ -9,10 +9,6 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    // Add headers for CSP in development mode
-    headers: {
-      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://www.payhere.lk https://*.payhere.lk; connect-src 'self' https://*.payhere.lk; frame-src 'self' https://*.payhere.lk; img-src 'self' data: https://*.payhere.lk; style-src 'self' 'unsafe-inline' https://*.payhere.lk;",
-    },
   },
   plugins: [
     react(),
