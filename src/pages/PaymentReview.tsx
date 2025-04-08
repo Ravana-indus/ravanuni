@@ -11,11 +11,36 @@ import { PAYHERE_SANDBOX_URL, PAYHERE_ACTIVE_URL } from '@/services/paymentServi
 
 // Add a preload hint for the PayHere SDK
 const preloadPayHereSDK = () => {
-  const link = document.createElement('link');
-  link.rel = 'preload';
-  link.as = 'script';
-  link.href = 'https://www.payhere.lk/lib/payhere.js';
-  document.head.appendChild(link);
+  try {
+    console.log('Preloading PayHere SDK...');
+    
+    // Add preload link
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'script';
+    link.href = 'https://www.payhere.lk/lib/payhere.js';
+    document.head.appendChild(link);
+    
+    // Also add the script tag to start loading it immediately
+    const script = document.createElement('script');
+    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    script.async = true;
+    script.defer = true;
+    
+    script.onload = () => {
+      console.log('PayHere SDK preloaded successfully');
+    };
+    
+    script.onerror = (error) => {
+      console.error('Failed to preload PayHere SDK:', error);
+      // Non-blocking, so we don't need to throw or reject here
+    };
+    
+    document.head.appendChild(script);
+  } catch (error) {
+    console.error('Error preloading PayHere SDK:', error);
+    // Non-blocking, so we don't need to throw or reject here
+  }
 };
 
 const PaymentReview = () => {
