@@ -17,21 +17,21 @@ const getWindowVar = (name: string, defaultValue: string): string => {
 // Use environment variables safely with fallbacks
 export const API_BASE_URL = isBrowser 
   ? getWindowVar('FRAPPE_API_URL', 'https://portal.riftuni.com/api')
-  : (process.env.NEXT_PUBLIC_FRAPPE_API_URL || 'https://portal.riftuni.com/api');
+  : (process.env.NEXT_PUBLIC_API_URL || 'https://portal.riftuni.com/api');
 
 /**
  * API Key for Frappe API
  */
 export const API_KEY = isBrowser
   ? getWindowVar('FRAPPE_API_KEY', '')
-  : (process.env.FRAPPE_API_KEY || '');
+  : (process.env.API_KEY || '');
 
 /**
  * API Secret for Frappe API
  */
 export const API_SECRET = isBrowser
   ? getWindowVar('FRAPPE_API_SECRET', '')
-  : (process.env.FRAPPE_API_SECRET || '');
+  : (process.env.API_SECRET || '');
 
 /**
  * Get headers for Frappe API with authentication

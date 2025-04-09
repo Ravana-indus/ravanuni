@@ -1,9 +1,9 @@
 const fetch = require('node-fetch');
 
 // Get API credentials from environment variables
-const API_KEY = process.env.FRAPPE_API_KEY || 'a9612959b012965';
-const API_SECRET = process.env.FRAPPE_API_SECRET || 'a6662956880fba6';
-const API_BASE_URL = process.env.FRAPPE_API_URL || 'https://portal.riftuni.com/api';
+const API_KEY = process.env.API_KEY || '0d596da8ae9f32d';
+const API_SECRET = process.env.API_SECRET || 'ce5ef45704aab11';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://portal.riftuni.com/api';
 
 exports.handler = async function(event, context) {
   // Set CORS headers
