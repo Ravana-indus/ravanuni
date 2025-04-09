@@ -117,14 +117,20 @@ export async function verifyPromoCode(promoCode: string): Promise<boolean> {
     // This avoids CORS issues as the request comes from the same domain
     const response = await fetch(`/.netlify/functions/proxy-coupon?code=${encodeURIComponent(promoCode)}`);
     
-    if (!response.ok) {
-      throw new Error('Failed to verify promo code');
-    }
-    
+    // Get the response data
     const data = await response.json();
     
+    // Log the response for debugging
+    console.log('Promo code verification response:', data);
+    
+    // Check if the request was successful
+    if (!data.success) {
+      console.error('Promo code verification failed:', data.error || data.message);
+      return false;
+    }
+    
     // Return isValid property from our proxy function response
-    return data.success && data.isValid;
+    return data.isValid;
   } catch (error) {
     console.error('Error verifying promo code:', error);
     return false;

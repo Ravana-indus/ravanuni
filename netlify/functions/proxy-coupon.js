@@ -45,7 +45,8 @@ exports.handler = async function(event, context) {
     }
 
     // Construct the API URL to verify the coupon code
-    const apiUrl = `${API_BASE_URL}/resource/Coupon%20Code?filters=[[%22coupon_code%22,%22=%22,%22${encodeURIComponent(couponCode)}%22]]`;
+    // Use a more reliable filter format that works with Frappe API
+    const apiUrl = `${API_BASE_URL}/resource/Coupon%20Code?filters=[["coupon_code","=","${encodeURIComponent(couponCode)}"]]`;
     
     console.log(`Calling API URL: ${apiUrl}`);
 
@@ -58,16 +59,60 @@ exports.handler = async function(event, context) {
       }
     });
 
-    const responseText = await response.text();
+    // Log the response status for debugging
     console.log(`API response status: ${response.status}`);
+    
+    // Get the response text first
+    const responseText = await response.text();
     console.log(`API response body: ${responseText.substring(0, 200)}...`);
 
+    // Check if the response is OK
     if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${responseText}`);
+      console.error(`API error: ${response.status} ${responseText}`);
+      return {
+        statusCode: 200, // Return 200 to avoid CORS issues, but indicate failure in the response
+        headers,
+        body: JSON.stringify({ 
+          success: false, 
+          isValid: false,
+          error: `API error: ${response.status}`,
+          message: 'Coupon code verification failed'
+        })
+      };
     }
 
-    // Parse the JSON response (we already consumed the body with response.text())
-    const data = JSON.parse(responseText);
+    // Parse the JSON response
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('Error parsing API response:', parseError);
+      return {
+        statusCode: 200, // Return 200 to avoid CORS issues
+        headers,
+        body: JSON.stringify({ 
+          success: false, 
+          isValid: false,
+          error: 'Invalid API response format',
+          message: 'Coupon code verification failed'
+        })
+      };
+    }
+    
+    // Check if the data structure is as expected
+    if (!data || typeof data !== 'object') {
+      console.error('Unexpected API response structure:', data);
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+          success: false, 
+          isValid: false,
+          error: 'Unexpected API response structure',
+          message: 'Coupon code verification failed'
+        })
+      };
+    }
     
     // Return whether the coupon code is valid
     const isValid = data.data && Array.isArray(data.data) && data.data.length > 0;
@@ -86,14 +131,15 @@ exports.handler = async function(event, context) {
   } catch (error) {
     console.error('Proxy error:', error);
     
+    // Return 200 status to avoid CORS issues, but indicate failure in the response
     return {
-      statusCode: 500,
+      statusCode: 200,
       headers,
       body: JSON.stringify({ 
         success: false, 
+        isValid: false,
         error: 'Error verifying coupon code',
-        message: error.message,
-        stack: error.stack
+        message: error.message || 'Unknown error occurred'
       })
     };
   }
