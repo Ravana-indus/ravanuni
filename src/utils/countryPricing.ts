@@ -113,40 +113,18 @@ export async function verifyPromoCode(promoCode: string): Promise<boolean> {
   if (!promoCode) return false;
   
   try {
-    // Import API configuration
-    const { API_BASE_URL, API_KEY, API_SECRET } = await import('@/utils/apiConfig');
-    
-    // Construct the API URL to verify the coupon code
-    const apiUrl = `${API_BASE_URL}/resource/Coupon%20Code?filters=[["coupon_code","=","${encodeURIComponent(promoCode)}"]]`;
-    
-    console.log(`Verifying promo code: ${promoCode}`);
-    
-    // Make the request to the Frappe API
-    const response = await fetch(apiUrl, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `token ${API_KEY}:${API_SECRET}`,
-        'Accept': 'application/json'
-      }
-    });
-    
-    // Log the response status for debugging
-    console.log(`API response status: ${response.status}`);
+    // Instead of calling the API directly, use our Netlify function proxy
+    // This avoids CORS issues as the request comes from the same domain
+    const response = await fetch(`/.netlify/functions/proxy-coupon?code=${encodeURIComponent(promoCode)}`);
     
     if (!response.ok) {
-      console.error(`API error: ${response.status}`);
-      return false;
+      throw new Error('Failed to verify promo code');
     }
     
-    // Parse the JSON response
     const data = await response.json();
-    console.log('Promo code verification response:', data);
     
-    // Check if the coupon code is valid
-    const isValid = data.data && Array.isArray(data.data) && data.data.length > 0;
-    console.log(`Coupon validity result: ${isValid}`);
-    
-    return isValid;
+    // Return isValid property from our proxy function response
+    return data.success && data.isValid;
   } catch (error) {
     console.error('Error verifying promo code:', error);
     return false;

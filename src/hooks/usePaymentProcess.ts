@@ -309,20 +309,7 @@ export const usePaymentProcess = () => {
           headers: getApiHeaders()
         });
         
-        // Log the response status for debugging
-        console.log(`Sales order API response status: ${salesOrderResponse.status}`);
-        
-        // Get the response text first
-        const responseText = await salesOrderResponse.text();
-        
-        // Try to parse the response as JSON
-        let salesOrderData;
-        try {
-          salesOrderData = JSON.parse(responseText);
-        } catch (parseError) {
-          console.error('Error parsing sales order response:', parseError);
-          console.warn('Could not retrieve exact customer name from sales order, using original:', exactCustomerName);
-        }
+        const salesOrderData = await salesOrderResponse.json();
         
         if (salesOrderResponse.ok && salesOrderData && salesOrderData.data && salesOrderData.data.customer) {
           exactCustomerName = salesOrderData.data.customer;
@@ -331,8 +318,8 @@ export const usePaymentProcess = () => {
           console.warn('Could not retrieve exact customer name from sales order, using original:', exactCustomerName);
         }
       } catch (error) {
-        console.error('Error fetching sales order details:', error);
-        console.warn('Could not retrieve exact customer name from sales order, using original:', exactCustomerName);
+        console.error('Error retrieving exact customer name from sales order:', error);
+        console.warn('Using original customer name:', exactCustomerName);
       }
       
       // Clean customer name to ensure compatibility with Frappe API

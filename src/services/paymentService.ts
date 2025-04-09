@@ -816,30 +816,11 @@ export const createSalesOrder = async (salesOrderData: SalesOrderData): Promise<
       body: JSON.stringify(salesOrderData)
     });
 
-    // Get the response text first
-    const responseText = await response.text();
-    console.log(`Sales order API response status: ${response.status}`);
-    
-    // Try to parse the response as JSON
-    let responseData;
-    try {
-      responseData = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error('Error parsing sales order response:', parseError);
-      return { 
-        success: false, 
-        error: 'Invalid response format from API',
-        statusCode: response.status
-      };
-    }
+    const responseData = await response.json();
     
     if (!response.ok) {
       console.error('Error creating sales order:', responseData);
-      return { 
-        success: false, 
-        error: responseData.exception || responseData.message || 'API error',
-        statusCode: response.status
-      };
+      return { success: false, error: responseData.exception || responseData.message || 'API error' };
     }
 
     return { success: true, data: responseData.data || responseData };
@@ -847,8 +828,7 @@ export const createSalesOrder = async (salesOrderData: SalesOrderData): Promise<
     console.error('Error in createSalesOrder:', error);
     return { 
       success: false, 
-      error: error instanceof Error ? error.message : 'Unknown error',
-      statusCode: 500
+      error: error instanceof Error ? error.message : 'Unknown error' 
     };
   }
 };
