@@ -5,6 +5,8 @@
   [build.environment]
     # Configure secrets scanning to exclude build output and cached files
     SECRETS_SCAN_OMIT_PATHS = "dist/*,node_modules/*,.netlify/*,build/*,.next/*,.cache/*"
+    # Configure secrets scanning to ignore specific keys
+    SECRETS_SCAN_OMIT_KEYS = "API_KEY,API_SECRET"
 
 # Redirect API requests to Netlify Functions
 [[redirects]]
