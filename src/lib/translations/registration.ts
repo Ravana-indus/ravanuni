@@ -544,4 +544,14 @@ export const registrationTranslations = {
     si: "",
     ta: ""
   },
+  "Payment Information": {
+    en: "Payment Information",
+    si: "",
+    ta: ""
+  },
+  "Details will be provided after registration": {
+    en: "Details will be provided after registration",
+    si: "",
+    ta: ""
+  },
 }; 
