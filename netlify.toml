@@ -6,17 +6,6 @@
     # Configure secrets scanning to exclude build output and cached files
     SECRETS_SCAN_OMIT_PATHS = "dist/*,node_modules/*,.netlify/*,build/*,.next/*,.cache/*"
 
-# Proxy API requests to portal.riftuni.com to avoid CORS issues
-[[redirects]]
-  from = "/api/proxy/*"
-  to = "https://portal.riftuni.com/api/:splat"
-  status = 200
-  force = true
-  [redirects.headers]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, Authorization"
-
 # Redirect API requests to Netlify Functions
 [[redirects]]
   from = "/api/payment/generate-hash"

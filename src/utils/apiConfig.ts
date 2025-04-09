@@ -14,16 +14,9 @@ const getWindowVar = (name: string, defaultValue: string): string => {
   return (window as any)[name] || defaultValue;
 };
 
-// Determine if we're in development or production
-const isDevelopment = isBrowser && 
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-
 // Use environment variables safely with fallbacks
-// In production, use our proxy endpoint to avoid CORS issues
 export const API_BASE_URL = isBrowser 
-  ? isDevelopment 
-    ? getWindowVar('FRAPPE_API_URL', 'https://portal.riftuni.com/api')
-    : getWindowVar('FRAPPE_API_URL', '/api/proxy') // Use proxy in production
+  ? getWindowVar('FRAPPE_API_URL', 'https://portal.riftuni.com/api')
   : (process.env.NEXT_PUBLIC_FRAPPE_API_URL || 'https://portal.riftuni.com/api');
 
 /**

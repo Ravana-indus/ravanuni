@@ -33,11 +33,6 @@ export interface LeadData {
   custom_amount?: number;
   custom_currency?: 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR';
   
-  // Address fields
-  custom_address?: string;
-  custom_city?: string;
-  custom_country?: string;
-  
   // Fields potentially replaced by new ones - comment out or remove later if confirmed
   // companion_registration: number;
   // companion_name?: string;
