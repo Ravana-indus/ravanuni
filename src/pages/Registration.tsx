@@ -52,6 +52,9 @@ const Registration = () => {
     custom_registering_with_a_family_member: false,
     custom_family_member_name: '',
     custom_promo_code: '',
+    custom_address: '',
+    custom_city: '',
+    custom_country: '',
   });
   
   // Add country detection
@@ -174,6 +177,9 @@ const Registration = () => {
         custom_promo_code: formData.custom_promo_code || undefined,
         custom_amount: calculatedPrice?.amount,
         custom_currency: calculatedPrice?.currency as 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR' | undefined,
+        custom_address: formData.custom_address,
+        custom_city: formData.custom_city,
+        custom_country: formData.custom_country || selectedCountry,
       };
       
       // Show success message
@@ -201,6 +207,9 @@ const Registration = () => {
         custom_registering_with_a_family_member: false,
         custom_family_member_name: '',
         custom_promo_code: '',
+        custom_address: '',
+        custom_city: '',
+        custom_country: '',
       });
       
       // Navigate to the payment review page with lead data
@@ -369,6 +378,9 @@ const Registration = () => {
       custom_promo_code: formData.custom_promo_code || undefined,
       custom_amount: calculatedPrice?.amount,
       custom_currency: calculatedPrice?.currency as 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR' | undefined,
+      custom_address: formData.custom_address,
+      custom_city: formData.custom_city,
+      custom_country: formData.custom_country || selectedCountry,
     };
     
     // Submit the lead registration using the hook
@@ -687,6 +699,47 @@ const Registration = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+94 7X XXX XXXX"
+                      className="w-full"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                  <Input 
+                    type="text" 
+                    name="custom_address"
+                    value={formData.custom_address}
+                    onChange={handleInputChange}
+                    placeholder="Your street address"
+                    className="w-full"
+                    required
+                  />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <Input 
+                      type="text" 
+                      name="custom_city"
+                      value={formData.custom_city}
+                      onChange={handleInputChange}
+                      placeholder="Your city"
+                      className="w-full"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                    <Input 
+                      type="text" 
+                      name="custom_country"
+                      value={formData.custom_country || selectedCountry}
+                      onChange={handleInputChange}
+                      placeholder="Your country"
                       className="w-full"
                       required
                     />

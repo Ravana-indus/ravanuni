@@ -126,6 +126,9 @@ export const createCustomer = async (customerData: CustomerData): Promise<ApiRes
       mobile_no: customerData.phone,
       default_currency: 'LKR', // Default to LKR, can be changed
       default_price_list: 'Standard Selling',
+      custom_address: customerData.address || '',
+      custom_city: customerData.city || '',
+      custom_country: customerData.country || 'Sri Lanka',
     };
 
     const response = await fetch(`${API_BASE_URL}/resource/Customer`, {
