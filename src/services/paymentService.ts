@@ -167,21 +167,22 @@ export const generatePayhereHash = async (paymentData: PaymentData): Promise<str
     // Determine the correct base URL for API calls
     const baseUrl = window.location.origin;
     const hostname = window.location.hostname;
+    const isDevelopment = hostname === 'localhost' || hostname === '127.0.0.1';
     
     // API endpoint based on environment
     let apiUrl;
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    if (isDevelopment) {
       // Use the dedicated API server in development
       apiUrl = 'http://localhost:8080/api/payment/generate-hash';
       console.log('Using development API server for hash generation');
     } else if (hostname.includes('riftuni.com')) {
-      // Use the correct API endpoint for riftuni.com
-      apiUrl = `${baseUrl}/api/payment/generate-hash`;
-      console.log('Using riftuni.com API endpoint for hash generation');
+      // Use the proxied API endpoint for production
+      apiUrl = `${baseUrl}/api/proxy/payment/generate-hash`;
+      console.log('Using proxied API endpoint for hash generation');
     } else {
       // Use the production API endpoint in the same domain
-      apiUrl = `${baseUrl}/api/payment/generate-hash`;
-      console.log('Using production API endpoint for hash generation');
+      apiUrl = `${baseUrl}/api/proxy/payment/generate-hash`;
+      console.log('Using proxied API endpoint for hash generation');
     }
     
     console.log(`Calling hash generation API at: ${apiUrl}`);

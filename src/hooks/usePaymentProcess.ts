@@ -148,7 +148,9 @@ export const usePaymentProcess = () => {
         merchant_id: PAYHERE_MERCHANT_ID,
         return_url: `${baseUrl}/thank-you?lead=${leadId}&payment=success${successParams}`,
         cancel_url: `${baseUrl}/thank-you?lead=${leadId}&payment=cancelled${cancelParams}`,
-        notify_url: `${baseUrl}/api/payment/notify`, // Server-side notification endpoint
+        notify_url: isDevelopment 
+          ? `${baseUrl}/api/payment/notify`
+          : `${baseUrl}/api/proxy/payment/notify`, // Use proxy in production
         order_id: uniqueOrderId,
         items: `Registration for ${courseType || 'RIFT Course'}`,
         currency: currency,
