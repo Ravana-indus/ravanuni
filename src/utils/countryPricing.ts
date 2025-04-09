@@ -113,17 +113,9 @@ export async function verifyPromoCode(promoCode: string): Promise<boolean> {
   if (!promoCode) return false;
   
   try {
-    // API endpoint to verify coupon code
-    const API_BASE_URL = 'https://portal.riftuni.com/api';
-    
-    // Check if coupon code exists
-    const response = await fetch(`${API_BASE_URL}/resource/Coupon Code?filters=[["coupon_code","=","${promoCode}"]]`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'token ' + 'a9612959b012965:a6662956880fba6', // Should ideally be from an environment variable
-        'Accept': 'application/json',
-      }
-    });
+    // Instead of calling the API directly, use our Netlify function proxy
+    // This avoids CORS issues as the request comes from the same domain
+    const response = await fetch(`/.netlify/functions/proxy-coupon?code=${encodeURIComponent(promoCode)}`);
     
     if (!response.ok) {
       throw new Error('Failed to verify promo code');
@@ -131,8 +123,8 @@ export async function verifyPromoCode(promoCode: string): Promise<boolean> {
     
     const data = await response.json();
     
-    // If data.data is an array and has at least one entry, the code is valid
-    return data.data && Array.isArray(data.data) && data.data.length > 0;
+    // Return isValid property from our proxy function response
+    return data.success && data.isValid;
   } catch (error) {
     console.error('Error verifying promo code:', error);
     return false;
