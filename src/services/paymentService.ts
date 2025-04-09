@@ -33,6 +33,9 @@ export interface CustomerData {
   address?: string;
   city?: string;
   country?: string;
+  custom_address?: string;
+  custom_city?: string;
+  custom_country?: string;
 }
 
 // Interface for payment data
@@ -126,6 +129,9 @@ export const createCustomer = async (customerData: CustomerData): Promise<ApiRes
       mobile_no: customerData.phone,
       default_currency: 'LKR', // Default to LKR, can be changed
       default_price_list: 'Standard Selling',
+      custom_address: customerData.custom_address || '',
+      custom_city: customerData.custom_city || '',
+      custom_country: customerData.custom_country || customerData.country || 'Sri Lanka',
     };
 
     const response = await fetch(`${API_BASE_URL}/resource/Customer`, {

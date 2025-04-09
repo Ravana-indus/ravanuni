@@ -51,7 +51,10 @@ export const usePaymentProcess = () => {
         customer_name: registeredCustomerName,
         email: leadData.email_id,
         phone: leadData.mobile_no,
-        country: leadData.preferred_time_zone?.toString() || 'Sri Lanka'
+        country: leadData.preferred_time_zone?.toString() || 'Sri Lanka',
+        custom_address: leadData.custom_address || '',
+        custom_city: leadData.custom_city || '',
+        custom_country: leadData.custom_country || leadData.preferred_time_zone?.toString() || 'Sri Lanka'
       };
       
       // Use the registered customer name as fallback
@@ -154,10 +157,10 @@ export const usePaymentProcess = () => {
         last_name: leadData.last_name || '',
         email: leadData.email_id || '',
         phone: leadData.mobile_no || '',
-        // Adding sample address and city for testing
-        address: '123 Sample Street', // Sample address for testing
-        city: 'Colombo',    // Colombo as city for testing
-        country: leadData.preferred_time_zone?.toString() || 'Sri Lanka',
+        // Use customer address fields if available, otherwise use sample values
+        address: leadData.custom_address || '123 Sample Street',
+        city: leadData.custom_city || 'Colombo',
+        country: leadData.custom_country || leadData.preferred_time_zone?.toString() || 'Sri Lanka',
         custom_1: leadId, // Store lead ID as custom parameter
         custom_2: customerName, // Store customer name as custom parameter
       };

@@ -52,6 +52,9 @@ const Registration = () => {
     custom_registering_with_a_family_member: false,
     custom_family_member_name: '',
     custom_promo_code: '',
+    custom_address: '',
+    custom_city: '',
+    custom_country: '',
   });
   
   // Add country detection
@@ -174,6 +177,9 @@ const Registration = () => {
         custom_promo_code: formData.custom_promo_code || undefined,
         custom_amount: calculatedPrice?.amount,
         custom_currency: calculatedPrice?.currency as 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR' | undefined,
+        custom_address: formData.custom_address || undefined,
+        custom_city: formData.custom_city || undefined,
+        custom_country: formData.custom_country || undefined,
       };
       
       // Show success message
@@ -201,6 +207,9 @@ const Registration = () => {
         custom_registering_with_a_family_member: false,
         custom_family_member_name: '',
         custom_promo_code: '',
+        custom_address: '',
+        custom_city: '',
+        custom_country: '',
       });
       
       // Navigate to the payment review page with lead data
@@ -369,6 +378,9 @@ const Registration = () => {
       custom_promo_code: formData.custom_promo_code || undefined,
       custom_amount: calculatedPrice?.amount,
       custom_currency: calculatedPrice?.currency as 'LKR' | 'USD' | 'EUR' | 'GBP' | 'CAD' | 'INR' | undefined,
+      custom_address: formData.custom_address || undefined,
+      custom_city: formData.custom_city || undefined,
+      custom_country: formData.custom_country || undefined,
     };
     
     // Submit the lead registration using the hook
@@ -712,6 +724,55 @@ const Registration = () => {
                     </select>
                   </div>
                 )}
+                
+                {/* Address Fields */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                  <Input 
+                    type="text" 
+                    name="custom_address"
+                    value={formData.custom_address}
+                    onChange={handleInputChange}
+                    placeholder="Your street address"
+                    className="w-full"
+                    required
+                  />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <Input 
+                      type="text" 
+                      name="custom_city"
+                      value={formData.custom_city}
+                      onChange={handleInputChange}
+                      placeholder="Your city"
+                      className="w-full"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                    <select 
+                      name="custom_country"
+                      value={formData.custom_country}
+                      onChange={handleInputChange}
+                      className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                      required
+                    >
+                      <option value="">Select a country</option>
+                      <option value="Sri Lanka">Sri Lanka</option>
+                      <option value="India">India</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="United States">United States</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Course Speed</label>
